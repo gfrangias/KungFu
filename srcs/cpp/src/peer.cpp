@@ -1,5 +1,7 @@
 #include <kungfu/peer.hpp>
 #include <libkungfu-comm.h>
+#include <stdio.h>
+#include <cstdlib>
 
 namespace kungfu
 {

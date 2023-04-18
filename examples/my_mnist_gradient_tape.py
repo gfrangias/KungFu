@@ -11,7 +11,7 @@ from kungfu.tensorflow.optimizers import (PairAveragingOptimizer,
 parser = argparse.ArgumentParser(description='KungFu mnist example.')
 parser.add_argument('--kf-optimizer',
                     type=str,
-                    default='sync-sgd',
+                    default='my-sync-sgd',
                     help='available options: sync-sgd, async-sgd, sma, my-sync-sgd')
 parser.add_argument('--barrier',
                     type=str,
