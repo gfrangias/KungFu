@@ -175,7 +175,7 @@ func boolToChar(v bool) C.char {
 }
 
 func callOP(name string, op func() error, done *C.callback_t) int {
-	if done == nil {
+	if done == nil { // sync
 		if config.EnableStallDetection {
 			defer utils.InstallStallDetector(name).Stop()
 		}

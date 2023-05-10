@@ -1,8 +1,9 @@
 import tensorflow as tf
+import sys
 from kungfu._utils import map_maybe
 from kungfu.tensorflow.ops import (defuse, fuse, group_all_reduce,
                                    group_nccl_all_reduce, monitored_all_reduce,
-                                   peer_info)
+                                   peer_info, set_tree, broadcast, subset_all_reduce)
 from kungfu.tensorflow.ops.adapt import calc_stats
 from kungfu.tensorflow.ops.collective import (
     group_all_reduce, group_hierarchical_nccl_all_reduce,
@@ -82,9 +83,7 @@ class _MySynchronousSGD(_KungFuAlgorithm):
     def apply_gradients(self, apply_grads_func, grads_and_vars, **kwargs):
 
         gradients, variables = list(zip(*grads_and_vars))
-
         synchr = kwargs.pop('name')
-
         """
         if self._nccl:
             # FIXME: We have a limitation that KungFu schedules NCCL operations
@@ -111,17 +110,56 @@ class _MySynchronousSGD(_KungFuAlgorithm):
         """
 
         if(synchr):
-            tf.print("-----Performing all reduce!-----")
+
+            
+            ######## ALL_REDUCE
+            #tf.print("-----Performing all reduce!-----")
+            #tf.print("My gradient: ", gradients[1][0])
             # Perform all reduce on current node based on the gradients of all nodes
             summed_gradients = group_all_reduce(gradients)
             # Cast the number of workers to tf.float32
             np = tf.cast(self._num_workers, tf.float32)
             # Reduce the gradients of the current node based on the average of all nodes
             reduced_grads = map_maybe(lambda g: g / np, summed_gradients)
+            tf.print("Reduced gradient: ", reduced_grads[1][0])
+            
+            
+            """
+            ######## SUBSET_ALL_REDUCEd
+            topology = tf.constant([0, 0, 0, 0], dtype=tf.int32)
+            #tf.print("-----Performing all reduce!-----")
+            #tf.print("My gradient: ", gradients[1][0])
+            fused_grad = fuse(gradients)
+            # Perform all reduce on current node based on the gradients of all nodes
+            summed_fused_gradients = subset_all_reduce(fused_grad,topology)
+            #print(summed_fused_gradients)
+            summed_gradients = defuse(summed_fused_gradients,
+                                    [g.shape for g in gradients])
+            # Cast the number of workers to tf.float32
+            np = tf.cast(self._num_workers, tf.float32)
+            # Reduce the gradients of the current node based on the average of all nodes
+            reduced_grads = map_maybe(lambda g: g / np, summed_gradients)
+            #tf.print("Reduced gradient: ", reduced_grads[1][0])
+            """
+
+            """
+            ######## MONITORED_ALL_REDUCE
+            tree = tf.constant([0, 0, 0, 1], dtype=tf.int32)
+            set_tree(broadcast(tree))
+            tf.print("-----Performing all reduce!-----")
+            tf.print("My gradient: ", gradients[1][0])
+            # Perform all reduce on current node based on the gradients of all nodes
+            summed_gradients = map_maybe(monitored_all_reduce, gradients)
+            # Cast the number of workers to tf.float32
+            np = tf.cast(self._num_workers, tf.float32)
+            # Reduce the gradients of the current node based on the average of all nodes
+            reduced_grads = map_maybe(lambda g: g / np, summed_gradients)
+            tf.print("Reduced gradient: ", reduced_grads[1][0])
+            """
+
         else:
             # Reduced grads are the same as the local grads
             reduced_grads = gradients
-
         # We need to re-zip gradients and variables as grads_and_vars can be only unzipped once.
         reduced_grads_and_vars = zip(reduced_grads, variables)
         return apply_grads_func(reduced_grads_and_vars, **kwargs)
