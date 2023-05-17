@@ -1,8 +1,12 @@
 import argparse
 
 import tensorflow as tf
+from kungfu._utils import map_maybe
 from kungfu.python import current_cluster_size, current_rank
-from kungfu.tensorflow.ops import current_rank, set_tree, broadcast
+from kungfu.tensorflow.ops import (defuse, fuse, group_all_reduce,
+                                   group_nccl_all_reduce, monitored_all_reduce,
+                                   peer_info, set_tree, broadcast, subset_all_reduce,
+                                   current_rank)
 from kungfu.tensorflow.optimizers import (PairAveragingOptimizer,
                                           SynchronousAveragingOptimizer,
                                           SynchronousSGDOptimizer,
@@ -25,7 +29,7 @@ dataset = tf.data.Dataset.from_tensor_slices(
     (tf.cast(mnist_images[..., tf.newaxis] / 255.0,
              tf.float32), tf.cast(mnist_labels, tf.int64)))
 
-dataset = dataset.repeat().batch(128)
+dataset = dataset.repeat().shuffle(10000).batch(128)
 
 mnist_model = tf.keras.Sequential([
     tf.keras.layers.Flatten(input_shape=(28, 28)),  # Flatten the input image
@@ -68,7 +72,7 @@ def calculate_MAPE(mnist_model, prev_variables):
         
         # Find the max MAPE between the layers
         max_mape = tf.reduce_max(mape)
-        #tf.print("MAPE: ",max_mape)
+        tf.print("MAPE: ",max_mape)
     return max_mape
 
 @tf.function
@@ -88,20 +92,29 @@ def training_step(images, labels, first_batch, prev_variables):
         probs = mnist_model(images, training=True)
         loss_value = loss(labels, probs)
 
-    updated_prev_variables = [0] * len(mnist_model.trainable_variables)
+    updated_prev_variables = [0.0] * len(mnist_model.trainable_variables)
 
     max_mape = calculate_MAPE(mnist_model, prev_variables)
 
     # Find the local gradients 
     grads = tape.gradient(loss_value, mnist_model.trainable_variables)
 
+    tf.print("My weight: ", mnist_model.trainable_variables[1][3])
+    
     # If MAPE > barrier perform all-reduce with other nodes and update local gradients based on that
-    if should_apply_gradients(max_mape):
-        opt.apply_gradients(zip(grads, mnist_model.trainable_variables),name=1)
+    if should_apply_gradients(max_mape) or first_batch:
+        tf.print("SYNCHRONIZATION")
+        summed_variables = group_all_reduce(mnist_model.trainable_variables)
+        # Cast the number of workers to tf.float32
+        np = tf.cast(current_cluster_size(), tf.float32)
+        # Reduce the gradients of the current node based on the average of all nodes
+        reduced_variables = map_maybe(lambda g: g / np, summed_variables)
+        tf.print("Reduced weight: ", reduced_variables[1][3])
+        for i, variable in enumerate(mnist_model.trainable_variables):
+            variable.assign(reduced_variables[i])
         updated_prev_variables = mnist_model.trainable_variables
-    # Else apply local gradients with no synchronization
     else:
-        opt.apply_gradients(zip(grads, mnist_model.trainable_variables),name=0)
+        opt.apply_gradients(zip(grads, mnist_model.trainable_variables),name=1)
         updated_prev_variables = prev_variables
 
     # KungFu: broadcast is done after the first gradient step to ensure optimizer initialization.
