@@ -83,7 +83,6 @@ class _MySynchronousSGD(_KungFuAlgorithm):
     def apply_gradients(self, apply_grads_func, grads_and_vars, **kwargs):
 
         gradients, variables = list(zip(*grads_and_vars))
-        synchr = kwargs.pop('name')
         """
         if self._nccl:
             # FIXME: We have a limitation that KungFu schedules NCCL operations

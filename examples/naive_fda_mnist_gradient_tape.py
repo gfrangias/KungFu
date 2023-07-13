@@ -55,7 +55,7 @@ elif args.kf_optimizer == 'async-sgd':
 elif args.kf_optimizer == 'sma':
     opt = SynchronousAveragingOptimizer(opt)
 elif args.kf_optimizer == 'my-sync-sgd':
-    opt = MySynchronousSGDOptimizer(opt, threshold=threshold)
+    opt = MySynchronousSGDOptimizer(opt)
 else:
     raise RuntimeError('Unknown KungFu optimizer')
 
