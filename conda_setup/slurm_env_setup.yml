@@ -34,7 +34,6 @@ dependencies:
   - pip=23.1.2=py38h06a4308_0
   - python=3.8.13=haa1d7c7_1
   - readline=8.2=h5eee18b_0
-  - setuptools=67.8.0=py38h06a4308_0
   - sqlite=3.41.2=h5eee18b_0
   - sysroot_linux-64=2.12=he073ed8_16
   - tk=8.6.12=h1ccaba5_0
@@ -44,10 +43,14 @@ dependencies:
   - zlib=1.2.13=h5eee18b_0
   - pip:
       - absl-py==0.15.0
+      - arrow==1.2.3
+      - astroid==2.15.6
       - astunparse==1.6.3
       - cachetools==5.3.1
       - certifi==2023.5.7
       - charset-normalizer==3.2.0
+      - cmake==3.27.0
+      - dill==0.3.7
       - flatbuffers==1.12
       - gast==0.3.3
       - google-auth==2.22.0
@@ -57,18 +60,28 @@ dependencies:
       - h5py==2.10.0
       - idna==3.4
       - importlib-metadata==6.8.0
+      - isort==5.12.0
+      - jinja2==3.1.2
+      - jinja2-time==0.2.0
       - keras-preprocessing==1.1.2
+      - lazy-object-proxy==1.9.0
+      - make==0.1.6.post2
       - markdown==3.4.3
       - markupsafe==2.1.3
+      - mccabe==0.7.0
       - numpy==1.19.5
       - oauthlib==3.2.2
       - opt-einsum==3.3.0
+      - platformdirs==3.9.1
       - protobuf==3.20.3
       - pyasn1==0.5.0
       - pyasn1-modules==0.3.0
+      - pylint==2.17.5
+      - python-dateutil==2.8.2
       - requests==2.31.0
       - requests-oauthlib==1.3.1
       - rsa==4.9
+      - setuptools==68.0.0
       - six==1.15.0
       - tensorboard==2.11.2
       - tensorboard-data-server==0.6.1
@@ -76,9 +89,10 @@ dependencies:
       - tensorflow==2.4.1
       - tensorflow-estimator==2.4.0
       - termcolor==1.1.0
-      - typing-extensions==3.7.4.3
+      - tomli==2.0.1
+      - tomlkit==0.11.8
+      - typing-extensions==4.7.1
       - urllib3==1.26.16
       - werkzeug==2.3.6
       - wrapt==1.12.1
       - zipp==3.16.2
-prefix: /storage/tuclocal/gfrangias/anaconda3/envs/kungfu-slurm
