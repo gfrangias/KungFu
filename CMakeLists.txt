@@ -2,6 +2,9 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.5)
 PROJECT(kungfu)
 
 SET(CMAKE_CXX_STANDARD 14)
+SET(CMAKE_C_COMPILER "/storage/tuclocal/gfrangias/anaconda3/envs/kungfu-slurm/bin/gcc")
+SET(CMAKE_CXX_COMPILER "/storage/tuclocal/gfrangias/anaconda3/envs/kungfu-slurm/bin/g++")
+SET(CMAKE_MAKE_PROGRAM "/storage/tuclocal/gfrangias/anaconda3/envs/kungfu-slurm/bin/cmake")
 
 ADD_COMPILE_OPTIONS(-fPIC)
 

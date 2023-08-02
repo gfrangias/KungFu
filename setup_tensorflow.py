@@ -32,7 +32,7 @@ def cmake_tf_ext_flags():
         cmake_flag('TF_COMPILE_FLAGS', tf_compile_flags),
         cmake_flag('TF_LINK_FLAGS', tf_link_flags),
         # sysconfig.get_config_var('EXT_SUFFIX')  does't work for python2
-        cmake_flag('PY_EXT_SUFFIX', '%s' % sysconfig.get_config_var('SO')),
+        cmake_flag('PY_EXT_SUFFIX', '%s' % sysconfig.get_config_var('EXT_SUFFIX')),
     ]
 
 
