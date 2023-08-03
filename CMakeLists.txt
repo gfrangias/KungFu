@@ -2,13 +2,13 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.5)
 PROJECT(kungfu)
 
 SET(CMAKE_CXX_STANDARD 14)
-SET(CMAKE_C_COMPILER "/storage/tuclocal/gfrangias/anaconda3/envs/kungfu-slurm/bin/gcc")
-SET(CMAKE_CXX_COMPILER "/storage/tuclocal/gfrangias/anaconda3/envs/kungfu-slurm/bin/g++")
-SET(CMAKE_MAKE_PROGRAM "/storage/tuclocal/gfrangias/anaconda3/envs/kungfu-slurm/bin/cmake")
 
 ADD_COMPILE_OPTIONS(-fPIC)
 
 SET(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
+SET(CMAKE_MAKE_PROGRAM=$HOME/anaconda3/envs/kungfu-okeanos/bin/cmake)
+SET(CMAKE_C_COMPILER=$HOME/anaconda3/envs/kungfu-okeanos/bin/gcc)
+SET(CMAKE_CXX_COMPILER=$HOME/anaconda3/envs/kungfu-okeanos/bin/g++)
 
 OPTION(KUNGFU_BUILD_TESTS "Build tests." OFF)
 OPTION(KUNGFU_BUILD_TF_OPS "Build tensorflow operators." OFF)
