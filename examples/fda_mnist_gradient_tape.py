@@ -1,12 +1,8 @@
 import argparse
-
 import tensorflow as tf
 from kungfu._utils import map_maybe
 from kungfu.python import current_cluster_size, current_rank
-from kungfu.tensorflow.ops import (defuse, fuse, group_all_reduce,
-                                   group_nccl_all_reduce, monitored_all_reduce,
-                                   peer_info, set_tree, broadcast, subset_all_reduce,
-                                   current_rank)
+from kungfu.tensorflow.ops import group_all_reduce
 from kungfu.tensorflow.optimizers import (PairAveragingOptimizer,
                                           SynchronousAveragingOptimizer,
                                           SynchronousSGDOptimizer,
@@ -36,9 +32,14 @@ dataset = tf.data.Dataset.from_tensor_slices(
 dataset = dataset.repeat().shuffle(10000).batch(128)
 
 mnist_model = tf.keras.Sequential([
-    tf.keras.layers.Flatten(input_shape=(28, 28)),  # Flatten the input image
-    tf.keras.layers.Dense(128, activation='relu'),  # Hidden layer with 128 neurons and ReLU activation
-    tf.keras.layers.Dense(10, activation='softmax')  # Output layer with 10 neurons (one for each digit) and softmax activation
+    tf.keras.layers.Conv2D(32, [3, 3], activation='relu'),
+    tf.keras.layers.Conv2D(64, [3, 3], activation='relu'),
+    tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
+    tf.keras.layers.Dropout(0.25),
+    tf.keras.layers.Flatten(),
+    tf.keras.layers.Dense(128, activation='relu'),
+    tf.keras.layers.Dropout(0.5),
+    tf.keras.layers.Dense(10, activation='softmax')
 ])
 
 loss = tf.losses.SparseCategoricalCrossentropy()
@@ -48,6 +49,8 @@ loss = tf.losses.SparseCategoricalCrossentropy()
 opt = tf.compat.v1.train.AdamOptimizer(0.001 * current_cluster_size())
 
 steps_since_sync = tf.Variable(0, dtype=tf.int32)
+total_syncs = tf.Variable(0, dtype=tf.int32)
+syncs_hist = []
 threshold = float(args.threshold)
 threshold = tf.constant(threshold)
 
@@ -79,19 +82,40 @@ def tensor_to_tensor_list(tensor):
 
 @tf.function
 def compute_divergence_2_norm(last_sync_model, local_model):
-    subtraction_list = tensor_lists_subtraction(local_model, last_sync_model)   # Convert the list of tensors into a single tensor
-    subtraction = tensor_list_to_vector(subtraction_list)                       # Subtract the two models
-    norm_2 =  tf.norm(subtraction, 2)                                           # Compute the 2-norm of the subtraction
+    models_diff = tensor_lists_subtraction(local_model, last_sync_model)   # Convert the list of tensors into a single tensor
+    models_diff_tensor = tensor_list_to_vector(models_diff)                # Subtract the two models
+    norm_2 =  tf.norm(models_diff_tensor, 2)                               # Compute the 2-norm of the subtraction
     return tensor_to_tensor_list(norm_2)
 
-@tf.function
 def compute_xi(second_last_sync_model, last_sync_model):
-    subtraction_list = tensor_lists_subtraction()
-    xi = [t / tf.norm(tf.concat(subtraction_list, axis=0)) for t in subtraction_list]
-    return xi
+    sync_models_diff = tensor_lists_subtraction(last_sync_model, second_last_sync_model)
+    sync_models_diff_tensor = tensor_list_to_vector(sync_models_diff)
+    sync_models_diff_tensor = tf.abs(sync_models_diff_tensor)
+    xi = tf.divide(sync_models_diff_tensor, tf.norm(sync_models_diff_tensor))
+    return tensor_to_tensor_list(xi)
+
+def compute_xi_2(second_last_sync_model, last_sync_model):
+    sync_models_diff = tensor_lists_subtraction(last_sync_model, second_last_sync_model)
+    sync_models_diff_tensor = tensor_list_to_vector(sync_models_diff)
+    sync_models_diff_tensor = tf.abs(sync_models_diff_tensor)
+    xi = tf.divide(sync_models_diff_tensor, tf.norm(sync_models_diff_tensor))
+    return tensor_to_tensor_list(xi)
 
 @tf.function
-def should_synchronize_models_naive(divergence):
+def compute_xi_dot_diff(last_sync_model, local_model, xi):
+    models_diff = tensor_lists_subtraction(local_model, last_sync_model)
+    models_diff_tensor = tensor_list_to_vector(models_diff)
+    if tf.is_tensor(xi[0]):
+        xi_tensor = tensor_list_to_vector(xi)
+    else:
+        random_tensor = tf.random.normal(shape=(len(models_diff_tensor),), dtype=tf.float32)
+        xi_tensor = tf.divide(random_tensor, tf.norm(random_tensor))
+
+    xi_dot_diff = tf.tensordot(xi_tensor, models_diff_tensor, axes=1)
+    return tensor_to_tensor_list(xi_dot_diff)
+
+@tf.function
+def rtc_check(divergence):
     global threshold
     if tf.math.greater(tf.cast(divergence, tf.float32),tf.cast(threshold, tf.float32)):
         return True
@@ -122,15 +146,17 @@ def training_step_naive(images, labels, first_batch, last_sync_model):
     updated_last_sync_model = last_sync_model
 
     local_divergence = compute_divergence_2_norm(last_sync_model, mnist_model.trainable_variables)
-    print(local_divergence)
+
     summed_divergences = group_all_reduce(local_divergence)
     np = tf.cast(current_cluster_size(), tf.float32)
     averaged_divergence = map_maybe(lambda d: d / np, summed_divergences)
 
-    if should_synchronize_models_naive(averaged_divergence) or first_batch:
-        tf.print("Steps since last sync: ", steps_since_sync)
-        tf.print("Average divergence: ", averaged_divergence)
+    if rtc_check(averaged_divergence) or first_batch:
+        if current_rank() == 0:
+            tf.print("Steps since last sync: ", steps_since_sync)
+            tf.print("Average divergence: ", averaged_divergence)
         reset_counter()
+        total_syncs.assign_add(1)
         summed_models = group_all_reduce(mnist_model.trainable_variables)
         # Cast the number of workers to tf.float32
         np = tf.cast(current_cluster_size(), tf.float32)
@@ -164,15 +190,23 @@ def training_step_linear(images, labels, first_batch, last_sync_model, xi):
     updated_last_sync_model = last_sync_model
 
     local_divergence = compute_divergence_2_norm(last_sync_model, mnist_model.trainable_variables)
-    print(local_divergence)
+    local_xi_dot_diff = compute_xi_dot_diff(last_sync_model, mnist_model.trainable_variables, xi)
+
     summed_divergences = group_all_reduce(local_divergence)
+    summed_xi_dot_diff = group_all_reduce(local_xi_dot_diff)
     np = tf.cast(current_cluster_size(), tf.float32)
     averaged_divergence = map_maybe(lambda d: d / np, summed_divergences)
+    averaged_xi_dot_diff = map_maybe(lambda d: d / np, summed_xi_dot_diff)
+    #tf.print(averaged_xi_dot_diff)
+    rtc_expr = averaged_divergence - tf.square(averaged_xi_dot_diff)
 
-    if should_synchronize_models_naive(averaged_divergence) or first_batch:
-        tf.print("Steps since last sync: ", steps_since_sync)
-        tf.print("Average divergence: ", averaged_divergence)
+    #tf.print(rtc_expr)
+    if rtc_check(rtc_expr) or first_batch:
+        if current_rank() == 0:
+            tf.print("Steps since last sync: ", steps_since_sync)
+            tf.print("Average divergence: ", rtc_expr)
         reset_counter()
+        total_syncs.assign_add(1)
         summed_models = group_all_reduce(mnist_model.trainable_variables)
         # Cast the number of workers to tf.float32
         np = tf.cast(current_cluster_size(), tf.float32)
@@ -180,9 +214,10 @@ def training_step_linear(images, labels, first_batch, last_sync_model, xi):
         averaged_models = map_maybe(lambda g: g / np, summed_models)
         for i, variable in enumerate(mnist_model.trainable_variables):
             variable.assign(averaged_models[i])
-        xi = compute_xi(updated_last_sync_model, mnist_model.trainable_variables)   # Compute the unit vector needed for Linear FDA
+        # Compute the difference between the latest updated model and the second latest updated model
+        xi = compute_xi(updated_last_sync_model, mnist_model.trainable_variables)
         updated_last_sync_model = mnist_model.trainable_variables
-        
+
     # KungFu: broadcast is done after the first gradient step to ensure optimizer initialization.
     if first_batch:
         from kungfu.tensorflow.initializer import broadcast_variables
@@ -191,17 +226,18 @@ def training_step_linear(images, labels, first_batch, last_sync_model, xi):
 
     return loss_value, updated_last_sync_model, xi
 
+_ = mnist_model(tf.random.normal((1, 28, 28, 1), dtype=tf.float32))
 last_sync_model = [0.0] * len(mnist_model.trainable_variables)
-
+xi = [0.0]
 # KungFu: adjust number of steps based on number of GPUs.
 for batch, (images, labels) in enumerate(
-        dataset.take(10000 // current_cluster_size())):
+        dataset.take(5000 // current_cluster_size())):
     
     #print("Step #"+str(batch))
     if args.fda == 'naive':
         loss_value, last_sync_model = training_step_naive(images, labels, batch == 0, last_sync_model)
     elif args.fda == 'linear':
-        loss_value, last_sync_model = training_step_linear(images, labels, batch == 0, last_sync_model)
+        loss_value, last_sync_model, xi = training_step_linear(images, labels, batch == 0, last_sync_model, xi)
     elif args.fda == 'sketch':
         print("Sketch not implemented yet!")
         exit()
@@ -209,5 +245,8 @@ for batch, (images, labels) in enumerate(
         print("FDA method \""+args.fda+"\" isn't available!")
         exit()
 
-    if batch % 10 == 0 and current_rank() == 0:
-        print('Step #%d\tLoss: %.6f' % (batch, loss_value))
+    syncs_hist.append(total_syncs)
+    if current_rank() == 0:
+        print('%d,%d' % (batch, syncs_hist[-1]))
+    #if batch % 10 == 0 and current_rank() == 0:
+        #print('Step #%d\tLoss: %.6f and %d synchronizations occured.' % (batch, loss_value, syncs_hist[-1]))
