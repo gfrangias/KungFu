@@ -231,7 +231,7 @@ last_sync_model = [0.0] * len(mnist_model.trainable_variables)
 xi = [0.0]
 # KungFu: adjust number of steps based on number of GPUs.
 for batch, (images, labels) in enumerate(
-        dataset.take(5000 // current_cluster_size())):
+        dataset.take(10000 // current_cluster_size())):
     
     #print("Step #"+str(batch))
     if args.fda == 'naive':
@@ -246,7 +246,7 @@ for batch, (images, labels) in enumerate(
         exit()
 
     syncs_hist.append(total_syncs)
-    if current_rank() == 0:
+    if current_rank() == 0 and batch % 10 == 0:
         print('%d,%d' % (batch, syncs_hist[-1]))
     #if batch % 10 == 0 and current_rank() == 0:
         #print('Step #%d\tLoss: %.6f and %d synchronizations occured.' % (batch, loss_value, syncs_hist[-1]))
