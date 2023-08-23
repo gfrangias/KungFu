@@ -1,5 +1,6 @@
 import argparse
 import tensorflow as tf
+import csv
 from kungfu._utils import map_maybe
 from kungfu.python import current_cluster_size, current_rank
 from kungfu.tensorflow.ops import group_all_reduce
@@ -20,6 +21,9 @@ parser.add_argument('--fda',
 parser.add_argument('--threshold',
                     type=str,
                     default='0.8')
+parser.add_argument('--batches',
+                    type=str,
+                    default='5000')
 args = parser.parse_args()
 
 (mnist_images, mnist_labels), _ = \
@@ -50,9 +54,15 @@ opt = tf.compat.v1.train.AdamOptimizer(0.001 * current_cluster_size())
 
 steps_since_sync = tf.Variable(0, dtype=tf.int32)
 total_syncs = tf.Variable(0, dtype=tf.int32)
-syncs_hist = []
 threshold = float(args.threshold)
+threshold_str = str(args.threshold)
 threshold = tf.constant(threshold)
+method = args.fda
+batches = int(args.batches)
+
+syncs_hist = []
+batch_hist = []
+loss_hist = []
 
 # KungFu: wrap tf.compat.v1.train.Optimizer.
 if args.kf_optimizer == 'sync-sgd':
@@ -130,6 +140,19 @@ def increment_counter():
 def reset_counter():
     steps_since_sync.assign(0)
 
+def save_csv(type ,batch_list, data_list, method, batches, machines, nodes, threshold):
+    # Specify the CSV file name
+    csv_file_name = type+"."+method+"."+batches+"."+machines+"x"+nodes+".thr"+threshold+".csv"
+
+    # Open the CSV file in write mode and overwrite if it exists
+    with open(csv_file_name, mode='w', newline='') as csv_file:
+        # Create a CSV writer
+        csv_writer = csv.writer(csv_file)
+        
+        # Write each element of data_list as a separate row
+        for batch_val, data_val in zip(batch_list, data_list):
+            csv_writer.writerow([batch_val, data_val])
+
 @tf.function
 def training_step_naive(images, labels, first_batch, last_sync_model):
     increment_counter()
@@ -152,9 +175,9 @@ def training_step_naive(images, labels, first_batch, last_sync_model):
     averaged_divergence = map_maybe(lambda d: d / np, summed_divergences)
 
     if rtc_check(averaged_divergence) or first_batch:
-        if current_rank() == 0:
-            tf.print("Steps since last sync: ", steps_since_sync)
-            tf.print("Average divergence: ", averaged_divergence)
+        #if current_rank() == 0:
+        #    tf.print("Steps since last sync: ", steps_since_sync)
+        #    tf.print("Average divergence: ", averaged_divergence)
         reset_counter()
         total_syncs.assign_add(1)
         summed_models = group_all_reduce(mnist_model.trainable_variables)
@@ -202,9 +225,9 @@ def training_step_linear(images, labels, first_batch, last_sync_model, xi):
 
     #tf.print(rtc_expr)
     if rtc_check(rtc_expr) or first_batch:
-        if current_rank() == 0:
-            tf.print("Steps since last sync: ", steps_since_sync)
-            tf.print("Average divergence: ", rtc_expr)
+        #if current_rank() == 0:
+        #    tf.print("Steps since last sync: ", steps_since_sync)
+        #    tf.print("Average divergence: ", rtc_expr)
         reset_counter()
         total_syncs.assign_add(1)
         summed_models = group_all_reduce(mnist_model.trainable_variables)
@@ -231,7 +254,7 @@ last_sync_model = [0.0] * len(mnist_model.trainable_variables)
 xi = [0.0]
 # KungFu: adjust number of steps based on number of GPUs.
 for batch, (images, labels) in enumerate(
-        dataset.take(10000 // current_cluster_size())):
+        dataset.take(batches // current_cluster_size())):
     
     #print("Step #"+str(batch))
     if args.fda == 'naive':
@@ -245,8 +268,12 @@ for batch, (images, labels) in enumerate(
         print("FDA method \""+args.fda+"\" isn't available!")
         exit()
 
-    syncs_hist.append(total_syncs)
-    if current_rank() == 0 and batch % 10 == 0:
-        print('%d,%d' % (batch, syncs_hist[-1]))
-    #if batch % 10 == 0 and current_rank() == 0:
-        #print('Step #%d\tLoss: %.6f and %d synchronizations occured.' % (batch, loss_value, syncs_hist[-1]))
+    if batch % 10 == 0 and current_rank() == 0:
+        batch_hist.append(batch)
+        syncs_hist.append(total_syncs.numpy())
+        loss_hist.append(loss_value.numpy())
+        print('Step #%d\tLoss: %.6f and %d synchronizations occured.' % (batch, loss_value, syncs_hist[-1]))
+
+if current_rank() == 0:
+    save_csv("sync", batch_hist, syncs_hist, method, str(batches), "4", str(current_cluster_size()), threshold_str)
+    save_csv("loss", batch_hist, loss_hist, method, str(batches), "4", str(current_cluster_size()), threshold_str)
