@@ -140,9 +140,9 @@ def increment_counter():
 def reset_counter():
     steps_since_sync.assign(0)
 
-def save_csv(type ,batch_list, data_list, method, batches, machines, nodes, threshold):
+def save_csv(type ,batch_list, data_list, method, batches, nodes, threshold, description):
     # Specify the CSV file name
-    csv_file_name = "./csv_output/"+type+"."+method+"."+batches+"."+machines+"x"+nodes+".thr"+threshold+".csv"
+    csv_file_name = "./csv_output/"+type+"."+method+"."+batches+".np"+nodes+".thr"+threshold+"."+description+".csv"
 
     # Open the CSV file in write mode and overwrite if it exists
     with open(csv_file_name, mode='w', newline='') as csv_file:
@@ -275,5 +275,5 @@ for batch, (images, labels) in enumerate(
         print('Step #%d\tLoss: %.6f and %d synchronizations occured.' % (batch, loss_value, syncs_hist[-1]))
 
 if current_rank() == 0:
-    save_csv("sync", batch_hist, syncs_hist, method, str(batches), "4", str(current_cluster_size()), threshold_str)
-    save_csv("loss", batch_hist, loss_hist, method, str(batches), "4", str(current_cluster_size()), threshold_str)
+    save_csv("sync", batch_hist, syncs_hist, method, str(batches), str(current_cluster_size()), threshold_str, "4x2.okeanos")
+    save_csv("loss", batch_hist, loss_hist, method, str(batches), str(current_cluster_size()), threshold_str, "4x2.okeanos")
