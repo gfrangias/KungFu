@@ -142,7 +142,7 @@ def reset_counter():
 
 def save_csv(type ,batch_list, data_list, method, batches, machines, nodes, threshold):
     # Specify the CSV file name
-    csv_file_name = type+"."+method+"."+batches+"."+machines+"x"+nodes+".thr"+threshold+".csv"
+    csv_file_name = "./csv_output/"+type+"."+method+"."+batches+"."+machines+"x"+nodes+".thr"+threshold+".csv"
 
     # Open the CSV file in write mode and overwrite if it exists
     with open(csv_file_name, mode='w', newline='') as csv_file:

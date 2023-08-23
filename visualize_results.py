@@ -4,7 +4,7 @@ import sys
 import os
 
 # Check if the correct number of command-line arguments are provided
-if len(sys.argv) != 3:
+if len(sys.argv) != 2:
     print("Usage: python script_name.py <file1.csv> <file2.csv>")
     sys.exit(1)
 
