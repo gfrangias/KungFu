@@ -5,6 +5,8 @@ import time
 def map_maybe(f, lst):
     return [f(x) if x is not None else None for x in lst]
 
+def map_maybe_topology(f, lst, topology):
+    return [f(x, topology) if x is not None else None for x in lst]
 
 def measure(f):
     t0 = time.time()

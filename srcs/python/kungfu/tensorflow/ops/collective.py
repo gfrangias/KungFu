@@ -1,5 +1,5 @@
 import tensorflow as tf
-from kungfu._utils import map_maybe
+from kungfu._utils import map_maybe, map_maybe_topology
 
 from ._tf_oplib import _op_lib
 from .topology import peer_info
@@ -67,6 +67,9 @@ def _maybe_group_all_reduce(ts, group_all_reduce_fn):
     return tf.cond(np > 1, lambda: group_all_reduce_fn(ts),
                    lambda: [tf.identity(t) for t in ts])
 
+def group_subset_all_reduce(ts, topology):
+    """Create a list of all_reduce operators for given tensor list."""
+    return map_maybe_topology(subset_all_reduce, ts, topology)
 
 def group_all_reduce(ts):
     """Create a list of all_reduce operators for given tensor list."""
