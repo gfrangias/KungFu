@@ -33,7 +33,7 @@ dataset = tf.data.Dataset.from_tensor_slices(
     (tf.cast(mnist_images[..., tf.newaxis] / 255.0,
              tf.float32), tf.cast(mnist_labels, tf.int64)))
 
-dataset = dataset.repeat().shuffle(10000).batch(128)
+dataset = dataset.repeat().shuffle(10000).batch(64)
 
 mnist_model = tf.keras.Sequential([
     tf.keras.layers.Conv2D(32, [3, 3], activation='relu'),
@@ -77,10 +77,6 @@ else:
     raise RuntimeError('Unknown KungFu optimizer')
 
 @tf.function
-def tensor_lists_subtraction(l1,l2):
-    return [tf.subtract(t1, t2) for t1, t2 in zip(l1, l2)]
-
-@tf.function
 def tensor_list_to_vector(tensor_list):
     return tf.concat([tf.reshape(var, [-1]) for var in tensor_list], axis=0)
 
@@ -90,40 +86,39 @@ def tensor_to_tensor_list(tensor):
     tensor_list.append(tensor)
     return tensor_list
 
+# Compute the divergence using the 2-norm for Naive FDA
 @tf.function
 def compute_divergence_2_norm(last_sync_model, local_model):
-    models_diff = tensor_lists_subtraction(local_model, last_sync_model)   # Convert the list of tensors into a single tensor
-    models_diff_tensor = tensor_list_to_vector(models_diff)                # Subtract the two models
-    norm_2 =  tf.norm(models_diff_tensor, 2)                               # Compute the 2-norm of the subtraction
+    last_sync_model_vector = tensor_list_to_vector(last_sync_model)
+    local_model_vector = tensor_list_to_vector(local_model)
+    norm_2 =  tf.norm(local_model_vector - last_sync_model_vector, 2)
     return tensor_to_tensor_list(norm_2)
 
+# Compute a random xi for the first synchronization
+def random_xi(model):
+    random_tensor = tf.random.normal(shape=(len(tensor_list_to_vector(model)),), dtype=tf.float32)
+    xi_tensor = tf.divide(random_tensor, tf.norm(random_tensor))
+    return tensor_to_tensor_list(xi_tensor)
+
+# Compute the "xi" unit vector
 def compute_xi(second_last_sync_model, last_sync_model):
-    sync_models_diff = tensor_lists_subtraction(last_sync_model, second_last_sync_model)
-    sync_models_diff_tensor = tensor_list_to_vector(sync_models_diff)
-    sync_models_diff_tensor = tf.abs(sync_models_diff_tensor)
+    last_sync_model_tensor = tensor_list_to_vector(last_sync_model) 
+    second_last_sync_model_tensor = tensor_list_to_vector(second_last_sync_model)
+    sync_models_diff_tensor = tf.abs(last_sync_model_tensor - second_last_sync_model_tensor)
     xi = tf.divide(sync_models_diff_tensor, tf.norm(sync_models_diff_tensor))
     return tensor_to_tensor_list(xi)
 
-def compute_xi_2(second_last_sync_model, last_sync_model):
-    sync_models_diff = tensor_lists_subtraction(last_sync_model, second_last_sync_model)
-    sync_models_diff_tensor = tensor_list_to_vector(sync_models_diff)
-    sync_models_diff_tensor = tf.abs(sync_models_diff_tensor)
-    xi = tf.divide(sync_models_diff_tensor, tf.norm(sync_models_diff_tensor))
-    return tensor_to_tensor_list(xi)
-
+# Compute the dot product of xi and the model difference
 @tf.function
 def compute_xi_dot_diff(last_sync_model, local_model, xi):
-    models_diff = tensor_lists_subtraction(local_model, last_sync_model)
-    models_diff_tensor = tensor_list_to_vector(models_diff)
-    if tf.is_tensor(xi[0]):
-        xi_tensor = tensor_list_to_vector(xi)
-    else:
-        random_tensor = tf.random.normal(shape=(len(models_diff_tensor),), dtype=tf.float32)
-        xi_tensor = tf.divide(random_tensor, tf.norm(random_tensor))
-
+    last_sync_model_tensor = tensor_list_to_vector(last_sync_model) 
+    local_model = tensor_list_to_vector(local_model)
+    models_diff_tensor = local_model - last_sync_model_tensor
+    xi_tensor = tensor_list_to_vector(xi)
     xi_dot_diff = tf.tensordot(xi_tensor, models_diff_tensor, axes=1)
     return tensor_to_tensor_list(xi_dot_diff)
 
+# Check if the divergence satisfies the RTC
 @tf.function
 def rtc_check(divergence):
     global threshold
@@ -140,6 +135,7 @@ def increment_counter():
 def reset_counter():
     steps_since_sync.assign(0)
 
+# Save output data for synchronizations and loss per batch
 def save_csv(type ,batch_list, data_list, method, batches, nodes, threshold, description):
     # Specify the CSV file name
     csv_file_name = "./csv_output/"+type+"."+method+"."+batches+".np"+nodes+".thr"+threshold+"."+description+".csv"
@@ -153,6 +149,7 @@ def save_csv(type ,batch_list, data_list, method, batches, nodes, threshold, des
         for batch_val, data_val in zip(batch_list, data_list):
             csv_writer.writerow([batch_val, data_val])
 
+# Training step for Naive FDA
 @tf.function
 def training_step_naive(images, labels, first_batch, last_sync_model):
     increment_counter()
@@ -168,11 +165,14 @@ def training_step_naive(images, labels, first_batch, last_sync_model):
     opt.apply_gradients(zip(grads, mnist_model.trainable_variables))
     updated_last_sync_model = last_sync_model
 
-    local_divergence = compute_divergence_2_norm(last_sync_model, mnist_model.trainable_variables)
+    if not first_batch:
+        local_divergence = compute_divergence_2_norm(last_sync_model, mnist_model.trainable_variables)
 
-    summed_divergences = group_all_reduce(local_divergence)
-    np = tf.cast(current_cluster_size(), tf.float32)
-    averaged_divergence = map_maybe(lambda d: d / np, summed_divergences)
+        summed_divergences = group_all_reduce(local_divergence)
+        np = tf.cast(current_cluster_size(), tf.float32)
+        averaged_divergence = map_maybe(lambda d: d / np, summed_divergences)
+    else:
+        averaged_divergence = 0
 
     if rtc_check(averaged_divergence) or first_batch:
         #if current_rank() == 0:
@@ -197,6 +197,7 @@ def training_step_naive(images, labels, first_batch, last_sync_model):
 
     return loss_value, updated_last_sync_model
 
+# Training step for Linear FDA
 @tf.function
 def training_step_linear(images, labels, first_batch, last_sync_model, xi):
     increment_counter()
@@ -212,16 +213,19 @@ def training_step_linear(images, labels, first_batch, last_sync_model, xi):
     opt.apply_gradients(zip(grads, mnist_model.trainable_variables))
     updated_last_sync_model = last_sync_model
 
-    local_divergence = compute_divergence_2_norm(last_sync_model, mnist_model.trainable_variables)
-    local_xi_dot_diff = compute_xi_dot_diff(last_sync_model, mnist_model.trainable_variables, xi)
+    if not first_batch:
+        local_divergence = compute_divergence_2_norm(last_sync_model, mnist_model.trainable_variables)
+        local_xi_dot_diff = compute_xi_dot_diff(last_sync_model, mnist_model.trainable_variables, xi)
 
-    summed_divergences = group_all_reduce(local_divergence)
-    summed_xi_dot_diff = group_all_reduce(local_xi_dot_diff)
-    np = tf.cast(current_cluster_size(), tf.float32)
-    averaged_divergence = map_maybe(lambda d: d / np, summed_divergences)
-    averaged_xi_dot_diff = map_maybe(lambda d: d / np, summed_xi_dot_diff)
-    #tf.print(averaged_xi_dot_diff)
-    rtc_expr = averaged_divergence - tf.square(averaged_xi_dot_diff)
+        summed_divergences = group_all_reduce(local_divergence)
+        summed_xi_dot_diff = group_all_reduce(local_xi_dot_diff)
+        np = tf.cast(current_cluster_size(), tf.float32)
+        averaged_divergence = map_maybe(lambda d: d / np, summed_divergences)
+        averaged_xi_dot_diff = map_maybe(lambda d: d / np, summed_xi_dot_diff)
+        #tf.print(averaged_xi_dot_diff)
+        rtc_expr = averaged_divergence - tf.square(averaged_xi_dot_diff)
+    else:
+        rtc_expr = 0
 
     #tf.print(rtc_expr)
     if rtc_check(rtc_expr) or first_batch:
@@ -238,7 +242,10 @@ def training_step_linear(images, labels, first_batch, last_sync_model, xi):
         for i, variable in enumerate(mnist_model.trainable_variables):
             variable.assign(averaged_models[i])
         # Compute the difference between the latest updated model and the second latest updated model
-        xi = compute_xi(updated_last_sync_model, mnist_model.trainable_variables)
+        if first_batch:
+            xi = random_xi(mnist_model.trainable_variables)
+        else:
+            xi = compute_xi(updated_last_sync_model, mnist_model.trainable_variables)
         updated_last_sync_model = mnist_model.trainable_variables
 
     # KungFu: broadcast is done after the first gradient step to ensure optimizer initialization.
@@ -250,6 +257,7 @@ def training_step_linear(images, labels, first_batch, last_sync_model, xi):
     return loss_value, updated_last_sync_model, xi
 
 _ = mnist_model(tf.random.normal((1, 28, 28, 1), dtype=tf.float32))
+#print(mnist_model.summary())
 last_sync_model = [0.0] * len(mnist_model.trainable_variables)
 xi = [0.0]
 # KungFu: adjust number of steps based on number of GPUs.
@@ -268,7 +276,7 @@ for batch, (images, labels) in enumerate(
         print("FDA method \""+args.fda+"\" isn't available!")
         exit()
 
-    if batch % 10 == 0 and current_rank() == 0:
+    if batch == batches // current_cluster_size()-1 and current_rank() == 0:
         batch_hist.append(batch)
         syncs_hist.append(total_syncs.numpy())
         loss_hist.append(loss_value.numpy())

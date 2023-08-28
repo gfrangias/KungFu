@@ -15,7 +15,7 @@ if len(sys.argv) != 2:
     sys.exit(1)
 
 parts = sys.argv[1].split('.')
-filename_skeleton = '.'.join(parts[2:7])
+filename_skeleton = '.'.join(parts[2:8])
 
 # Read the CSV files from command-line arguments
 sync_file_naive = "./csv_output/sync.naive."+filename_skeleton+".csv"

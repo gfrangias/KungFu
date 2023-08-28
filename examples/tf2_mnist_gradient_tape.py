@@ -68,7 +68,7 @@ def training_step(images, labels, first_batch):
 
 # KungFu: adjust number of steps based on number of GPUs.
 for batch, (images, labels) in enumerate(
-        dataset.take(10000 // current_cluster_size())):
+        dataset.take(60000 // current_cluster_size())):
     loss_value = training_step(images, labels, batch == 0)
 
     if batch % 10 == 0 and current_rank() == 0:
