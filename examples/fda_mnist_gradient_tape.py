@@ -1,6 +1,6 @@
 import argparse
 import tensorflow as tf
-import csv
+import csv, time, os
 from kungfu._utils import map_maybe
 from kungfu.python import current_cluster_size, current_rank
 from kungfu.tensorflow.ops import group_all_reduce
@@ -135,6 +135,19 @@ def increment_counter():
 def reset_counter():
     steps_since_sync.assign(0)
 
+# Save time duration
+def save_duration(type , duration, method, batches, nodes, threshold, description):
+    # Specify the CSV file name
+    csv_file_name = "./csv_output/"+type+"."+method+"."+batches+".np"+nodes+".thr"+threshold+"."+description+".csv"
+
+    with open(csv_file_name, 'a', newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        
+        if not os.path.exists(csv_file_name):
+            writer.writerow(['Duration'])
+        
+        writer.writerow([duration])
+
 # Save output data for synchronizations and loss per batch
 def save_csv(type ,batch_list, data_list, method, batches, nodes, threshold, description):
     # Specify the CSV file name
@@ -261,6 +274,7 @@ _ = mnist_model(tf.random.normal((1, 28, 28, 1), dtype=tf.float32))
 last_sync_model = [0.0] * len(mnist_model.trainable_variables)
 xi = [0.0]
 # KungFu: adjust number of steps based on number of GPUs.
+start_time = time.time()
 for batch, (images, labels) in enumerate(
         dataset.take(batches // current_cluster_size())):
     
@@ -276,12 +290,15 @@ for batch, (images, labels) in enumerate(
         print("FDA method \""+args.fda+"\" isn't available!")
         exit()
 
-    if batch == batches // current_cluster_size()-1 and current_rank() == 0:
+    if batch % 10 == 0 and current_rank() == 0:
         batch_hist.append(batch)
         syncs_hist.append(total_syncs.numpy())
         loss_hist.append(loss_value.numpy())
         print('Step #%d\tLoss: %.6f and %d synchronizations occured.' % (batch, loss_value, syncs_hist[-1]))
 
+end_time = time.time()
+elapsed_time = end_time - start_time
 if current_rank() == 0:
-    save_csv("sync", batch_hist, syncs_hist, method, str(batches), str(current_cluster_size()), threshold_str, "4x2.okeanos")
-    save_csv("loss", batch_hist, loss_hist, method, str(batches), str(current_cluster_size()), threshold_str, "4x2.okeanos")
+    save_duration("duration", elapsed_time, method, str(batches), str(current_cluster_size()), threshold_str, "4x1.okeanos")
+#    save_csv("sync", batch_hist, syncs_hist, method, str(batches), str(current_cluster_size()), threshold_str, "4x1.okeanos")
+#    save_csv("loss", batch_hist, loss_hist, method, str(batches), str(current_cluster_size()), threshold_str, "4x1.okeanos")
