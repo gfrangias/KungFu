@@ -21,21 +21,36 @@ parser.add_argument('--fda',
 parser.add_argument('--threshold',
                     type=str,
                     default='0.8')
-parser.add_argument('--batches',
+parser.add_argument('--epochs',
                     type=str,
-                    default='5000')
+                    default='100')
 args = parser.parse_args()
 
 (mnist_images, mnist_labels), _ = \
     tf.keras.datasets.mnist.load_data(path='mnist-%d.npz' % current_rank())
 
+steps_since_sync = tf.Variable(0, dtype=tf.int32)
+total_syncs = tf.Variable(0, dtype=tf.int32)
+threshold = float(args.threshold)
+threshold_str = str(args.threshold)
+threshold = tf.constant(threshold)
+method = args.fda
+epochs = int(args.epochs)
+steps_per_epoch_per_node = int(len(mnist_images) / (current_cluster_size() * 64))
+batches = steps_per_epoch_per_node * epochs
+print(batches)
+
+syncs_hist = []
+batch_hist = []
+loss_hist = []
+
 dataset = tf.data.Dataset.from_tensor_slices(
     (tf.cast(mnist_images[..., tf.newaxis] / 255.0,
              tf.float32), tf.cast(mnist_labels, tf.int64)))
 
-dataset = dataset.repeat().shuffle(10000).batch(64)
+dataset = dataset.repeat().shuffle(epochs*steps_per_epoch_per_node).batch(64)
 
-mnist_model = tf.keras.Sequential([
+mnist_model =  tf.keras.Sequential([
     tf.keras.layers.Conv2D(32, [3, 3], activation='relu'),
     tf.keras.layers.Conv2D(64, [3, 3], activation='relu'),
     tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
@@ -44,25 +59,13 @@ mnist_model = tf.keras.Sequential([
     tf.keras.layers.Dense(128, activation='relu'),
     tf.keras.layers.Dropout(0.5),
     tf.keras.layers.Dense(10, activation='softmax')
-])
+  ])
 
 loss = tf.losses.SparseCategoricalCrossentropy()
 
 # KungFu: adjust learning rate based on number of GPUs.
 # opt = tf.keras.optimizers.SGD(0.001 * current_cluster_size())
 opt = tf.compat.v1.train.AdamOptimizer(0.001 * current_cluster_size())
-
-steps_since_sync = tf.Variable(0, dtype=tf.int32)
-total_syncs = tf.Variable(0, dtype=tf.int32)
-threshold = float(args.threshold)
-threshold_str = str(args.threshold)
-threshold = tf.constant(threshold)
-method = args.fda
-batches = int(args.batches)
-
-syncs_hist = []
-batch_hist = []
-loss_hist = []
 
 # KungFu: wrap tf.compat.v1.train.Optimizer.
 if args.kf_optimizer == 'sync-sgd':
@@ -180,7 +183,6 @@ def training_step_naive(images, labels, first_batch, last_sync_model):
 
     if not first_batch:
         local_divergence = compute_divergence_2_norm(last_sync_model, mnist_model.trainable_variables)
-
         summed_divergences = group_all_reduce(local_divergence)
         np = tf.cast(current_cluster_size(), tf.float32)
         averaged_divergence = map_maybe(lambda d: d / np, summed_divergences)
@@ -270,13 +272,15 @@ def training_step_linear(images, labels, first_batch, last_sync_model, xi):
     return loss_value, updated_last_sync_model, xi
 
 _ = mnist_model(tf.random.normal((1, 28, 28, 1), dtype=tf.float32))
-#print(mnist_model.summary())
+if current_rank == 0:
+    print(mnist_model.summary())
+
 last_sync_model = [0.0] * len(mnist_model.trainable_variables)
 xi = [0.0]
 # KungFu: adjust number of steps based on number of GPUs.
 start_time = time.time()
 for batch, (images, labels) in enumerate(
-        dataset.take(batches // current_cluster_size())):
+        dataset.take(batches)):
     
     #print("Step #"+str(batch))
     if args.fda == 'naive':
@@ -290,15 +294,15 @@ for batch, (images, labels) in enumerate(
         print("FDA method \""+args.fda+"\" isn't available!")
         exit()
 
-    if batch % 10 == 0 and current_rank() == 0:
+    if (batch == 0 or (batch+1) % steps_per_epoch_per_node == 0) and current_rank() == 0:
         batch_hist.append(batch)
         syncs_hist.append(total_syncs.numpy())
         loss_hist.append(loss_value.numpy())
-        print('Step #%d\tLoss: %.6f and %d synchronizations occured.' % (batch, loss_value, syncs_hist[-1]))
+        print('Epoch #%d\tLoss: %.6f and %d synchronizations occured.' % (int((batch+1)/steps_per_epoch_per_node), loss_value, syncs_hist[-1]))
 
 end_time = time.time()
 elapsed_time = end_time - start_time
 if current_rank() == 0:
-    save_duration("duration", elapsed_time, method, str(batches), str(current_cluster_size()), threshold_str, "4x1.okeanos")
+    save_duration("duration", elapsed_time, method, str(epochs), str(current_cluster_size()), threshold_str, "4x1.okeanos")
 #    save_csv("sync", batch_hist, syncs_hist, method, str(batches), str(current_cluster_size()), threshold_str, "4x1.okeanos")
 #    save_csv("loss", batch_hist, loss_hist, method, str(batches), str(current_cluster_size()), threshold_str, "4x1.okeanos")
