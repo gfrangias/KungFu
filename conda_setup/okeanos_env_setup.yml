@@ -125,4 +125,10 @@ dependencies:
       - wcwidth==0.2.6
       - werkzeug==2.3.6
       - wrapt==1.15.0
+variables:
+  LD_LIBRARY_PATH: /home/user/anaconda3/envs/kungfu-okeanos/lib
+  CMAKE_MAKE_PROGRAM: /home/user/anaconda3/envs/kungfu-okeanos/bin/cmake
+  CMAKE_C_COMPILER: /home/user/anaconda3/envs/kungfu-okeanos/bin/gcc
+  CMAKE_CXX_COMPILER: /home/user/anaconda3/envs/kungfu-okeanos/bin/g++
+  PATH: /home/user/.local/bin:/home/user/anaconda3/envs/kungfu-okeanos/bin:/home/user/anaconda3/condabin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 prefix: /home/user/anaconda3/envs/kungfu-okeanos
