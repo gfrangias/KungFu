@@ -152,9 +152,9 @@ def save_duration(type , duration, method, batches, nodes, threshold, descriptio
         writer.writerow([duration])
 
 # Save output data for synchronizations and loss per batch
-def save_csv(type ,batch_list, data_list, method, batches, nodes, threshold, description):
+def save_csv(type ,batch_list, data_list, method, epochs, nodes, threshold, description):
     # Specify the CSV file name
-    csv_file_name = "./csv_output/"+type+"."+method+"."+batches+".np"+nodes+".thr"+threshold+"."+description+".csv"
+    csv_file_name = "./csv_output/"+type+"."+method+"."+epochs+".np"+nodes+".thr"+threshold+"."+description+".csv"
 
     # Open the CSV file in write mode and overwrite if it exists
     with open(csv_file_name, mode='w', newline='') as csv_file:
@@ -279,8 +279,7 @@ last_sync_model = [0.0] * len(mnist_model.trainable_variables)
 xi = [0.0]
 # KungFu: adjust number of steps based on number of GPUs.
 start_time = time.time()
-for batch, (images, labels) in enumerate(
-        dataset.take(batches)):
+for batch, (images, labels) in enumerate(dataset):
     
     #print("Step #"+str(batch))
     if args.fda == 'naive':
@@ -294,15 +293,17 @@ for batch, (images, labels) in enumerate(
         print("FDA method \""+args.fda+"\" isn't available!")
         exit()
 
-    if (batch == 0 or (batch+1) % steps_per_epoch_per_node == 0) and current_rank() == 0:
-        batch_hist.append(batch)
-        syncs_hist.append(total_syncs.numpy())
-        loss_hist.append(loss_value.numpy())
-        print('Epoch #%d\tLoss: %.6f and %d synchronizations occured.' % (int((batch+1)/steps_per_epoch_per_node), loss_value, syncs_hist[-1]))
+    if current_rank() == 0:
+        if batch % 20 == 0:
+            batch_hist.append(batch)
+            syncs_hist.append(total_syncs.numpy())
+            loss_hist.append(loss_value.numpy())
+        if batch == 0 or ((batch+1) % steps_per_epoch_per_node == 0):
+            print('Epoch #%d\tLoss: %.6f and %d synchronizations occured.' % (int((batch+1)/steps_per_epoch_per_node), loss_value, syncs_hist[-1]))
 
 end_time = time.time()
 elapsed_time = end_time - start_time
 if current_rank() == 0:
-    save_duration("duration", elapsed_time, method, str(epochs), str(current_cluster_size()), threshold_str, "4x1.okeanos")
-#    save_csv("sync", batch_hist, syncs_hist, method, str(batches), str(current_cluster_size()), threshold_str, "4x1.okeanos")
-#    save_csv("loss", batch_hist, loss_hist, method, str(batches), str(current_cluster_size()), threshold_str, "4x1.okeanos")
+#    save_duration("duration", elapsed_time, method, str(epochs), str(current_cluster_size()), threshold_str, "4x1.okeanos")
+    save_csv("sync", batch_hist, syncs_hist, method, str(epochs), str(current_cluster_size()), threshold_str, "4x1.okeanos")
+    save_csv("loss", batch_hist, loss_hist, method, str(epochs), str(current_cluster_size()), threshold_str, "4x1.okeanos")
