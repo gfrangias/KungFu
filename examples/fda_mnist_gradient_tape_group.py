@@ -3,7 +3,7 @@ import tensorflow as tf
 import csv, time, os
 from kungfu._utils import map_maybe
 from kungfu.python import current_cluster_size, current_rank
-from kungfu.tensorflow.ops import group_subset_all_reduce, set_tree, broadcast
+from kungfu.tensorflow.ops import group_subset_all_reduce, set_tree, broadcast, subset_all_reduce
 from kungfu.tensorflow.optimizers import (PairAveragingOptimizer,
                                           SynchronousAveragingOptimizer,
                                           SynchronousSGDOptimizer,
@@ -62,7 +62,8 @@ batches = int(args.batches)
 np = current_cluster_size()
 
 # Set a star-topology with node 0 as the root
-tree = tf.zeros([4], dtype=tf.int32)
+tree = tf.constant([0, 0, 2], dtype=tf.int32)
+tree2 = tf.constant([0, 0, 2], dtype=tf.int32)
 set_tree_op = set_tree(broadcast(tree))
 syncs_hist = []
 batch_hist = []
@@ -185,7 +186,7 @@ def training_step_naive(images, labels, first_batch, last_sync_model):
     if not first_batch:
         local_divergence = compute_divergence_2_norm(last_sync_model, mnist_model.trainable_variables)
         tf.print("Local divergence: ", local_divergence)
-        summed_divergences = group_subset_all_reduce(local_divergence, tree)
+        summed_divergences = group_subset_all_reduce(local_divergence, tree2)
         tf.print("Summed divergence: ", summed_divergences)
         np = tf.cast(current_cluster_size(), tf.float32)
         averaged_divergence = map_maybe(lambda d: d / np, summed_divergences)
@@ -198,7 +199,7 @@ def training_step_naive(images, labels, first_batch, last_sync_model):
         #    tf.print("Average divergence: ", averaged_divergence)
         reset_counter()
         total_syncs.assign_add(1)
-        summed_models = group_subset_all_reduce(mnist_model.trainable_variables, tree)
+        summed_models = group_subset_all_reduce(mnist_model.trainable_variables, tree2)
         # Cast the number of workers to tf.float32
         np = tf.cast(current_cluster_size(), tf.float32)
         # Reduce the gradients of the current node based on the average of all nodes
@@ -235,8 +236,8 @@ def training_step_linear(images, labels, first_batch, last_sync_model, xi):
         local_divergence = compute_divergence_2_norm(last_sync_model, mnist_model.trainable_variables)
         local_xi_dot_diff = compute_xi_dot_diff(last_sync_model, mnist_model.trainable_variables, xi)
 
-        summed_divergences = group_subset_all_reduce(local_divergence, tree)
-        summed_xi_dot_diff = group_subset_all_reduce(local_xi_dot_diff, tree)
+        summed_divergences = group_subset_all_reduce(local_divergence, tree2)
+        summed_xi_dot_diff = group_subset_all_reduce(local_xi_dot_diff, tree2)
         np = tf.cast(current_cluster_size(), tf.float32)
         averaged_divergence = map_maybe(lambda d: d / np, summed_divergences)
         averaged_xi_dot_diff = map_maybe(lambda d: d / np, summed_xi_dot_diff)
@@ -252,7 +253,7 @@ def training_step_linear(images, labels, first_batch, last_sync_model, xi):
         #    tf.print("Average divergence: ", rtc_expr)
         reset_counter()
         total_syncs.assign_add(1)
-        summed_models = group_subset_all_reduce(mnist_model.trainable_variables, tree)
+        summed_models = group_subset_all_reduce(mnist_model.trainable_variables, tree2)
         # Cast the number of workers to tf.float32
         np = tf.cast(current_cluster_size(), tf.float32)
         # Reduce the gradients of the current node based on the average of all nodes

@@ -2,8 +2,7 @@ import tensorflow as tf
 import sys
 from kungfu._utils import map_maybe
 from kungfu.tensorflow.ops import (defuse, fuse, group_all_reduce,
-                                   group_nccl_all_reduce, monitored_all_reduce,
-                                   peer_info, set_tree, broadcast, subset_all_reduce)
+                                   group_nccl_all_reduce, peer_info)
 from kungfu.tensorflow.ops.adapt import calc_stats
 from kungfu.tensorflow.ops.collective import (
     group_all_reduce, group_hierarchical_nccl_all_reduce,

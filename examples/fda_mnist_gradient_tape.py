@@ -1,6 +1,6 @@
 import argparse
 import tensorflow as tf
-import csv, time, os
+import csv, time, os, sys
 from kungfu._utils import map_maybe
 from kungfu.python import current_cluster_size, current_rank
 from kungfu.tensorflow.ops import group_all_reduce
@@ -12,7 +12,7 @@ from kungfu.tensorflow.optimizers import (PairAveragingOptimizer,
 parser = argparse.ArgumentParser(description='KungFu mnist example.')
 parser.add_argument('--kf-optimizer',
                     type=str,
-                    default='my-sync-sgd',
+                    default='sync-sgd',
                     help='available options: sync-sgd, async-sgd, sma, my-sync-sgd')
 parser.add_argument('--fda',
                     type=str,
@@ -49,6 +49,7 @@ dataset = tf.data.Dataset.from_tensor_slices(
              tf.float32), tf.cast(mnist_labels, tf.int64)))
 
 dataset = dataset.repeat().shuffle(epochs*steps_per_epoch_per_node).batch(64)
+
 
 mnist_model =  tf.keras.Sequential([
     tf.keras.layers.Conv2D(32, [3, 3], activation='relu'),
