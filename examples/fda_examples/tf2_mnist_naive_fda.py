@@ -112,7 +112,7 @@ def training_step(images, labels, first_step, last_sync_model):
     if first_step:
         from kungfu.tensorflow.initializer import broadcast_variables
         broadcast_variables(train_model.variables)
-        broadcast_variables(opt.variables())
+        broadcast_variables(my_opt.variables())
         syncs.assign_add(1)
 
 
