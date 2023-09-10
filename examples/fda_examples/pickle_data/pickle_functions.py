@@ -4,7 +4,7 @@ import tensorflow as tf
 
 
 def initialize_logs(exper_type, model_type, nodes, total_epochs, batch_size):
-    training_logs = {"epoch": [], "step": [], "syncs": [], "batch_loss": [], "batch_accuracy": []}
+    training_logs = {"epoch": [], "step": [], "syncs": [], "batch_loss": [], "epoch_accuracy": []}
     training_logs["loss"] = 1
     training_logs["accuracy"] = 0
     training_logs["duration"] = 0
@@ -16,12 +16,16 @@ def initialize_logs(exper_type, model_type, nodes, total_epochs, batch_size):
     
     return training_logs
 
-def step_update_logs(training_logs, step, steps_per_epoch, syncs, batch_loss, batch_accuracy):
+def step_update_logs(training_logs, step, steps_per_epoch, syncs, batch_loss):
     training_logs["epoch"].append(int(step / steps_per_epoch + 1))
     training_logs["step"].append(step)
     training_logs["syncs"].append(syncs)
     training_logs["batch_loss"].append(batch_loss.numpy())
-    training_logs["batch_accuracy"].append(batch_accuracy.numpy())
+
+    return training_logs
+
+def epoch_update_accuracy(training_logs, epoch_accuracy):
+    training_logs["epoch_accuracy"].append(epoch_accuracy)
 
     return training_logs
 

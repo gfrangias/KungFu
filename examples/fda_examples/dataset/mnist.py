@@ -22,6 +22,6 @@ def create_dataset(epochs, batch_size, N, i):
     # Shuffle the samples of every epoch
     # Set batch size
     train_dataset = train_dataset.shuffle(epochs*steps_per_epoch).repeat().batch(64)
-    test_dataset = test_dataset.batch(512)
+    test_dataset = test_dataset.batch(64)
 
     return train_dataset, test_dataset, steps_per_epoch

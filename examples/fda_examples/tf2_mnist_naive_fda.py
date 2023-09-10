@@ -6,7 +6,7 @@ from dataset.mnist import create_dataset
 from fda_functions.naive_fda import compute_averaged_divergence, rtc_check
 from pickle_data.pickle_functions import initialize_logs,\
                                     step_update_logs,\
-                                    export_pickle
+                                    export_pickle, epoch_update_accuracy
 
 import tensorflow as tf
 from kungfu.python import current_cluster_size, current_rank
@@ -50,7 +50,6 @@ elif args.model == "adv_cnn":
 
 # Set Adam along with KungFu Synchronous SGD optimizer
 opt = tf.compat.v1.train.AdamOptimizer()
-my_opt = MySynchronousSGDOptimizer(opt)
 
 #
 # Function that performs one training step of one batch
@@ -72,7 +71,7 @@ def training_step(images, labels, first_step, last_sync_model):
     # the gradients of the trainable variables with respect to the loss.
     grads = tape.gradient(batch_loss, train_model.trainable_variables)
 
-    my_opt.apply_gradients(zip(grads, train_model.trainable_variables))
+    opt.apply_gradients(zip(grads, train_model.trainable_variables))
 
     if not first_step:
         averaged_divergence = compute_averaged_divergence \
@@ -100,26 +99,19 @@ def training_step(images, labels, first_step, last_sync_model):
         #tf.print("New last sync model: ")
         #tf.print(tf.norm(last_sync_model[0]))
 
-    # Update training metric.
-    train_model.compiled_metrics.update_state(labels, probs)
-    batch_accuracy = train_model.metrics[0].result()
-    
-    # Reset accuracy metric so that the next batch accuracy doesn't accumulate
-    train_model.metrics[0].reset_states()
-
     # KungFu: broadcast is done after the first gradient step to ensure optimizer initialization.
     # This way all models across the network initialize with the same weights
     if first_step:
         from kungfu.tensorflow.initializer import broadcast_variables
         broadcast_variables(train_model.variables)
-        broadcast_variables(my_opt.variables())
+        broadcast_variables(opt.variables())
         syncs.assign_add(1)
 
-
-    return batch_loss, batch_accuracy, last_sync_model
+    return batch_loss, last_sync_model
 
 # Start timer
 start_time = time.time()
+time_excluded = 0
 
 # Initialize last sync model
 last_sync_model = train_model.trainable_variables
@@ -128,28 +120,38 @@ last_sync_model = train_model.trainable_variables
 for step, (images, labels) in enumerate(train_dataset.take(steps_per_epoch*epochs)):
 
     # Take a training step
-    batch_loss, batch_accuracy, last_sync_model = training_step(images, labels, step == 0, last_sync_model)
+    batch_loss, last_sync_model = training_step(images, labels, step == 0, last_sync_model)
 
     # Log loss and accuracy data every 10 steps
     if (step % 10 == 0 or step == steps_per_epoch*epochs - 1) and args.l and current_rank() == 0:
         training_logs = step_update_logs(training_logs, step, steps_per_epoch, \
-                                         syncs.numpy(), batch_loss, batch_accuracy)
+                                         syncs.numpy(), batch_loss)
 
     # Print data to terminal
     if (((step % steps_per_epoch) % 10 == 0) or (step % (steps_per_epoch - 1) == 0)) and current_rank() == 0:
-        print('Epoch #%d\tStep #%d \tLoss: %.6f\tBatch Accuracy: %.6f\tSyncs: %d' % \
-              (step / steps_per_epoch + 1, step % steps_per_epoch, batch_loss, batch_accuracy, syncs))
- 
+        print('Epoch #%d\tStep #%d \tLoss: %.6f\tSyncs: %d' % \
+              (step / steps_per_epoch + 1, step % steps_per_epoch, batch_loss, syncs))
+        
+    if step % steps_per_epoch == 0 and step != 0 and args.l:
+        start_excluded_time = time.time() 
+        loss, epoch_accuracy = train_model.evaluate(test_dataset)
+        training_logs = epoch_update_accuracy(training_logs, epoch_accuracy)
+        end_excluded_time = time.time()
+        time_excluded +=  end_excluded_time - start_excluded_time
+
 # Stop timer
 end_time = time.time()
 
 if current_rank()==0:
 
+    train_model.save('my_model.keras')
+
     # Evaluate the learning using test data
     print("Evaluating final model...")
     loss, accuracy = train_model.evaluate(test_dataset)
-
+    training_logs = epoch_update_accuracy(training_logs, accuracy)
+    
     # Update training logs and export using pickle
     if args.l: 
-        export_pickle(training_logs, loss, accuracy, end_time - start_time)
+        export_pickle(training_logs, loss, accuracy, end_time - start_time - time_excluded)
         

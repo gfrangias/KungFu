@@ -5,7 +5,7 @@ from models.adv_cnn import create_adv_cnn
 from dataset.mnist import create_dataset
 from pickle_data.pickle_functions import initialize_logs,\
                                     step_update_logs,\
-                                    export_pickle
+                                    export_pickle, epoch_update_accuracy
 
 import tensorflow as tf
 from kungfu.python import current_cluster_size, current_rank
@@ -76,13 +76,6 @@ def training_step(images, labels, first_step):
     # the value of the variables to minimize the loss.
     opt.apply_gradients(zip(grads, train_model.trainable_variables))
 
-    # Update training metric.
-    train_model.compiled_metrics.update_state(labels, probs)
-    batch_accuracy = train_model.metrics[0].result()
-    
-    # Reset accuracy metric so that the next batch accuracy doesn't accumulate
-    train_model.metrics[0].reset_states()
-
     # KungFu: broadcast is done after the first gradient step to ensure optimizer initialization.
     # This way all models across the network initialize with the same weights
     if first_step:
@@ -90,26 +83,34 @@ def training_step(images, labels, first_step):
         broadcast_variables(train_model.variables)
         broadcast_variables(opt.variables())
 
-    return batch_loss, batch_accuracy
+    return batch_loss
 
 # Start timer
 start_time = time.time()
+time_excluded = 0
 
 # Take the batches needed for this epoch and take the steps needed
 for step, (images, labels) in enumerate(train_dataset.take(steps_per_epoch*epochs)):
 
     # Take a training step
-    batch_loss, batch_accuracy = training_step(images, labels, step == 0)
+    batch_loss = training_step(images, labels, step == 0)
 
     # Log loss and accuracy data every 10 steps
     if (step % 10 == 0 or step == steps_per_epoch*epochs - 1) and args.l and current_rank() == 0:
         training_logs = step_update_logs(training_logs, step, steps_per_epoch, \
-                                         step, batch_loss, batch_accuracy)
+                                         step, batch_loss)
 
     # Print data to terminal
     if (((step % steps_per_epoch) % 10 == 0) or (step % (steps_per_epoch - 1) == 0)) and current_rank() == 0:
-        print('Epoch #%d\tStep #%d \tLoss: %.6f\tBatch Accuracy: %.6f' % \
-              (step / steps_per_epoch + 1, step % steps_per_epoch, batch_loss, batch_accuracy))
+        print('Epoch #%d\tStep #%d \tLoss: %.6f' % \
+              (step / steps_per_epoch + 1, step % steps_per_epoch, batch_loss))
+    
+    if step % steps_per_epoch == 0 and step != 0 and args.l:
+        start_excluded_time = time.time() 
+        loss, epoch_accuracy = train_model.evaluate(test_dataset)
+        training_logs = epoch_update_accuracy(training_logs, epoch_accuracy)
+        end_excluded_time = time.time()
+        time_excluded +=  end_excluded_time - start_excluded_time
  
 # Stop timer
 end_time = time.time()
@@ -119,8 +120,9 @@ if current_rank()==0:
     # Evaluate the learning using test data
     print("Evaluating final model...")
     loss, accuracy = train_model.evaluate(test_dataset)
+    training_logs = epoch_update_accuracy(training_logs, accuracy)
 
     # Update training logs and export using pickle
     if args.l: 
-        export_pickle(training_logs, loss, accuracy, end_time - start_time)
+        export_pickle(training_logs, loss, accuracy, end_time - start_time - time_excluded)
         
