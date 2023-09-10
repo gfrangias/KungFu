@@ -6,13 +6,12 @@ from dataset.mnist import create_dataset
 from fda_functions.naive_fda import compute_averaged_divergence, rtc_check
 from pickle_data.pickle_functions import initialize_logs,\
                                     step_update_logs,\
-                                    export_pickle, epoch_update_accuracy
+                                    store_pickle, epoch_update_accuracy
 
 import tensorflow as tf
 from kungfu.python import current_cluster_size, current_rank
 from kungfu.tensorflow.ops import group_all_reduce
 from kungfu._utils import map_maybe
-from kungfu.tensorflow.optimizers import MySynchronousSGDOptimizer
                                           
 parser = argparse.ArgumentParser(description='KungFu mnist example.')
 parser.add_argument('--epochs', type=int, default=10,
@@ -49,7 +48,7 @@ elif args.model == "adv_cnn":
     train_model, loss_fun = create_adv_cnn(input_shape=(28,28,1), num_classes=10)
 
 # Set Adam along with KungFu Synchronous SGD optimizer
-opt = tf.compat.v1.train.AdamOptimizer()
+opt = tf.keras.optimizers.Adam()
 
 #
 # Function that performs one training step of one batch
@@ -85,7 +84,7 @@ def training_step(images, labels, first_step, last_sync_model):
     #    tf.print(averaged_divergence)
     
 
-    if rtc_check(averaged_divergence, args.threshold):
+    if rtc_check(averaged_divergence, args.threshold) or first_step:
         if current_rank() == 0: tf.print("Syncing!")
         syncs.assign_add(1)
         summed_models = group_all_reduce(train_model.trainable_variables)
@@ -99,6 +98,7 @@ def training_step(images, labels, first_step, last_sync_model):
         #tf.print("New last sync model: ")
         #tf.print(tf.norm(last_sync_model[0]))
 
+    """
     # KungFu: broadcast is done after the first gradient step to ensure optimizer initialization.
     # This way all models across the network initialize with the same weights
     if first_step:
@@ -106,7 +106,7 @@ def training_step(images, labels, first_step, last_sync_model):
         broadcast_variables(train_model.variables)
         broadcast_variables(opt.variables())
         syncs.assign_add(1)
-
+    """
     return batch_loss, last_sync_model
 
 # Start timer
@@ -132,7 +132,7 @@ for step, (images, labels) in enumerate(train_dataset.take(steps_per_epoch*epoch
         print('Epoch #%d\tStep #%d \tLoss: %.6f\tSyncs: %d' % \
               (step / steps_per_epoch + 1, step % steps_per_epoch, batch_loss, syncs))
         
-    if step % steps_per_epoch == 0 and step != 0 and args.l:
+    if step % steps_per_epoch == 0 and step != 0 and args.l and current_rank() == 0:
         start_excluded_time = time.time() 
         loss, epoch_accuracy = train_model.evaluate(test_dataset)
         training_logs = epoch_update_accuracy(training_logs, epoch_accuracy)
@@ -153,5 +153,5 @@ if current_rank()==0:
     
     # Update training logs and export using pickle
     if args.l: 
-        export_pickle(training_logs, loss, accuracy, end_time - start_time - time_excluded)
+        store_pickle(training_logs, loss, accuracy, end_time - start_time - time_excluded)
         

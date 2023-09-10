@@ -29,17 +29,25 @@ def epoch_update_accuracy(training_logs, epoch_accuracy):
 
     return training_logs
 
-def export_pickle(training_logs, loss, accuracy, duration):
+def store_pickle(training_logs, loss, accuracy, duration):
     training_logs["loss"] = loss
     training_logs["accuracy"] = accuracy
     training_logs["duration"] = duration
 
-    filename = training_logs["exper_type"].replace(" ", "_") + "." + training_logs["model_type"] + ".nodes-" +\
+    base_filename = training_logs["exper_type"].replace(" ", "_") + "." + training_logs["model_type"] + ".nodes-" +\
     str(training_logs["nodes"]) + ".epochs-" + str(training_logs["total_epochs"]) + ".batch-" + str(training_logs["batch_size"]) + ".pkl"
+    
+    filename = base_filename
+    n = 1
+
+    # Check if file exists, if yes, add (n) to its name
+    while os.path.exists(os.path.dirname(os.path.abspath(__file__))+ "/" + filename):
+        filename = base_filename.replace('.pkl', f'({n}).pkl')
+        n += 1
 
     with open(os.path.dirname(os.path.abspath(__file__))+ "/" + filename, "wb") as f:
         pickle.dump(training_logs, f)
-    
+
     print("Data saved at: " + os.path.dirname(os.path.abspath(__file__)) + "/" + filename)
 
 def load_pickle(filename):

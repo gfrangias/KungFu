@@ -5,7 +5,7 @@ from models.adv_cnn import create_adv_cnn
 from dataset.mnist import create_dataset
 from pickle_data.pickle_functions import initialize_logs,\
                                     step_update_logs,\
-                                    export_pickle, epoch_update_accuracy
+                                    store_pickle, epoch_update_accuracy
 
 import tensorflow as tf
 from kungfu.python import current_cluster_size, current_rank
@@ -124,5 +124,5 @@ if current_rank()==0:
 
     # Update training logs and export using pickle
     if args.l: 
-        export_pickle(training_logs, loss, accuracy, end_time - start_time - time_excluded)
+        store_pickle(training_logs, loss, accuracy, end_time - start_time - time_excluded)
         
