@@ -14,6 +14,7 @@ from datetime import datetime
 parser = argparse.ArgumentParser(description='Create figures using pickle files')
 parser.add_argument('-f', type=str, default='', nargs='+', help='list of pickle files')
 parser.add_argument("--syncs", action="store_true")
+parser.add_argument("--accuracy", action="store_true")
 parser.add_argument("--basis", type=str, default="exper_type")
 args = parser.parse_args()
 
@@ -85,5 +86,32 @@ def syncs_figure(filenames, basis):
 
     figure_file = save_svg_with_description(plt.gcf(), figure_file, filenames)
 
+def accuracy_figure(filenames, basis):
+
+    file_data = []
+
+    # Load the stored data
+    for i in range(len(filenames)):
+        file_data.append(load_pickle(filenames[i]))
+
+    filename = "Accuracy." + "on_" + basis + ".x" + str(len(filenames)) + ".svg"
+    figure_file = os.path.dirname(__file__) + "/" + filename
+    
+    plt.figure()
+
+    for i in range(len(file_data)):
+        lib = file_data[i]
+        plt.plot(range(lib["epoch"][-1]), lib["epoch_accuracy"], label=str(lib[basis]))
+
+    plt.xlabel('Epoch')
+    plt.ylabel('Accuracy')
+    plt.title('Accuracy per Epoch')
+    plt.legend()
+
+    figure_file = save_svg_with_description(plt.gcf(), figure_file, filenames)
+
 if args.syncs:
     syncs_figure(args.f, args.basis)
+
+if args.accuracy:
+    accuracy_figure(args.f, args.basis)

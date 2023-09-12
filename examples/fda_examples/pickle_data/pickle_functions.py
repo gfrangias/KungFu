@@ -50,6 +50,23 @@ def store_pickle(training_logs, loss, accuracy, duration):
 
     print("Data saved at: " + os.path.dirname(os.path.abspath(__file__)) + "/" + filename)
 
+def edit_pickle(filename, field, value):
+    # Load the data from the pickle file
+    data = load_pickle(filename)
+    
+    # Check if the field exists in the data, if not raise an exception
+    if field not in data:
+        raise KeyError(f"'{field}' does not exist in the loaded data.")
+    
+    # Update the field with the new value
+    data[field] = value
+
+    # Save the updated data back to the pickle file
+    with open(os.path.dirname(os.path.abspath(__file__)) + "/" + filename, "wb") as f:
+        pickle.dump(data, f)
+
+    print(f"Updated '{field}' in {filename} with value: {value}")
+
 def load_pickle(filename):
 
     with open(os.path.dirname(os.path.abspath(__file__)) + "/" + filename, "rb") as f:

@@ -49,7 +49,7 @@ elif args.model == "adv_cnn":
     train_model, loss_fun = create_adv_cnn(input_shape=(28,28,1), num_classes=10)
 
 # Set Adam along with KungFu Synchronous SGD optimizer
-opt = tf.compat.v1.train.AdamOptimizer()
+opt = tf.keras.optimizers.Adam()
 opt = SynchronousSGDOptimizer(opt)
 
 #

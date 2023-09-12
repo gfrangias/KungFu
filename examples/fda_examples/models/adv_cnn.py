@@ -31,4 +31,4 @@ def create_adv_cnn(input_shape, num_classes):
     metrics=[tf.keras.metrics.SparseCategoricalAccuracy(name='test_accuracy')]
     )
 
-    return adv_cnn, adv_cnn.loss
+    return adv_cnn, adv_cnn.loss, adv_cnn.optimizer

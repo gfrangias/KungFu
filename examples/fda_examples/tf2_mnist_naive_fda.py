@@ -43,12 +43,11 @@ if current_rank() == 0 and args.l:
 
 # Create selected model
 if args.model == "lenet5":
-    train_model, loss_fun = create_lenet5(input_shape=(28,28,1), num_classes=10)
+    train_model, loss_fun, opt = create_lenet5(input_shape=(28,28,1), num_classes=10)
 elif args.model == "adv_cnn":
-    train_model, loss_fun = create_adv_cnn(input_shape=(28,28,1), num_classes=10)
+    train_model, loss_fun, opt = create_adv_cnn(input_shape=(28,28,1), num_classes=10)
 
 # Set Adam along with KungFu Synchronous SGD optimizer
-opt = tf.keras.optimizers.Adam()
 
 #
 # Function that performs one training step of one batch
@@ -84,8 +83,9 @@ def training_step(images, labels, first_step, last_sync_model):
     #    tf.print(averaged_divergence)
     
 
-    if rtc_check(averaged_divergence, args.threshold) or first_step:
+    if rtc_check(averaged_divergence, args.threshold):
         if current_rank() == 0: tf.print("Syncing!")
+        synced = True
         syncs.assign_add(1)
         summed_models = group_all_reduce(train_model.trainable_variables)
 
@@ -97,18 +97,19 @@ def training_step(images, labels, first_step, last_sync_model):
         last_sync_model = train_model.trainable_variables
         #tf.print("New last sync model: ")
         #tf.print(tf.norm(last_sync_model[0]))
-
-    """
+    else:
+        synced = False
+        
     # KungFu: broadcast is done after the first gradient step to ensure optimizer initialization.
     # This way all models across the network initialize with the same weights
+
     if first_step:
         from kungfu.tensorflow.initializer import broadcast_variables
         broadcast_variables(train_model.variables)
         broadcast_variables(opt.variables())
         syncs.assign_add(1)
-    """
-    return batch_loss, last_sync_model
 
+    return batch_loss, last_sync_model, synced
 # Start timer
 start_time = time.time()
 time_excluded = 0
@@ -120,7 +121,10 @@ last_sync_model = train_model.trainable_variables
 for step, (images, labels) in enumerate(train_dataset.take(steps_per_epoch*epochs)):
 
     # Take a training step
-    batch_loss, last_sync_model = training_step(images, labels, step == 0, last_sync_model)
+    batch_loss, last_sync_model, synced = training_step(images, labels, step == 0, last_sync_model)
+
+    if step % steps_per_epoch == 0:
+        new_epoch = True
 
     # Log loss and accuracy data every 10 steps
     if (step % 10 == 0 or step == steps_per_epoch*epochs - 1) and args.l and current_rank() == 0:
@@ -132,7 +136,8 @@ for step, (images, labels) in enumerate(train_dataset.take(steps_per_epoch*epoch
         print('Epoch #%d\tStep #%d \tLoss: %.6f\tSyncs: %d' % \
               (step / steps_per_epoch + 1, step % steps_per_epoch, batch_loss, syncs))
         
-    if step % steps_per_epoch == 0 and step != 0 and args.l and current_rank() == 0:
+    if new_epoch and step != 0 and args.l and current_rank() == 0 and synced:
+        new_epoch = False
         start_excluded_time = time.time() 
         loss, epoch_accuracy = train_model.evaluate(test_dataset)
         training_logs = epoch_update_accuracy(training_logs, epoch_accuracy)
