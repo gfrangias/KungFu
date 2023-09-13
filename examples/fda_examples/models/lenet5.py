@@ -25,8 +25,7 @@ def create_lenet5(input_shape, num_classes):
 
     lenet5.compile(
     loss = tf.keras.losses.SparseCategoricalCrossentropy(),
-    metrics=[tf.keras.metrics.SparseCategoricalAccuracy(name='test_accuracy')],
-    optimizer = tf.keras.optimizers.Adam()
+    metrics=[tf.keras.metrics.SparseCategoricalAccuracy(name='test_accuracy')]
     )
 
-    return lenet5, lenet5.loss, lenet5.optimizer
+    return lenet5, lenet5.loss
