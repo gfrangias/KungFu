@@ -3,14 +3,13 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 from models.lenet5 import create_lenet5
 from models.adv_cnn import create_adv_cnn
 from dataset.mnist import create_dataset
-from pickle_data.pickle_functions import initialize_logs,\
-                                    step_update_logs,\
-                                    store_pickle, epoch_update_accuracy
+from dataframe.logs_dict import logs_dict
+from dataframe.logs_df import logs_df
 
 import tensorflow as tf
 from kungfu.python import current_cluster_size, current_rank
 from kungfu.tensorflow.optimizers import SynchronousSGDOptimizer
-                                          
+                      
 parser = argparse.ArgumentParser(description='KungFu mnist example.')
 parser.add_argument('--epochs',
                     type=int,
@@ -39,8 +38,8 @@ if current_rank() == 0 and args.l:
     print("Steps per Epoch: "+ str(steps_per_epoch))
 
     # Initialize the training logs
-    training_logs = initialize_logs("Synchronous SGD", args.model, current_cluster_size(),\
-                                             epochs, args.batch)
+    logs_dict = logs_dict("Synchronous SGD", args.model, current_cluster_size(), None, args.batch, steps_per_epoch)
+
 
 # Create selected model
 if args.model == "lenet5":
@@ -97,18 +96,18 @@ for step, (images, labels) in enumerate(train_dataset.take(steps_per_epoch*epoch
 
     # Log loss and accuracy data every 10 steps
     if (step % 10 == 0 or step == steps_per_epoch*epochs - 1) and args.l and current_rank() == 0:
-        training_logs = step_update_logs(training_logs, step, steps_per_epoch, \
-                                         step, batch_loss)
+        logs_dict.step_update(step, step, batch_loss)
+
 
     # Print data to terminal
     if (((step % steps_per_epoch) % 10 == 0) or (step % (steps_per_epoch - 1) == 0)) and current_rank() == 0:
         print('Epoch #%d\tStep #%d \tLoss: %.6f' % \
               (step / steps_per_epoch + 1, step % steps_per_epoch, batch_loss))
     
-    if step % steps_per_epoch == 0 and step != 0 and args.l:
+    if step % steps_per_epoch == 0 and step != 0 and args.l and current_rank() == 0:
         start_excluded_time = time.time() 
         loss, epoch_accuracy = train_model.evaluate(test_dataset)
-        training_logs = epoch_update_accuracy(training_logs, epoch_accuracy)
+        logs_dict.epoch_update(epoch_accuracy)
         end_excluded_time = time.time()
         time_excluded +=  end_excluded_time - start_excluded_time
  
@@ -120,9 +119,9 @@ if current_rank()==0:
     # Evaluate the learning using test data
     print("Evaluating final model...")
     loss, accuracy = train_model.evaluate(test_dataset)
-    training_logs = epoch_update_accuracy(training_logs, accuracy)
 
     # Update training logs and export using pickle
     if args.l: 
-        store_pickle(training_logs, loss, accuracy, end_time - start_time - time_excluded)
-        
+        logs_dict.epoch_update(accuracy)
+        logs_df = logs_df(logs_dict)
+        logs_df.append_in_parquet()        

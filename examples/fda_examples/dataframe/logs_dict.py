@@ -1,6 +1,7 @@
 from datetime import datetime
 import os
 import pandas as pd
+import tensorflow as tf
 
 class logs_dict:
 
@@ -38,7 +39,10 @@ class logs_dict:
     
     def step_update(self, step, syncs, loss):
         self.step_data["step"].append(step)
-        self.step_data["syncs"].append(syncs.numpy())
+        if  tf.is_tensor(syncs):
+            self.step_data["syncs"].append(syncs.numpy())
+        else:
+            self.step_data["syncs"].append(syncs)
         self.step_data["loss"].append(loss.numpy())
     
     def epoch_update(self, accuracy):
