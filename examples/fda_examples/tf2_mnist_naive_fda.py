@@ -1,4 +1,4 @@
-import os, argparse, time
+import os, argparse, time, sys
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 from models.lenet5 import create_lenet5
 from models.adv_cnn import create_adv_cnn
@@ -36,7 +36,7 @@ if current_rank() == 0 and args.l:
 
     print("Steps per Epoch: "+ str(steps_per_epoch))
 
-    logs_dict = logs_dict("ok", args.model, current_cluster_size(), args.batch, steps_per_epoch)
+    logs_dict = logs_dict("Naive FDA", args.model, current_cluster_size(), args.threshold, args.batch, steps_per_epoch)
 
 # Create selected model
 if args.model == "lenet5":
@@ -118,6 +118,8 @@ for step, (images, labels) in enumerate(train_dataset.take(steps_per_epoch*epoch
 
     # Take a training step
     batch_loss, last_sync_model = training_step(images, labels, step == 0, last_sync_model)
+    tensor_size = 0
+    
     # Log loss and accuracy data every 10 steps
     if (step % 10 == 0 or step == steps_per_epoch*epochs - 1) and args.l and current_rank() == 0:
         logs_dict.step_update(step, syncs, batch_loss)
@@ -136,8 +138,6 @@ for step, (images, labels) in enumerate(train_dataset.take(steps_per_epoch*epoch
 end_time = time.time()
 
 if current_rank()==0:
-
-    train_model.save('my_model.keras')
 
     # Evaluate the learning using test data
     print("Evaluating final model...")

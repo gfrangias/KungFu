@@ -1,11 +1,16 @@
 from datetime import datetime
 import os
+import pandas as pd
 
 class logs_dict:
 
-    def __init__(self, exper_type, model_type, nodes, batch_size, steps_per_epoch):
+    def __init__(self, exper_type, model_type, nodes, threshold, batch_size, steps_per_epoch):
         
-        exper_id = find_next_id("examples/fda_examples/parquet_files/")
+        if os.path.exists("examples/fda_examples/parquet_files/info.parquet"):
+            df = pd.read_parquet("examples/fda_examples/parquet_files/info.parquet")
+            exper_id = df["exper_id"].max() + 1
+        else:
+            exper_id = 0
 
         timestamp = datetime.now().strftime("%d-%m-%Y %H:%M")
 
@@ -14,6 +19,7 @@ class logs_dict:
             "exper_type" : exper_type,
             "model_type" : model_type,
             "nodes" : nodes,
+            "threshold" : threshold,
             "batch_size" : batch_size,
             "timestamp" : timestamp,
             "steps_per_epoch" : steps_per_epoch

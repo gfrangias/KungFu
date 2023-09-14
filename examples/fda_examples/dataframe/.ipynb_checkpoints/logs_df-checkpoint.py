@@ -9,7 +9,7 @@ class logs_df:
         self.info_file = self.directory + "info.parquet"
         self.step_file = self.directory + "step.parquet"
         self.epoch_file = self.directory + "epoch.parquet"
-        data_sync_map = {"lenet5" : 0.061706*4, "adv_cnn" : 2.592202*4}
+        data_sync_map = {"lenet5" : 2, "adv_cnn" : 3}
         data_non_sync_map = {"lenet5" : 1, "adv_cnn" : 1}
 
         self.info_df = pd.DataFrame(logs_dict.info_data, index=[0])

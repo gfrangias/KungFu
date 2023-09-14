@@ -2,6 +2,7 @@ import tensorflow as tf
 from kungfu.tensorflow.ops import group_all_reduce
 from kungfu._utils import map_maybe
 from .tensor_list_functions import tensor_list_to_vector, tensor_to_tensor_list
+import sys
 
 # Compute the divergence using the 2-norm for Naive FDA
 def compute_averaged_divergence(last_sync_model, local_model, num_of_nodes):
@@ -14,7 +15,6 @@ def compute_averaged_divergence(last_sync_model, local_model, num_of_nodes):
     # last synced model
     local_divergence =  tf.norm(local_model_vector - last_sync_model_vector, 2)
     #tf.print("Local divergence: ")
-    #tf.print(local_divergence)
 
     # Calculate the average divergence of the network using all-reduce
     local_divergence = tensor_to_tensor_list(local_divergence)
