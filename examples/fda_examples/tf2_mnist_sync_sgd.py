@@ -124,4 +124,4 @@ if current_rank()==0:
     if args.l: 
         logs_dict.epoch_update(accuracy)
         logs_df = logs_df(logs_dict)
-        logs_df.append_in_parquet()        
+        logs_df.append_in_csv()        

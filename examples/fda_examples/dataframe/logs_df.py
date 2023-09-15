@@ -5,10 +5,10 @@ class logs_df:
 
     def __init__(self, logs_dict):
 
-        self.directory = "examples/fda_examples/parquet_files/"
-        self.info_file = self.directory + "info.parquet"
-        self.step_file = self.directory + "step.parquet"
-        self.epoch_file = self.directory + "epoch.parquet"
+        self.directory = "examples/fda_examples/csv_files/"
+        self.info_file = self.directory + "info.csv"
+        self.step_file = self.directory + "step.csv"
+        self.epoch_file = self.directory + "epoch.csv"
         data_sync_map = {"lenet5" : 0.061706*4, "adv_cnn" : 2.592202*4}
         data_non_sync_map = {"lenet5" : 4/10**6, "adv_cnn" : 4/10**6}
 
@@ -26,15 +26,15 @@ class logs_df:
         self.epoch_df = pd.DataFrame(logs_dict.epoch_data)
         self.epoch_df["exper_id"] = self.info_df["exper_id"].iloc[0]
 
-    def append_in_parquet(self):
+    def append_in_csv(self):
         print(self.info_df)
         print(self.epoch_df)
         print(self.step_df)
 
         if os.path.exists(self.info_file) and os.path.exists(self.step_file) and os.path.exists(self.epoch_file):
-            info_df = pd.read_parquet(self.info_file)
-            step_df = pd.read_parquet(self.step_file)
-            epoch_df = pd.read_parquet(self.epoch_file)
+            info_df = pd.read_csv(self.info_file)
+            step_df = pd.read_csv(self.step_file)
+            epoch_df = pd.read_csv(self.epoch_file)
 
             combined_info = pd.concat([info_df, self.info_df])
             combined_step = pd.concat([step_df, self.step_df])
@@ -45,14 +45,10 @@ class logs_df:
             combined_step = self.step_df
             combined_epoch = self.epoch_df    
             
-        combined_info.to_parquet(self.info_file)
-        combined_step.to_parquet(self.step_file)
-        combined_epoch.to_parquet(self.epoch_file)
+        combined_info.to_csv(self.info_file, index=False)
+        combined_step.to_csv(self.step_file, index=False)
+        combined_epoch.to_csv(self.epoch_file, index=False)
         print("Stored with experiment ID: "+str(self.id))
-        print("In files:\t"+"info.parquet")
-        print("\t\t"+"step.parquet")
-        print("\t\t"+"epoch.parquet")
-
-    def load_parquet(self):
-        dfs = pd.read_parquet(parquet_file, engine='pyarrow', storage_options=None)
-        print(dfs)
+        print("In files:\t"+"info.csv")
+        print("\t\t"+"step.csv")
+        print("\t\t"+"epoch.csv")

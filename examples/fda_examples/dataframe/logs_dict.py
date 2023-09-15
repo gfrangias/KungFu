@@ -7,8 +7,8 @@ class logs_dict:
 
     def __init__(self, exper_type, model_type, nodes, threshold, batch_size, steps_per_epoch):
         
-        if os.path.exists("examples/fda_examples/parquet_files/info.parquet"):
-            df = pd.read_parquet("examples/fda_examples/parquet_files/info.parquet")
+        if os.path.exists("examples/fda_examples/csv_files/info.csv"):
+            df = pd.read_csv("examples/fda_examples/csv_files/info.csv")
             exper_id = df["exper_id"].max() + 1
         else:
             exper_id = 0
@@ -57,7 +57,7 @@ def find_next_id(directory):
 
     # Iterate through the filenames and extract the IDs
     for filename in filenames:
-        # Check if the filename matches the format "exp_{id}_*.parquet"
+        # Check if the filename matches the format "exp_{id}_*.csv"
         if filename.startswith("exp_"):
             try:
                 # Extract the ID by splitting the filename and parsing it as an integer
