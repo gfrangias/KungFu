@@ -17,11 +17,13 @@ def create_dataset(epochs, batch_size, N, i):
 
     # Calculate the number of steps per epoch needed for each node
     steps_per_epoch = int(np.floor(len(train_images) / (N * batch_size)))
-
+    steps_per_epoch_float = len(train_images) / (N * batch_size)
+    
     # Duplicate the dataset multiple times
     # Shuffle the samples of every epoch
     # Set batch size
-    train_dataset = train_dataset.shuffle(epochs*steps_per_epoch).repeat().batch(64)
-    test_dataset = test_dataset.batch(64)
+    shuffle_size = train_dataset.cardinality()
+    train_dataset = train_dataset.shuffle(shuffle_size).repeat().batch(batch_size)
+    test_dataset = test_dataset.batch(1024)
 
-    return train_dataset, test_dataset, steps_per_epoch
+    return train_dataset, test_dataset, steps_per_epoch, steps_per_epoch_float

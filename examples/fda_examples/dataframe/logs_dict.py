@@ -22,12 +22,14 @@ class logs_dict:
             "nodes" : nodes,
             "threshold" : threshold,
             "batch_size" : batch_size,
+            "duration" : 0,
             "timestamp" : timestamp,
             "steps_per_epoch" : steps_per_epoch
         }
 
         self.epoch_data = {
-            "accuracy" : []
+            "accuracy" : [],
+            "loss" : []
         }
 
         self.step_data = {
@@ -45,8 +47,10 @@ class logs_dict:
             self.step_data["syncs"].append(syncs)
         self.step_data["loss"].append(loss.numpy())
     
-    def epoch_update(self, accuracy):
+    def epoch_update(self, accuracy, loss, duration=0):
         self.epoch_data["accuracy"].append(accuracy)
+        self.epoch_data["loss"].append(loss)
+        self.info_data["duration"] = duration
 
 def find_next_id(directory):
     # Get a list of filenames in the directory

@@ -1,4 +1,4 @@
-import argparse, itertools
+import argparse, itertools, subprocess
 
 parser = argparse.ArgumentParser(description='KungFu mnist example.')
 parser.add_argument('--nodes', type=int, default=4,
@@ -53,4 +53,10 @@ for exper_type in exper_type_list:
             commands.append(command)
 
 print("Running "+ str(len(commands)) +" experiments on "+ str(args.nodes) +" nodes!")
-[print(command) for command in commands]
+
+for i, command in enumerate(commands):
+    print(f"Running command {i + 1}/{len(commands)}")
+    subprocess.run(command, shell=True)
+    subprocess.run("sleep 1s", shell=True)
+
+

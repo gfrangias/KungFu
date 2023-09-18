@@ -30,12 +30,13 @@ epochs = args.epochs
 syncs = tf.Variable(0, dtype=tf.int32)
 
 # Load mnist dataset
-train_dataset, test_dataset, steps_per_epoch = \
+train_dataset, test_dataset, steps_per_epoch, steps_per_epoch_float = \
     create_dataset(epochs, args.batch, current_cluster_size(), current_rank())
 
 if current_rank() == 0 and args.l: 
 
     print("Steps per Epoch: "+ str(steps_per_epoch))
+    print("Steps per Epoch in float: "+str(steps_per_epoch_float))
 
     logs_dict = logs_dict("Naive FDA", args.model, current_cluster_size(), args.threshold, args.batch, steps_per_epoch)
 
@@ -110,6 +111,9 @@ def training_step(images, labels, first_step, last_sync_model):
 # Start timer
 start_time = time.time()
 time_excluded = 0
+steps_remainder = 0
+epoch = 1
+step_in_epoch = 0
 
 # Initialize last sync model
 last_sync_model = train_model.trainable_variables
@@ -119,7 +123,33 @@ for step, (images, labels) in enumerate(train_dataset.take(steps_per_epoch*epoch
 
     # Take a training step
     batch_loss, last_sync_model = training_step(images, labels, step == 0, last_sync_model)
-    tensor_size = 0
+    
+    step_in_epoch+=1
+
+    if step_in_epoch == steps_per_epoch and steps_remainder < 1:
+        if args.l and current_rank() == 0:
+            print("Epoch #%d\tSteps: %d\t Steps remainder: %.2f" % (epoch, step_in_epoch, steps_remainder))
+            start_excluded_time = time.time() 
+            epoch_loss, epoch_accuracy = train_model.evaluate(test_dataset)
+            logs_dict.epoch_update(epoch_accuracy, epoch_loss)
+            end_excluded_time = time.time()
+            time_excluded +=  end_excluded_time - start_excluded_time
+        epoch += 1
+        step_in_epoch = 0
+        steps_remainder += steps_per_epoch_float - steps_per_epoch
+
+    if step_in_epoch > steps_per_epoch and steps_remainder >= 1:
+        if args.l and current_rank() == 0:
+            print("Epoch #%d\tSteps: %d\t Steps remainder: %.2f" % (epoch, step_in_epoch, steps_remainder))
+            start_excluded_time = time.time() 
+            epoch_loss, epoch_accuracy = train_model.evaluate(test_dataset)
+            logs_dict.epoch_update(epoch_accuracy, epoch_loss)
+            end_excluded_time = time.time()
+            time_excluded += end_excluded_time - start_excluded_time
+        epoch += 1
+        step_in_epoch = 0
+        steps_remainder = steps_remainder - 1
+    
 
     # Log loss and accuracy data every 10 steps
     if (step % 10 == 0 or step == steps_per_epoch*epochs - 1) and args.l and current_rank() == 0:
@@ -127,13 +157,8 @@ for step, (images, labels) in enumerate(train_dataset.take(steps_per_epoch*epoch
 
     # Print data to terminal
     if (((step % steps_per_epoch) % 10 == 0) or (step % (steps_per_epoch - 1) == 0)) and current_rank() == 0:
-        print('Epoch #%d\tStep #%d \tLoss: %.6f\tSyncs: %d' % (step / steps_per_epoch + 1, step % steps_per_epoch, batch_loss, syncs))
-    if step % steps_per_epoch == 0 and step != 0 and args.l and current_rank() == 0:
-        start_excluded_time = time.time() 
-        loss, epoch_accuracy = train_model.evaluate(test_dataset)
-        logs_dict.epoch_update(epoch_accuracy)
-        end_excluded_time = time.time()
-        time_excluded +=  end_excluded_time - start_excluded_time
+        print('Epoch #%d\tStep #%d \tLoss: %.6f\tSyncs: %d' % (epoch, step_in_epoch, batch_loss, syncs))
+
 
 # Stop timer
 end_time = time.time()
@@ -146,6 +171,6 @@ if current_rank()==0:
 
     # Update training logs and export using pickle
     if args.l: 
-        logs_dict.epoch_update(accuracy)
+        logs_dict.epoch_update(accuracy, loss, end_time - start_time - time_excluded)
         logs_df = logs_df(logs_dict)
         logs_df.append_in_csv()
