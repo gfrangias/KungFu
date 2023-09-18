@@ -1,3 +1,6 @@
+from kungfu.python import current_cluster_size, current_rank
+from kungfu.tensorflow.optimizers import SynchronousSGDOptimizer
+
 import os, argparse, time
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 from models.lenet5 import create_lenet5
@@ -7,8 +10,6 @@ from dataframe.logs_dict import logs_dict
 from dataframe.logs_df import logs_df
 
 import tensorflow as tf
-from kungfu.python import current_cluster_size, current_rank
-from kungfu.tensorflow.optimizers import SynchronousSGDOptimizer
                       
 parser = argparse.ArgumentParser(description='KungFu mnist example.')
 parser.add_argument('--epochs',

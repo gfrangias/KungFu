@@ -1,3 +1,7 @@
+from kungfu.python import current_cluster_size, current_rank
+from kungfu.tensorflow.ops import group_all_reduce
+from kungfu._utils import map_maybe
+
 import os, argparse, time
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 from models.lenet5 import create_lenet5
@@ -8,9 +12,6 @@ from dataframe.logs_df import logs_df
 from fda_functions.naive_fda import compute_averaged_divergence, rtc_check
 
 import tensorflow as tf
-from kungfu.python import current_cluster_size, current_rank
-from kungfu.tensorflow.ops import group_all_reduce
-from kungfu._utils import map_maybe
 
 parser = argparse.ArgumentParser(description='KungFu mnist example.')
 parser.add_argument('--epochs', type=int, default=10,
