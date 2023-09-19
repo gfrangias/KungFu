@@ -55,8 +55,10 @@ for exper_type in exper_type_list:
 print("Running "+ str(len(commands)) +" experiments on "+ str(args.nodes) +" nodes!")
 
 for i, command in enumerate(commands):
-    print(f"Running command {i + 1}/{len(commands)}")
-    subprocess.run(command, shell=True)
-    subprocess.run("sleep 1s", shell=True)
+    if i >= 4:
+        print(f"Running command {i + 1}/{len(commands)}")
+        subprocess.run(command, shell=True)
+        subprocess.run("sleep 1m", shell=True)
+
 
 

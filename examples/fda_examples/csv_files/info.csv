@@ -1,10 +1,6 @@
-exper_id,exper_type,model_type,nodes,threshold,batch_size,timestamp,steps_per_epoch,data_sync,data_non_sync,duration
-0,Synchronous SGD,lenet5,4,,32,18-09-2023 17:41,468,0.246824,4e-06,
-1,Synchronous SGD,lenet5,4,,64,18-09-2023 17:43,234,0.246824,4e-06,
-2,Synchronous SGD,lenet5,4,,128,18-09-2023 17:44,117,0.246824,4e-06,
-3,Synchronous SGD,lenet5,4,,32,18-09-2023 17:48,468,0.246824,4e-06,
-4,Synchronous SGD,lenet5,4,,32,18-09-2023 17:49,468,0.246824,4e-06,
-5,Synchronous SGD,lenet5,4,,32,18-09-2023 17:58,468,0.246824,4e-06,20.640745401382446
-6,Synchronous SGD,lenet5,4,,32,18-09-2023 18:00,468,0.246824,4e-06,11.045939207077026
-7,Synchronous SGD,lenet5,4,,64,18-09-2023 18:00,234,0.246824,4e-06,6.591596841812134
-8,Synchronous SGD,lenet5,4,,128,18-09-2023 18:00,117,0.246824,4e-06,5.109164714813232
+exper_id,exper_type,model_type,nodes,threshold,batch_size,duration,timestamp,steps_per_epoch,data_sync,data_non_sync
+0,Synchronous SGD,lenet5,4,,32,956.4899961948396,18-09-2023 20:42,468,0.246824,4e-06
+1,Synchronous SGD,lenet5,4,,64,490.29425859451294,18-09-2023 20:59,234,0.246824,4e-06
+2,Synchronous SGD,lenet5,4,,128,340.1813130378723,18-09-2023 21:09,117,0.246824,4e-06
+3,Synchronous SGD,adv_cnn,4,,32,27720.75703573227,18-09-2023 21:16,468,10.368808,4e-06
+4,Synchronous SGD,adv_cnn,4,,64,21395.84746694565,19-09-2023 08:09,234,10.368808,4e-06
