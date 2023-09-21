@@ -152,8 +152,8 @@ for step, (images, labels) in enumerate(train_dataset.take(steps_per_epoch*epoch
     
 
     # Log loss and accuracy data every 10 steps
-    if (step % 10 == 0 or step == steps_per_epoch*epochs - 1) and args.l and current_rank() == 0:
-        logs_dict.step_update(step, syncs, batch_loss)
+    #if (step % 10 == 0 or step == steps_per_epoch*epochs - 1) and args.l and current_rank() == 0:
+    #    logs_dict.step_update(step, syncs, batch_loss)
 
     # Print data to terminal
     if (((step % steps_per_epoch) % 10 == 0) or (step % (steps_per_epoch - 1) == 0)) and current_rank() == 0:
