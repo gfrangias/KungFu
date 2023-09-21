@@ -9,7 +9,7 @@
 
 #SBATCH --job-name=kf${0}    # Job name
 #SBATCH --output=./logs/kf${0}.out # Stdout 
-#SBATCH --error=.logs/kf${0}.err # Stderr 
+#SBATCH --error=./logs/kf${0}.err # Stderr 
 #SBATCH --array=0-3     # Array of task IDs
 #SBATCH --ntasks=20     # Number of tasks(processes)
 #SBATCH --nodes=${0}     # Number of nodes requested
@@ -60,8 +60,8 @@ echo "IP List: $ip_list"
 
 # Run your program
 for node in $(seq 1 ${0}); do
-  srun --exclusive -N1 -n1 -o kf${0}_${node}_0.out -e kf${0}_${node}_0.err python3 run_tests.py --nodes ${0} --ips $ip_list --nic your_nic_value --index 0 &
-  srun --exclusive -N1 -n1 -o kf${0}_${node}_1.out -e kf${0}_${node}_1.err python3 run_tests.py --nodes ${0} --ips $ip_list --nic your_nic_value --index 1 &
-  srun --exclusive -N1 -n1 -o kf${0}_${node}_2.out -e kf${0}_${node}_2.err python3 run_tests.py --nodes ${0} --ips $ip_list --nic your_nic_value --index 2 &
-  srun --exclusive -N1 -n1 -o kf${0}_${node}_3.out -e kf${0}_${node}_3.err python3 run_tests.py --nodes ${0} --ips $ip_list --nic your_nic_value --index 3 &
+  srun --exclusive -N1 -n1 -o ./logs/kf${0}_${node}_0.out -e ./logs/kf${0}_${node}_0.err python3 run_tests.py --nodes ${0} --ips $ip_list --nic your_nic_value --index 0 &
+  srun --exclusive -N1 -n1 -o ./logs/kf${0}_${node}_1.out -e ./logs/kf${0}_${node}_1.err python3 run_tests.py --nodes ${0} --ips $ip_list --nic your_nic_value --index 1 &
+  srun --exclusive -N1 -n1 -o ./logs/kf${0}_${node}_2.out -e ./logs/kf${0}_${node}_2.err python3 run_tests.py --nodes ${0} --ips $ip_list --nic your_nic_value --index 2 &
+  srun --exclusive -N1 -n1 -o ./logs/kf${0}_${node}_3.out -e ./logs/kf${0}_${node}_3.err python3 run_tests.py --nodes ${0} --ips $ip_list --nic your_nic_value --index 3 &
 done
