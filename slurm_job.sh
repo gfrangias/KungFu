@@ -7,17 +7,34 @@
 #                                                        #
 ##########################################################
 
-#SBATCH --job-name=kf    # Job name
-#SBATCH --output=initial_test.out # Stdout (%j expands to jobId)
-#SBATCH --error=initial_test.err # Stderr (%j expands to jobId)
-#SBATCH --ntasks=2     # Number of tasks(processes)
-#SBATCH --nodes=2     # Number of nodes requested
-#SBATCH --ntasks-per-node=1     # Tasks per node
-#SBATCH --cpus-per-task=20     # Threads per task
-#SBATCH --mem=16G
-#SBATCH --time=01:00:00   # walltime
-#SBATCH --partition=compute    # Partition
-#SBATCH --account=pa230902    # Replace with your system project
+# Compute the number of nodes needed
+
+num_clients="$1"
+
+num_nodes=$((num_clients / 4))
+
+# Check if there's a remainder
+remainder=$((num_clients % 4))
+
+# If there's a remainder, add 1 to the result
+if [ $remainder -ne 0 ]; then
+        num_nodes=$((num_nodes + 1))
+fi
+
+echo "$num_nodes nodes will be used!"
+
+
+#SBATCH --job-name=kf${num_clients}     # Job name
+#SBATCH --output=kf${num_clients}.out   # Stdout (%j expands to jobId)
+#SBATCH --error=kf${num_clients}.err    # Stderr (%j expands to jobId)
+#SBATCH --ntasks=${num_nodes}           # Number of tasks(processes)
+#SBATCH --nodes=${num_nodes}            # Number of nodes requested
+#SBATCH --ntasks-per-node=1             # Tasks per node
+#SBATCH --cpus-per-task=20              # Threads per task
+#SBATCH --mem=32G
+#SBATCH --time=01:00:00                 # walltime
+#SBATCH --partition=compute             # Partition
+#SBATCH --account=pa230902              # Replace with your system project
 
 ## LOAD MODULES ##
 module purge            # clean up loaded modules
@@ -47,14 +64,13 @@ for node in $nodelist; do
 
     # Append to the list, with ":1" added after each IP
     if [ -z "$ip_list" ]; then
-        ip_list="${ip}:1"
+        ip_list="${ip}"
     else
-        ip_list="${ip_list},${ip}:1"
+        ip_list="${ip_list},${ip}"
     fi
 done
 
 # Print or use the IP list
 echo "IP List: $ip_list"
 
-srun kungfu-run -np 2 -H $ip_list -nic eth0 python3 examples/fda_examples/tf2_mnist_naive_fda.py
-
+srun run_tests --clients $num_clients --nodes $num_nodes --ips $ip_list --nic "eth0"
