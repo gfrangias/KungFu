@@ -7,19 +7,17 @@
 #                                                        #
 ##########################################################
 
-#SBATCH --job-name=kf${0}    # Job name
-#SBATCH --output=./logs/kf${0}.out # Stdout 
-#SBATCH --error=./logs/kf${0}.err # Stderr 
-#SBATCH --array=0-3     # Array of task IDs
-#SBATCH --ntasks=20     # Number of tasks(processes)
-#SBATCH --nodes=${0}     # Number of nodes requested
-#SBATCH --ntasks-per-node=4     # Tasks per node
-#SBATCH --cpus-per-task=5     # Threads per task
-#SBATCH --mem=12G
+#SBATCH --job-name=kf    # Job name
+#SBATCH --output=initial_test.out # Stdout (%j expands to jobId)
+#SBATCH --error=initial_test.err # Stderr (%j expands to jobId)
+#SBATCH --ntasks=2     # Number of tasks(processes)
+#SBATCH --nodes=2     # Number of nodes requested
+#SBATCH --ntasks-per-node=1     # Tasks per node
+#SBATCH --cpus-per-task=20     # Threads per task
+#SBATCH --mem=16G
 #SBATCH --time=01:00:00   # walltime
 #SBATCH --partition=compute    # Partition
-#SBATCH --account=pa230401    # Replace with your system project
-
+#SBATCH --account=pa230902    # Replace with your system project
 
 ## LOAD MODULES ##
 module purge            # clean up loaded modules
@@ -58,10 +56,5 @@ done
 # Print or use the IP list
 echo "IP List: $ip_list"
 
-# Run your program
-for node in $(seq 1 ${0}); do
-  srun --exclusive -N1 -n1 -o ./logs/kf${0}_${node}_0.out -e ./logs/kf${0}_${node}_0.err python3 run_tests.py --nodes ${0} --ips $ip_list --nic your_nic_value --index 0 &
-  srun --exclusive -N1 -n1 -o ./logs/kf${0}_${node}_1.out -e ./logs/kf${0}_${node}_1.err python3 run_tests.py --nodes ${0} --ips $ip_list --nic your_nic_value --index 1 &
-  srun --exclusive -N1 -n1 -o ./logs/kf${0}_${node}_2.out -e ./logs/kf${0}_${node}_2.err python3 run_tests.py --nodes ${0} --ips $ip_list --nic your_nic_value --index 2 &
-  srun --exclusive -N1 -n1 -o ./logs/kf${0}_${node}_3.out -e ./logs/kf${0}_${node}_3.err python3 run_tests.py --nodes ${0} --ips $ip_list --nic your_nic_value --index 3 &
-done
+srun kungfu-run -np 2 -H $ip_list -nic eth0 python3 examples/fda_examples/tf2_mnist_naive_fda.py
+
