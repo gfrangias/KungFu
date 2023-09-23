@@ -103,6 +103,7 @@ for step, (images, labels) in enumerate(train_dataset.take(steps_per_epoch*epoch
     if step_in_epoch == steps_per_epoch and steps_remainder < 1:
         if args.l and current_rank() == 0:
             print("Epoch #%d\tSteps: %d\t Steps remainder: %.2f" % (epoch, step_in_epoch, steps_remainder))
+            print("Total Steps: %d\tSyncs: %d" % (step+1, step+1))
             start_excluded_time = time.time() 
             epoch_loss, epoch_accuracy = train_model.evaluate(test_dataset)
             logs_dict.epoch_update(epoch_accuracy, epoch_loss)
@@ -115,6 +116,7 @@ for step, (images, labels) in enumerate(train_dataset.take(steps_per_epoch*epoch
     if step_in_epoch > steps_per_epoch and steps_remainder >= 1:
         if args.l and current_rank() == 0:
             print("Epoch #%d\tSteps: %d\t Steps remainder: %.2f" % (epoch, step_in_epoch, steps_remainder))
+            print("Total Steps: %d\tSyncs: %d" % (step+1, step+1))
             start_excluded_time = time.time() 
             epoch_loss, epoch_accuracy = train_model.evaluate(test_dataset)
             logs_dict.epoch_update(epoch_accuracy, epoch_loss)
@@ -130,9 +132,9 @@ for step, (images, labels) in enumerate(train_dataset.take(steps_per_epoch*epoch
 
 
     # Print data to terminal
-    if (((step % steps_per_epoch) % 10 == 0) or (step % (steps_per_epoch - 1) == 0)) and current_rank() == 0:
-        print('Epoch #%d\tStep #%d \tLoss: %.6f' % \
-              (epoch, step_in_epoch, batch_loss))
+    #if (((step % steps_per_epoch) % 10 == 0) or (step % (steps_per_epoch - 1) == 0)) and current_rank() == 0:
+    #    print('Epoch #%d\tStep #%d \tLoss: %.6f' % \
+    #          (epoch, step_in_epoch, batch_loss))
  
 # Stop timer
 end_time = time.time()
@@ -148,3 +150,4 @@ if current_rank()==0:
         logs_dict.epoch_update(accuracy, loss, end_time - start_time - time_excluded)
         logs_df = logs_df(logs_dict)
         logs_df.append_in_csv()        
+
