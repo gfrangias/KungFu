@@ -84,7 +84,7 @@ def training_step(images, labels, first_step, last_sync_model):
 
 
     if rtc_check(averaged_divergence, args.threshold):
-        if current_rank() == 0: tf.print("Syncing!")
+        #if current_rank() == 0: tf.print("Syncing!")
 
         syncs.assign_add(1)
         summed_models = group_all_reduce(train_model.trainable_variables)
@@ -129,8 +129,8 @@ for step, (images, labels) in enumerate(train_dataset.take(steps_per_epoch*epoch
     if step_in_epoch == steps_per_epoch and steps_remainder < 1:
         if args.l and current_rank() == 0:
             print("Epoch #%d\tSteps: %d\t Steps remainder: %.2f" % (epoch, step_in_epoch, steps_remainder))
-	    print("Total Steps: %d\tSyncs: %d" % (step+1, syncs))	
-            start_excluded_time = time.time() 
+            print("Total Steps: %d\tSyncs: %d" % (step+1, syncs))
+            start_excluded_time = time.time()
             epoch_loss, epoch_accuracy = train_model.evaluate(test_dataset)
             logs_dict.epoch_update(epoch_accuracy, epoch_loss)
             end_excluded_time = time.time()
@@ -142,12 +142,13 @@ for step, (images, labels) in enumerate(train_dataset.take(steps_per_epoch*epoch
     if step_in_epoch > steps_per_epoch and steps_remainder >= 1:
         if args.l and current_rank() == 0:
             print("Epoch #%d\tSteps: %d\t Steps remainder: %.2f" % (epoch, step_in_epoch, steps_remainder))
-            print("Total Steps: %d\tSyncs: %d" % (step+1, syncs))            
-	    start_excluded_time = time.time() 
+            print("Total Steps: %d\tSyncs: %d" % (step+1, syncs))
+            start_excluded_time = time.time()
             epoch_loss, epoch_accuracy = train_model.evaluate(test_dataset)
             logs_dict.epoch_update(epoch_accuracy, epoch_loss)
             end_excluded_time = time.time()
             time_excluded += end_excluded_time - start_excluded_time
+
         epoch += 1
         step_in_epoch = 0
         steps_remainder = steps_remainder - 1
