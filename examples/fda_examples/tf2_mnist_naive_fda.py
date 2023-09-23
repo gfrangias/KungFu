@@ -175,5 +175,6 @@ if current_rank()==0:
     # Update training logs and export using pickle
     if args.l: 
         logs_dict.epoch_update(accuracy, loss, end_time - start_time - time_excluded)
+        logs_dict.id_update()
         logs_df = logs_df(logs_dict)
         logs_df.append_in_csv()

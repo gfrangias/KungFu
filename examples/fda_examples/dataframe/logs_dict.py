@@ -6,17 +6,11 @@ import tensorflow as tf
 class logs_dict:
 
     def __init__(self, exper_type, model_type, nodes, threshold, batch_size, steps_per_epoch):
-        
-        if os.path.exists("examples/fda_examples/csv_files/info.csv"):
-            df = pd.read_csv("examples/fda_examples/csv_files/info.csv")
-            exper_id = df["exper_id"].max() + 1
-        else:
-            exper_id = 0
 
         timestamp = datetime.now().strftime("%d-%m-%Y %H:%M")
 
         self.info_data = {
-            "exper_id" : exper_id,
+            "exper_id" : None,
             "exper_type" : exper_type,
             "model_type" : model_type,
             "nodes" : nodes,
@@ -51,6 +45,15 @@ class logs_dict:
         self.epoch_data["accuracy"].append(accuracy)
         self.epoch_data["loss"].append(loss)
         self.info_data["duration"] = duration
+
+    def id_update(self):
+        if os.path.exists("examples/fda_examples/csv_files/info.csv"):
+            df = pd.read_csv("examples/fda_examples/csv_files/info.csv")
+            exper_id = df["exper_id"].max() + 1
+        else:
+            exper_id = 0
+
+        self.info_data["exper_id"] = exper_id
 
 def find_next_id(directory):
     # Get a list of filenames in the directory
