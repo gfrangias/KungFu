@@ -1,5 +1,5 @@
 def map_epochs(exper_type, model_type, batch_size, threshold=None):
-    epochs = 0
+    epochs = None
 
     if exper_type == "Synchronous SGD":
         if model_type == "lenet5":
@@ -8,7 +8,12 @@ def map_epochs(exper_type, model_type, batch_size, threshold=None):
             if batch_size == "128": epochs = 750
             if batch_size == "256": epochs = 1500
     elif exper_type == "Naive FDA":
-        epochs = 0
+        if model_type == "lenet5":
+            if threshold == "0.5":
+                if batch_size == "32": epochs = 350
+                if batch_size == "64": epochs = 600
+                if batch_size == "128": epochs = 1000
+                if batch_size == "256": epochs = 2000
 
     
     return str(epochs)

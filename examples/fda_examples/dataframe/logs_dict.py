@@ -23,7 +23,8 @@ class logs_dict:
 
         self.epoch_data = {
             "accuracy" : [],
-            "loss" : []
+            "loss" : [],
+            "time" : []
         }
 
         self.step_data = {
@@ -41,9 +42,10 @@ class logs_dict:
             self.step_data["syncs"].append(syncs)
         self.step_data["loss"].append(loss.numpy())
     
-    def epoch_update(self, accuracy, loss, duration=0):
+    def epoch_update(self, accuracy, loss, time=0, duration=0):
         self.epoch_data["accuracy"].append(accuracy)
         self.epoch_data["loss"].append(loss)
+        self.epoch_data["time"].append(time)
         self.info_data["duration"] = duration
 
     def id_update(self):

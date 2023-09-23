@@ -106,7 +106,8 @@ for step, (images, labels) in enumerate(train_dataset.take(steps_per_epoch*epoch
             print("Total Steps: %d\tSyncs: %d" % (step+1, step+1))
             start_excluded_time = time.time() 
             epoch_loss, epoch_accuracy = train_model.evaluate(test_dataset)
-            logs_dict.epoch_update(epoch_accuracy, epoch_loss)
+            end_time = time.time()
+            logs_dict.epoch_update(epoch_accuracy, epoch_loss, end_time - start_time - time_excluded)
             end_excluded_time = time.time()
             time_excluded +=  end_excluded_time - start_excluded_time
         epoch += 1
@@ -119,7 +120,8 @@ for step, (images, labels) in enumerate(train_dataset.take(steps_per_epoch*epoch
             print("Total Steps: %d\tSyncs: %d" % (step+1, step+1))
             start_excluded_time = time.time() 
             epoch_loss, epoch_accuracy = train_model.evaluate(test_dataset)
-            logs_dict.epoch_update(epoch_accuracy, epoch_loss)
+            end_time = time.time()
+            logs_dict.epoch_update(epoch_accuracy, epoch_loss, end_time - start_time - time_excluded)
             end_excluded_time = time.time()
             time_excluded += end_excluded_time - start_excluded_time
         epoch += 1
@@ -147,7 +149,7 @@ if current_rank()==0:
 
     # Update training logs and export using pickle
     if args.l: 
-        logs_dict.epoch_update(accuracy, loss, end_time - start_time - time_excluded)
+        logs_dict.epoch_update(accuracy, loss, end_time - start_time - time_excluded, end_time - start_time - time_excluded)
         logs_dict.id_update()
         logs_df = logs_df(logs_dict)
         logs_df.append_in_csv()        
