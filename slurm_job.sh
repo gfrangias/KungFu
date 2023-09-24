@@ -1,14 +1,14 @@
 #!/bin/bash -l
 
-#SBATCH --job-name=kf.cl10.synchronous_lenet
-#SBATCH --output=kf.cl10.synchronous_lenet.out
-#SBATCH --error=kf.cl10.synchronous_lenet.err
+#SBATCH --job-name=kf.cl10.synchronous_adv_cnn
+#SBATCH --output=kf.cl10.synchronous_adv_cnn.out
+#SBATCH --error=kf.cl10.synchronous_adv_cnn.err
 #SBATCH --ntasks=3
 #SBATCH --nodes=3
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=20
 #SBATCH --mem=32G
-#SBATCH --time=1-00:00:00
+#SBATCH --time=3-00:00:00
 #SBATCH --partition=compute
 #SBATCH --account=pa230902
 

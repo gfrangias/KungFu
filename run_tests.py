@@ -13,9 +13,9 @@ parser.add_argument('--nic', type=str, required=True,
 parser.add_argument('--print', action="store_true", help="print commands")
 args = parser.parse_args()
 
-exper_type_list = ["Naive FDA"]
-model_type_list = ["lenet5"]
-threshold_list = ["0.5"]
+exper_type_list = ["Synchronous SGD"]
+model_type_list = ["adv_cnn"]
+threshold_list = ["0.5", "1.0"]
 batch_size_list = ["32", "64", "128", "256"]
 
 commands = []
