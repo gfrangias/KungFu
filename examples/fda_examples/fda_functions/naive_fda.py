@@ -1,5 +1,5 @@
 import tensorflow as tf
-from kungfu.tensorflow.ops import group_all_reduce
+from kungfu.tensorflow.ops import group_all_reduce, all_reduce
 from kungfu._utils import map_maybe
 from .tensor_list_functions import tensor_list_to_vector, tensor_to_tensor_list
 import sys
@@ -17,12 +17,10 @@ def compute_averaged_divergence(last_sync_model, local_model, num_of_nodes):
     #tf.print("Local divergence: ")
 
     # Calculate the average divergence of the network using all-reduce
-    local_divergence = tensor_to_tensor_list(local_divergence)
-    summed_divergences = group_all_reduce(local_divergence)
-    num_of_nodes = tf.cast(num_of_nodes, tf.float32)
-    averaged_divergence = map_maybe(lambda d: d / num_of_nodes, summed_divergences)
+    summed_divergences = all_reduce(local_divergence)
+    averaged_divergence = summed_divergences / num_of_nodes
 
-    return tensor_to_tensor_list(averaged_divergence)
+    return averaged_divergence
 
 # Check if the divergence satisfies the RTC
 def rtc_check(divergence, threshold):

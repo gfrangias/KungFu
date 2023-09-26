@@ -1,3 +1,8 @@
+import tensorflow as tf
+if tf.config.list_physical_devices('GPU'):
+        for gpu in tf.config.experimental.list_physical_devices('GPU'):
+                tf.config.experimental.set_memory_growth(gpu,True)
+
 from kungfu.python import current_cluster_size, current_rank
 from kungfu.tensorflow.ops import group_all_reduce
 from kungfu._utils import map_maybe
@@ -10,8 +15,6 @@ from dataset.mnist import create_dataset
 from dataframe.logs_dict import logs_dict
 from dataframe.logs_df import logs_df
 from fda_functions.naive_fda import compute_averaged_divergence, rtc_check
-
-import tensorflow as tf
 
 parser = argparse.ArgumentParser(description='KungFu mnist example.')
 parser.add_argument('--epochs', type=int, default=10,
@@ -109,7 +112,6 @@ def training_step(images, labels, first_step, last_sync_model):
     return batch_loss, last_sync_model
 
 # Start timer
-start_time = time.time()
 time_excluded = 0
 steps_remainder = 0
 epoch = 1
@@ -120,22 +122,22 @@ last_sync_model = train_model.trainable_variables
 
 # Take the batches needed for this epoch and take the steps needed
 for step, (images, labels) in enumerate(train_dataset.take(steps_per_epoch*epochs)):
+    if step==0: start_time = time.perf_counter() 
 
     # Take a training step
     batch_loss, last_sync_model = training_step(images, labels, step == 0, last_sync_model)
-    
+
+    start_excluded_time = time.perf_counter()  
+
     step_in_epoch+=1
 
     if step_in_epoch == steps_per_epoch and steps_remainder < 1:
         if args.l and current_rank() == 0:
             print("Epoch #%d\tSteps: %d\t Steps remainder: %.2f" % (epoch, step_in_epoch, steps_remainder))
             print("Total Steps: %d\tSyncs: %d" % (step+1, syncs))
-            start_excluded_time = time.time()
             epoch_loss, epoch_accuracy = train_model.evaluate(test_dataset)
-            end_time = time.time()
+            end_time = time.perf_counter() 
             logs_dict.epoch_update(epoch_accuracy, epoch_loss, end_time - start_time - time_excluded)
-            end_excluded_time = time.time()
-            time_excluded +=  end_excluded_time - start_excluded_time
         epoch += 1
         step_in_epoch = 0
         steps_remainder += steps_per_epoch_float - steps_per_epoch
@@ -144,17 +146,16 @@ for step, (images, labels) in enumerate(train_dataset.take(steps_per_epoch*epoch
         if args.l and current_rank() == 0:
             print("Epoch #%d\tSteps: %d\t Steps remainder: %.2f" % (epoch, step_in_epoch, steps_remainder))
             print("Total Steps: %d\tSyncs: %d" % (step+1, syncs))
-            start_excluded_time = time.time()
             epoch_loss, epoch_accuracy = train_model.evaluate(test_dataset)
-            end_time = time.time()
+            end_time = time.perf_counter() 
             logs_dict.epoch_update(epoch_accuracy, epoch_loss, end_time - start_time - time_excluded)
-            end_excluded_time = time.time()
-            time_excluded += end_excluded_time - start_excluded_time
 
         epoch += 1
         step_in_epoch = 0
         steps_remainder = steps_remainder - 1
     
+    end_excluded_time = time.perf_counter() 
+    time_excluded += end_excluded_time - start_excluded_time
 
     # Log loss and accuracy data every 10 steps
     #if (step % 10 == 0 or step == steps_per_epoch*epochs - 1) and args.l and current_rank() == 0:
@@ -166,7 +167,7 @@ for step, (images, labels) in enumerate(train_dataset.take(steps_per_epoch*epoch
 
 
 # Stop timer
-end_time = time.time()
+end_time = time.perf_counter() 
 
 if current_rank()==0:
 
