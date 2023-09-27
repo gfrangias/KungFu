@@ -5,6 +5,7 @@ if tf.config.list_physical_devices('GPU'):
 
 from kungfu.python import current_cluster_size, current_rank
 from kungfu.tensorflow.ops import group_all_reduce
+from kungfu.tensorflow.optimizers import MySynchronousSGDOptimizer
 from kungfu._utils import map_maybe
 
 import os, argparse, time
@@ -51,6 +52,7 @@ elif args.model == "adv_cnn":
 
 # Set Adam along with KungFu Synchronous SGD optimizer
 opt = tf.keras.optimizers.Adam()
+opt = MySynchronousSGDOptimizer(opt)
 
 #
 # Function that performs one training step of one batch
