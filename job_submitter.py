@@ -50,7 +50,7 @@ done
 
 echo "IP List: $ip_list"
 
-srun python3 run_tests.py --clients $num_clients --nodes $num_nodes --ips $ip_list --nic "eth0"
+srun python3 run_experiments.py --clients $num_clients --nodes $num_nodes --ips $ip_list --nic "eth0" --json 
 
 """
     # Save the SLURM script to a file
@@ -67,6 +67,7 @@ if __name__ == "__main__":
     parser.add_argument('--partition', default='compute', help='SLURM partition where the tests will run')
     parser.add_argument('--account', default='pa230902', help='SLURM account')
     parser.add_argument('--time', default='01:00:00', help='Wall time of job')
+    parser.add_argument('--json', required=True, help='name of JSON file that contains the experiments\' paramaters')
     parser.add_argument('--script_name', default='slurm_job.sh', help='Script name')
 
     args = parser.parse_args()

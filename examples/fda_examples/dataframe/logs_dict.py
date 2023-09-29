@@ -5,7 +5,7 @@ import tensorflow as tf
 
 class logs_dict:
 
-    def __init__(self, exper_type, model_type, nodes, threshold, batch_size, steps_per_epoch):
+    def __init__(self, exper_type, model_type, nodes, threshold, batch_size, steps_per_epoch, epochs):
 
         timestamp = datetime.now().strftime("%d-%m-%Y %H:%M")
 
@@ -14,6 +14,7 @@ class logs_dict:
             "exper_type" : exper_type,
             "model_type" : model_type,
             "nodes" : nodes,
+            "epochs" : epochs,
             "threshold" : threshold,
             "batch_size" : batch_size,
             "duration" : 0,
@@ -42,11 +43,11 @@ class logs_dict:
             self.step_data["syncs"].append(syncs)
         self.step_data["loss"].append(loss.numpy())
     
-    def epoch_update(self, accuracy, loss, time=0, duration=0):
+    def epoch_update(self, accuracy, loss, time=0):
         self.epoch_data["accuracy"].append(accuracy)
         self.epoch_data["loss"].append(loss)
         self.epoch_data["time"].append(time)
-        self.info_data["duration"] = duration
+        self.info_data["duration"] = time
 
     def id_update(self):
         if os.path.exists("examples/fda_examples/csv_files/info.csv"):

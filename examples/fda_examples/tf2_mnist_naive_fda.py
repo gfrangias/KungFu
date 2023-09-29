@@ -52,7 +52,6 @@ elif args.model == "adv_cnn":
 
 # Set Adam along with KungFu Synchronous SGD optimizer
 opt = tf.keras.optimizers.Adam()
-opt = MySynchronousSGDOptimizer(opt)
 
 #
 # Function that performs one training step of one batch
@@ -114,22 +113,22 @@ def training_step(images, labels, first_step, last_sync_model):
     return batch_loss, last_sync_model
 
 # Start timer
-time_excluded = 0
 steps_remainder = 0
 epoch = 1
 step_in_epoch = 0
+duration = 0
 
 # Initialize last sync model
 last_sync_model = train_model.trainable_variables
 
 # Take the batches needed for this epoch and take the steps needed
 for step, (images, labels) in enumerate(train_dataset.take(steps_per_epoch*epochs)):
-    if step==0: start_time = time.perf_counter() 
-
+    
+    start_time = time.time() 
     # Take a training step
     batch_loss, last_sync_model = training_step(images, labels, step == 0, last_sync_model)
-
-    start_excluded_time = time.perf_counter()  
+    end_time = time.time()
+    duration += end_time - start_time
 
     step_in_epoch+=1
 
@@ -138,8 +137,7 @@ for step, (images, labels) in enumerate(train_dataset.take(steps_per_epoch*epoch
             print("Epoch #%d\tSteps: %d\t Steps remainder: %.2f" % (epoch, step_in_epoch, steps_remainder))
             print("Total Steps: %d\tSyncs: %d" % (step+1, syncs))
             epoch_loss, epoch_accuracy = train_model.evaluate(test_dataset)
-            end_time = time.perf_counter() 
-            logs_dict.epoch_update(epoch_accuracy, epoch_loss, end_time - start_time - time_excluded)
+            logs_dict.epoch_update(epoch_accuracy, epoch_loss, duration)
         epoch += 1
         step_in_epoch = 0
         steps_remainder += steps_per_epoch_float - steps_per_epoch
@@ -149,16 +147,11 @@ for step, (images, labels) in enumerate(train_dataset.take(steps_per_epoch*epoch
             print("Epoch #%d\tSteps: %d\t Steps remainder: %.2f" % (epoch, step_in_epoch, steps_remainder))
             print("Total Steps: %d\tSyncs: %d" % (step+1, syncs))
             epoch_loss, epoch_accuracy = train_model.evaluate(test_dataset)
-            end_time = time.perf_counter() 
-            logs_dict.epoch_update(epoch_accuracy, epoch_loss, end_time - start_time - time_excluded)
-
+            logs_dict.epoch_update(epoch_accuracy, epoch_loss, duration)            
         epoch += 1
         step_in_epoch = 0
         steps_remainder = steps_remainder - 1
     
-    end_excluded_time = time.perf_counter() 
-    time_excluded += end_excluded_time - start_excluded_time
-
     # Log loss and accuracy data every 10 steps
     #if (step % 10 == 0 or step == steps_per_epoch*epochs - 1) and args.l and current_rank() == 0:
     #    logs_dict.step_update(step, syncs, batch_loss)
@@ -167,19 +160,16 @@ for step, (images, labels) in enumerate(train_dataset.take(steps_per_epoch*epoch
    # if (((step % steps_per_epoch) % 10 == 0) or (step % (steps_per_epoch - 1) == 0)) and current_rank() == 0:
    #     print('Epoch #%d\tStep #%d \tLoss: %.6f\tSyncs: %d' % (epoch, step_in_epoch, batch_loss, syncs))
 
-
-# Stop timer
-end_time = time.perf_counter() 
-
 if current_rank()==0:
-
-    # Evaluate the learning using test data
-    print("Evaluating final model...")
-    loss, accuracy = train_model.evaluate(test_dataset)
+    
+    epoch_loss, epoch_accuracy = train_model.evaluate(test_dataset)
+    logs_dict.epoch_update(epoch_accuracy, epoch_loss, duration) 
 
     # Update training logs and export using pickle
     if args.l: 
-        logs_dict.epoch_update(accuracy, loss, end_time - start_time - time_excluded, end_time - start_time - time_excluded)
         logs_dict.id_update()
         logs_df = logs_df(logs_dict)
         logs_df.append_in_csv()
+
+
+
