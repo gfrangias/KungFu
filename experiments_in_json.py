@@ -8,9 +8,9 @@ def generate_combinations(args):
 
     for clients in args.clients:
         
-        for algorithm in args.algorithms:
+        for model in args.models:
 
-            for model in args.models:
+            for algorithm in args.algorithms:
                 default['clients'] = clients
                 default['algorithm'] = algorithm
                 default['model'] = model

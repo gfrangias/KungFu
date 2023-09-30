@@ -7,7 +7,7 @@ parser.add_argument('--clients', type=int, required=True,
 parser.add_argument('--nodes', type=int, required=True,
                     help='number of nodes in the network')
 parser.add_argument('--ips', type=str, required=True,
-                    help='a list of ips in the form: IP1:slots,IP2:slots,...')
+                    help='a list of ips in the form: IP1,IP2,...')
 parser.add_argument('--nic', type=str, required=True,
                     help='the NIC of the network')
 parser.add_argument('--json', type=str, required=True,
@@ -30,8 +30,8 @@ with open('json_experiments/'+args.json, 'r') as f:
 
 for experiment in experiments:
 
-    command = "kungfu-run -np %d -H %s python3 examples/fda_examples/tf2_mnist_experiment --epochs %d --model %s --batch %d --threshold %.2f --exper_type %s -l" % \
-        (args.clients, ips, experiment['epochs'], experiment['model'], experiment['batch_size'], experiment['threshold'], experiment['algorithm'])
+    command = "kungfu-run -np %d -H %s --nic %s python3 examples/fda_examples/tf2_mnist_experiment.py --epochs %d --model %s --batch %d --threshold %.2f --exper_type %s -l" % \
+        (args.clients, ips, args.nic, experiment['epochs'], experiment['model'], experiment['batch_size'], experiment['threshold'], experiment['algorithm'])
     
     if args.print:
         print(command)
