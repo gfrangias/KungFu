@@ -160,53 +160,44 @@ def training_step_naive(images, labels, first_step, last_sync_model):
 # Start timer
 steps_remainder = 0
 epoch = 1
-step_in_epoch = 0
+total_steps = 0
 duration = 0
 
 # Initialize last sync model
 last_sync_model = train_model.trainable_variables
 
-# Take the batches needed for this epoch and take the steps needed
-for step, (images, labels) in enumerate(train_dataset.take(steps_per_epoch*epochs)):
+train_dataset_iter = iter(train_dataset)
+
+for epoch in range(1, epochs+1):
     
-    start_time = time.time() 
-    # Take a training step
-    if(args.exper_type == "naive"):
-        batch_loss, last_sync_model = training_step_naive(images, labels, step == 0, last_sync_model)
-    elif(args.exper_type == "synchronous"):
-        batch_loss = training_step_synchronous(images, labels, step == 0)
-    end_time = time.time()
-    duration += end_time - start_time
-
-    step_in_epoch+=1
-
-    if step_in_epoch == steps_per_epoch and steps_remainder < 1:
-        if args.l and current_rank() == 0:
-            print("Epoch #%d\tSteps: %d\t Steps remainder: %.2f" % (epoch, step_in_epoch, steps_remainder))
-            print("Total Steps: %d\tSyncs: %d" % (step+1, syncs))
-            epoch_loss, epoch_accuracy = train_model.evaluate(test_dataset)
-            logs_dict.epoch_update(epoch_accuracy, epoch_loss, duration)
-        epoch += 1
-        step_in_epoch = 0
+    if args.l and current_rank() == 0 and epoch > 1:
+        total_steps += step + 1
+        print("Epoch #%d\tSteps: %d\t Steps remainder: %.2f" % (epoch-1, step+1, steps_remainder))
+        print("Total Steps: %d\tSyncs: %d" % (total_steps, syncs))
+        epoch_loss, epoch_accuracy = train_model.evaluate(test_dataset)
+        logs_dict.epoch_update(epoch_accuracy, epoch_loss, duration)
+    
+    if steps_remainder < 1 or epoch == 1:
         steps_remainder += steps_per_epoch_float - steps_per_epoch
-
-    if step_in_epoch > steps_per_epoch and steps_remainder >= 1:
-        if args.l and current_rank() == 0:
-            print("Epoch #%d\tSteps: %d\t Steps remainder: %.2f" % (epoch, step_in_epoch, steps_remainder))
-            print("Total Steps: %d\tSyncs: %d" % (step+1, syncs))
-            epoch_loss, epoch_accuracy = train_model.evaluate(test_dataset)
-            logs_dict.epoch_update(epoch_accuracy, epoch_loss, duration)            
-        epoch += 1
-        step_in_epoch = 0
+        steps_next_epoch = steps_per_epoch
+    else:
         steps_remainder = steps_remainder - 1
-    
-    # Log loss and accuracy data every 10 steps
-    #if (step % 10 == 0 or step == steps_per_epoch*epochs - 1) and args.l and current_rank() == 0:
-    #    logs_dict.step_update(step, syncs, batch_loss)
+        steps_next_epoch = steps_per_epoch + 1
 
-    # Print data to terminal
-   # if (((step % steps_per_epoch) % 10 == 0) or (step % (steps_per_epoch - 1) == 0)) and current_rank() == 0:
-   #     print('Epoch #%d\tStep #%d \tLoss: %.6f\tSyncs: %d' % (epoch, step_in_epoch, batch_loss, syncs))
+
+
+    # Take the batches needed for this epoch and take the steps needed
+    for step in range(steps_next_epoch):
+        images, labels = next(train_dataset_iter)
+
+        start_time = time.time() 
+        # Take a training step
+        if(args.exper_type == "naive"):
+            batch_loss, last_sync_model = training_step_naive(images, labels, step == 0, last_sync_model)
+        elif(args.exper_type == "synchronous"):
+            batch_loss = training_step_synchronous(images, labels, step == 0)
+        end_time = time.time()
+        duration += end_time - start_time
 
 if current_rank()==0:
     
@@ -218,4 +209,5 @@ if current_rank()==0:
         logs_dict.id_update()
         logs_df = logs_df(logs_dict)
         logs_df.append_in_csv()
+
 
