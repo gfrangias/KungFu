@@ -1,5 +1,4 @@
 import argparse
-import os
 import subprocess
 
 def main(args, job_name, output_name, error_name, num_nodes):
@@ -60,6 +59,8 @@ srun python3 run_experiments.py --clients $num_clients --nodes $num_nodes --ips 
     subprocess.run(['sbatch', args.script_name])
 
 if __name__ == "__main__":
+
+    # Get input parameters
     parser = argparse.ArgumentParser(description='Generate and submit a SLURM job')
     parser.add_argument('--special_name', default=None, help='Special naming for the job name')
     parser.add_argument('--clients', required=True, help='Number of clients')
@@ -72,11 +73,13 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
+    # Generate SLURM job name
     if args.special_name is None:
         job_name = 'kf.cl'+args.clients
     else:
         job_name = 'kf.cl'+args.clients+'.'+args.special_name
     
+    # Output files names
     output_name = job_name+'.out'
     error_name = job_name+'.err'
 
@@ -92,5 +95,6 @@ if __name__ == "__main__":
 
     print(f"{num_nodes} nodes will be used!")
     
+    # Generate SLURM job script
     main(args, job_name, output_name, error_name, num_nodes)
 

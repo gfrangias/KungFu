@@ -6,38 +6,45 @@ def generate_combinations(args):
     default = {}
     default['exper_id'] = -1
 
-    for clients in args.clients:
-        
-        for model in args.models:
+    for _ in range(args.repetitions):
 
-            for algorithm in args.algorithms:
-                default['clients'] = clients
-                default['algorithm'] = algorithm
-                default['model'] = model
-                default['threshold'] = args.thresholds[0]
-                if algorithm == "synchronous": default['threshold'] = 0.0
-                default['batch_size'] = args.batch_sizes[0]
-                default['epochs'] = args.epochs
-                default['exper_id']+=1
+        for clients in args.clients:
+            
+            for model in args.models:
 
-                combinations.append(default.copy())
+                for algorithm in args.algorithms:
 
-                if algorithm != "synchronous":
-                    for threshold in args.thresholds[1:]:
+                    # Dict default stores the default values of each parameter
+                    default['clients'] = clients
+                    default['algorithm'] = algorithm
+                    default['model'] = model
+                    default['threshold'] = args.thresholds[0]
+                    if algorithm == "synchronous": default['threshold'] = 0.0
+                    default['batch_size'] = args.batch_sizes[0]
+                    default['epochs'] = args.epochs
+                    default['exper_id']+=1
+
+                    combinations.append(default.copy())
+
+                    # Threshold is relevant only for FDA methods
+                    if algorithm != "synchronous":
+                        for threshold in args.thresholds[1:]:
+                            default['exper_id']+=1
+                            temp = default.copy()
+                            temp['threshold'] = threshold
+                            combinations.append(temp.copy())
+
+                    for batch_size in args.batch_sizes[1:]:
                         default['exper_id']+=1
                         temp = default.copy()
-                        temp['threshold'] = threshold
+                        temp['batch_size'] = batch_size
                         combinations.append(temp.copy())
-
-                for batch_size in args.batch_sizes[1:]:
-                    default['exper_id']+=1
-                    temp = default.copy()
-                    temp['batch_size'] = batch_size
-                    combinations.append(temp.copy())
         
     return combinations
 
 if __name__ == "__main__":
+
+    # Get the input arguments
     parser = argparse.ArgumentParser(description='Create a JSON file configuration of experiments parameters.')
     parser.add_argument('--clients', type=int, nargs="+", help='number of clients in the network')
     parser.add_argument("--algorithms", type=str, nargs="+", help="algorithms used")
@@ -49,13 +56,16 @@ if __name__ == "__main__":
     parser.add_argument('--print', action="store_true", help="print json")
     args = parser.parse_args()
     
+    # Generate all possible combinations
     combinations = generate_combinations(args)
-    combinations = combinations * args.repetitions
     
+    # Generate the JSON file name
     json_file_name = "json_experiments/experiments_"+"_".join([str(clients) for clients in args.clients])+".json"
 
+    # If --print just print the parameters combinations
     if args.print:
         print('\n'.join(map(str, combinations)))
+    # Else write the combinations in the JSON file
     else:
         # Save to JSON file
         with open(json_file_name, 'w') as f:
