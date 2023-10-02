@@ -1,12 +1,12 @@
-import tensorflow as tf
-if tf.config.list_physical_devices('GPU'):
-        for gpu in tf.config.experimental.list_physical_devices('GPU'):
-                tf.config.experimental.set_memory_growth(gpu,True)
-
 from kungfu.python import current_cluster_size, current_rank
 from kungfu.tensorflow.ops import group_all_reduce
 from kungfu.tensorflow.optimizers import MySynchronousSGDOptimizer
 from kungfu._utils import map_maybe
+
+import tensorflow as tf
+if tf.config.list_physical_devices('GPU'):
+        for gpu in tf.config.experimental.list_physical_devices('GPU'):
+                tf.config.experimental.set_memory_growth(gpu,True)
 
 import os, argparse, time
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
