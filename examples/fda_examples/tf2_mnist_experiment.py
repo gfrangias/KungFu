@@ -27,6 +27,10 @@ parser.add_argument('--batch', type=int, default=64,
 parser.add_argument("-l", action="store_true", help="Enable logs")
 parser.add_argument("--threshold", type=float, default= 1.1,
                      help="synchronization threshold")
+parser.add_argument("--clients_per_node", type=str, 
+                    default='[]', help="Client and node configuration")
+parser.add_argument("--optimizer", type=str, 
+                    default='Adam', help='Optimizer used')
 parser.add_argument("--exper_type", type=str, default= "synchronous",
                      help="type of experiment algorithm")
 args = parser.parse_args()
@@ -44,8 +48,8 @@ if current_rank() == 0 and args.l:
     print("Steps per Epoch: "+ str(steps_per_epoch))
     print("Steps per Epoch in float: "+str(steps_per_epoch_float))
 
-    if args.exper_type == "synchronous": logs_dict = logs_dict("Synchronous SGD", args.model, current_cluster_size(), None, args.batch, steps_per_epoch, epochs)
-    elif args.exper_type == "naive": logs_dict = logs_dict("Naive FDA", args.model, current_cluster_size(), args.threshold, args.batch, steps_per_epoch, epochs)
+    if args.exper_type == "synchronous": logs_dict = logs_dict("Synchronous SGD", args.model, current_cluster_size(), args.clients_per_node,None, args.batch, steps_per_epoch, epochs)
+    elif args.exper_type == "naive": logs_dict = logs_dict("Naive FDA", args.model, current_cluster_size(), args.clients_per_node, args.threshold, args.batch, steps_per_epoch, epochs) 
 
 
 # Create selected model

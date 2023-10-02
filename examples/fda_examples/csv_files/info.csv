@@ -1,3 +1,0 @@
-exper_id,exper_type,model_type,nodes,epochs,threshold,batch_size,duration,timestamp,steps_per_epoch,data_sync,data_non_sync
-0,Synchronous SGD,lenet5,5,10,,32,58.35315155982971,01-10-2023 18:11,375,0.246824,4e-06
-1,Synchronous SGD,lenet5,5,10,,64,37.903356313705444,01-10-2023 18:14,187,0.246824,4e-06
