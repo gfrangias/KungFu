@@ -48,7 +48,7 @@ done
 
 echo "IP List: $ip_list"
 
-srun python3 run_experiments.py --clients {num_clients} --nodes {num_nodes} --ips $ip_list --nic "eth0" --json {args.json}
+srun python3 run_experiments.py --clients {args.clients} --nodes {num_nodes} --ips $ip_list --nic "eth0" --json {args.json}
 
 """
     # Save the SLURM script to a file
