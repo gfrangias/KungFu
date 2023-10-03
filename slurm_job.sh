@@ -8,7 +8,7 @@
 #SBATCH --ntasks-per-node=1
 #SBATCH --mem=32G
 #SBATCH --time=01:00:00
-#SBATCH --partition=gpu
+#SBATCH --partition=compute
 #SBATCH --account=pa230902
 
 module purge
