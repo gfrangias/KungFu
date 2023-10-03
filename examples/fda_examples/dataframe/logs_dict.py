@@ -24,6 +24,8 @@ class logs_dict:
         }
 
         self.epoch_data = {
+            "epoch" : [],
+            "syncs" : [],
             "accuracy" : [],
             "loss" : [],
             "time" : []
@@ -32,19 +34,32 @@ class logs_dict:
         self.step_data = {
 
             "step" : [],
+            "epoch" : [],
             "syncs" : [],
             "loss" : [],
+            "time" : []
         }
     
-    def step_update(self, step, syncs, loss):
+    def step_update(self, step, epoch, syncs, loss, time):
         self.step_data["step"].append(step)
+        self.step_data["epoch"].append(int(epoch))
+
         if  tf.is_tensor(syncs):
             self.step_data["syncs"].append(syncs.numpy())
         else:
             self.step_data["syncs"].append(syncs)
+        
         self.step_data["loss"].append(loss.numpy())
-    
-    def epoch_update(self, accuracy, loss, time=0):
+        self.step_data["time"].append(time)
+
+    def epoch_update(self, epoch, syncs, accuracy, loss, time=0):
+        self.epoch_data["epoch"].append(epoch)
+
+        if  tf.is_tensor(syncs):
+            self.epoch_data["syncs"].append(syncs.numpy())
+        else:
+            self.epoch_data["syncs"].append(syncs)
+
         self.epoch_data["accuracy"].append(accuracy)
         self.epoch_data["loss"].append(loss)
         self.epoch_data["time"].append(time)

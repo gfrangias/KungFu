@@ -43,3 +43,24 @@ class data_analysis:
 
     #def print_syncs_accuracy(self):
 
+    def group_repeated_expers(self, attributes, label=None, print=False):
+
+        # Group by multiple columns
+        grouped = self.dfs[0].groupby(attributes)
+
+        # Initialize an empty dictionary to store the result
+        result = {}
+
+        # Iterate through each group and collect the IDs
+        for name, group in grouped:
+            ids = group['exper_id'].tolist()
+            
+            # If a label is specified, use it to map the output
+            if label:
+                label_value = group[label].iloc[0]
+                result[label_value] = ids
+            else:
+                result[name] = ids
+
+        if print: print(result)
+        return(result)

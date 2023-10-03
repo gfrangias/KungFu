@@ -163,7 +163,6 @@ def training_step_naive(images, labels, first_step, last_sync_model):
 
 # Start timer
 steps_remainder = 0
-epoch = 1
 total_steps = 0
 duration = 0
 
@@ -174,13 +173,6 @@ train_dataset_iter = iter(train_dataset)
 
 for epoch in range(1, epochs+1):
     
-    if args.l and current_rank() == 0 and epoch > 1:
-        total_steps += step + 1
-        print("Epoch #%d\tSteps: %d\t Steps remainder: %.2f" % (epoch-1, step+1, steps_remainder))
-        print("Total Steps: %d\tSyncs: %d" % (total_steps, syncs))
-        epoch_loss, epoch_accuracy = train_model.evaluate(test_dataset)
-        logs_dict.epoch_update(epoch_accuracy, epoch_loss, duration)
-    
     if steps_remainder < 1 or epoch == 1:
         steps_remainder += steps_per_epoch_float - steps_per_epoch
         steps_next_epoch = steps_per_epoch
@@ -188,13 +180,13 @@ for epoch in range(1, epochs+1):
         steps_remainder = steps_remainder - 1
         steps_next_epoch = steps_per_epoch + 1
 
-
-
     # Take the batches needed for this epoch and take the steps needed
     for step in range(steps_next_epoch):
         images, labels = next(train_dataset_iter)
 
+        total_steps += 1
         start_time = time.time() 
+        
         # Take a training step
         if(args.exper_type == "naive"):
             batch_loss, last_sync_model = training_step_naive(images, labels, step == 0, last_sync_model)
@@ -203,10 +195,18 @@ for epoch in range(1, epochs+1):
         end_time = time.time()
         duration += end_time - start_time
 
-if current_rank()==0:
+        # Log loss and syncs data at every step
+        if args.l and current_rank() == 0:
+            logs_dict.step_update(total_steps, epoch, syncs, batch_loss, duration)
     
-    epoch_loss, epoch_accuracy = train_model.evaluate(test_dataset)
-    logs_dict.epoch_update(epoch_accuracy, epoch_loss, duration) 
+    if args.l and current_rank() == 0:
+
+        print("Epoch #%d\tSteps: %d\t Steps remainder: %.2f" % (epoch, step+1, steps_remainder))
+        print("Total Steps: %d\tSyncs: %d" % (total_steps, syncs))
+        epoch_loss, epoch_accuracy = train_model.evaluate(test_dataset)
+        logs_dict.epoch_update(epoch, syncs, epoch_accuracy, epoch_loss, duration)
+
+if current_rank()==0:
 
     # Update training logs and export using pickle
     if args.l: 
