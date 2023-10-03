@@ -38,7 +38,7 @@ with open('json_experiments/'+args.json, 'r') as f:
 for experiment in experiments:
 
     # Create the KungFu command
-    command = "kungfu-run -np %d -H %s --nic %s python3 examples/fda_examples/tf2_mnist_experiment.py --epochs %d --model %s --batch %d --threshold %.2f --exper_type %s --clients_per_node %s --optimizer %s -l" % \
+    command = "kungfu-run -np %d -H %s --nic %s python3 examples/fda_examples/tf2_mnist_experiment.py --epochs %d --model %s --batch %d --threshold %.2f --exper_type %s --clients_per_node "%s" --optimizer %s -l" % \
         (args.clients, ips, args.nic, experiment['epochs'], experiment['model'], experiment['batch_size'], experiment['threshold'], experiment['algorithm'], str(clients_per_node), experiment['optimizer'])
     
     # If --print then just print the commands
