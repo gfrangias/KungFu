@@ -204,7 +204,7 @@ for epoch in range(1, epochs+1):
         print("Epoch #%d\tSteps: %d\t Steps remainder: %.2f" % (epoch, step+1, steps_remainder))
         print("Total Steps: %d\tSyncs: %d" % (total_steps, syncs))
         epoch_loss, epoch_accuracy = train_model.evaluate(test_dataset)
-        logs_dict.epoch_update(epoch, syncs, epoch_accuracy, epoch_loss, duration)
+        logs_dict.epoch_update(epoch, total_steps, syncs, epoch_accuracy, epoch_loss, duration)
 
 if current_rank()==0:
 

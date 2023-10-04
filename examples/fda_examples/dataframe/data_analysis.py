@@ -64,3 +64,37 @@ class data_analysis:
 
         if print: print(result)
         return(result)
+    
+    def get_values_from_id(self, table, attributes, id):
+
+        result = self.dfs[table].loc[self.dfs[table]['exper_id'] == id, attributes]
+
+        return result
+    
+    def min_max_mean_of_rows(self, table, attributes, ids):
+
+        result_dict = {}
+
+        for labels, id_list in ids.items():
+            temp_dfs = []
+            for id in id_list:
+                result = self.get_values_from_id(table, attributes, id)
+                temp_dfs.append(result.set_index(attributes[0]))
+            
+            # Combine the DataFrames
+            combined_df = pd.concat(temp_dfs, keys=range(len(temp_dfs)))
+
+            # Calculate the mean accuracy for each epoch
+            agg_df = combined_df.groupby(attributes[0]).agg(
+                mean=(attributes[1], 'mean'),
+                min=(attributes[1], 'min'),
+                max=(attributes[1], 'max')
+                ).reset_index()
+
+        return result_dict, attributes
+    
+    def epoch_step_with_info(self):
+        self.dfs[2] = pd.merge(self.dfs[0], self.dfs[2], on='exper_id')
+
+
+

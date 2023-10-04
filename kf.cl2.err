@@ -1,300 +1,300 @@
 [W] invalid valud of CUDA_VISIBLE_DEVICES: "NoDevFiles"
 [W] invalid valud of CUDA_VISIBLE_DEVICES: "NoDevFiles"
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:03:43.165851: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.10.1
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:03:43.165852: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.10.1
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:03:53.556382: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:03:53.556383: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:03:53.584112: E tensorflow/stream_executor/cuda/cuda_driver.cc:328] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:03:53.584099: E tensorflow/stream_executor/cuda/cuda_driver.cc:328] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:03:53.584180: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu28
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:03:53.584199: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu28
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:03:53.584175: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu28
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:03:53.584196: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu28
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:03:53.584404: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:03:53.584400: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:03:53.584499: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:03:53.584531: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:03:53.584493: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:03:53.584531: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:03:53.585384: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:03:53.585383: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:03:53.604484: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 2600020000 Hz
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:03:53.604501: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 2600020000 Hz
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:03:53.608008: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x4aa7610 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:03:53.608044: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:03:53.608479: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x46ae4f0 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:03:53.608522: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:03:55.674040: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:03:55.710636: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:42:45.132579: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.10.1
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:42:45.132579: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.10.1
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:42:56.472635: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:42:56.472637: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:42:56.564557: E tensorflow/stream_executor/cuda/cuda_driver.cc:328] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:42:56.564604: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu11
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:42:56.564614: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu11
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:42:56.564563: E tensorflow/stream_executor/cuda/cuda_driver.cc:328] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:42:56.564645: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu11
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:42:56.564688: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu11
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:42:56.564742: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:42:56.564792: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:42:56.564804: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:42:56.564883: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:42:56.564982: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:42:56.565003: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:42:56.565498: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:42:56.565789: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:42:56.577962: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 2600120000 Hz
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:42:56.581283: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x41d9260 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:42:56.581309: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:42:56.584704: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 2600120000 Hz
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:42:56.588217: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x5558640 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:42:56.588256: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:42:58.921855: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:42:58.927618: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
 [W] invalid valud of CUDA_VISIBLE_DEVICES: "NoDevFiles"
 [W] invalid valud of CUDA_VISIBLE_DEVICES: "NoDevFiles"
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:06:13.775315: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.10.1
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:06:13.775316: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.10.1
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:06:23.770124: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:06:23.770124: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:06:23.799192: E tensorflow/stream_executor/cuda/cuda_driver.cc:328] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:06:23.799201: E tensorflow/stream_executor/cuda/cuda_driver.cc:328] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:06:23.799271: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu28
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:06:23.799292: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu28
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:06:23.799265: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu28
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:06:23.799284: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu28
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:06:23.799517: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:06:23.799517: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:06:23.799618: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:06:23.799612: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:06:23.799639: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:06:23.799633: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:06:23.800471: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:06:23.800471: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:06:23.813133: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 2600020000 Hz
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:06:23.815901: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x546c590 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:06:23.815923: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:06:23.817481: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 2600020000 Hz
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:06:23.820290: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x5736150 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:06:23.820313: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:06:26.059768: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:06:26.135005: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:45:17.288511: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.10.1
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:45:17.288512: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.10.1
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:45:26.647071: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:45:26.647063: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:45:26.677252: E tensorflow/stream_executor/cuda/cuda_driver.cc:328] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:45:26.677244: E tensorflow/stream_executor/cuda/cuda_driver.cc:328] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:45:26.677323: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu11
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:45:26.677323: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu11
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:45:26.677345: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu11
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:45:26.677342: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu11
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:45:26.677561: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:45:26.677562: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:45:26.677658: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:45:26.677687: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:45:26.677769: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:45:26.677798: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:45:26.678499: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:45:26.678626: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:45:26.696946: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 2600120000 Hz
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:45:26.697127: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 2600120000 Hz
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:45:26.699882: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x4e09150 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:45:26.699901: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:45:26.700013: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x5795540 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:45:26.700051: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:45:29.041537: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:45:29.045745: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
 [W] invalid valud of CUDA_VISIBLE_DEVICES: "NoDevFiles"
 [W] invalid valud of CUDA_VISIBLE_DEVICES: "NoDevFiles"
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:08:45.111689: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.10.1
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:08:45.111689: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.10.1
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:08:54.554922: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:08:54.554921: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:08:54.583049: E tensorflow/stream_executor/cuda/cuda_driver.cc:328] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:08:54.583049: E tensorflow/stream_executor/cuda/cuda_driver.cc:328] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:08:54.583131: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu28
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:08:54.583151: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu28
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:08:54.583124: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu28
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:08:54.583145: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu28
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:08:54.583352: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:08:54.583361: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:08:54.583441: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:08:54.583462: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:08:54.583448: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:08:54.583466: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:08:54.584312: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:08:54.584311: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:08:54.599881: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 2600020000 Hz
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:08:54.600014: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 2600020000 Hz
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:08:54.602770: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x43b34d0 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:08:54.602792: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:08:54.602914: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x504d0d0 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:08:54.602933: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:08:56.640525: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:08:56.680520: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:47:48.339190: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.10.1
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:47:48.339191: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.10.1
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:47:57.786977: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:47:57.786972: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:47:57.816744: E tensorflow/stream_executor/cuda/cuda_driver.cc:328] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:47:57.816739: E tensorflow/stream_executor/cuda/cuda_driver.cc:328] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:47:57.816817: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu11
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:47:57.816838: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu11
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:47:57.816824: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu11
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:47:57.816845: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu11
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:47:57.817048: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:47:57.817058: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:47:57.817144: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:47:57.817164: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:47:57.817153: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:47:57.817174: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:47:57.818001: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:47:57.817995: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:47:57.835925: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 2600120000 Hz
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:47:57.836320: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 2600120000 Hz
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:47:57.838593: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x5e0f510 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:47:57.838611: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:47:57.839201: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x404d460 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:47:57.839220: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:47:59.856080: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:47:59.864933: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
 [W] invalid valud of CUDA_VISIBLE_DEVICES: "NoDevFiles"
 [W] invalid valud of CUDA_VISIBLE_DEVICES: "NoDevFiles"
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:11:15.056807: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.10.1
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:11:15.056807: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.10.1
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:11:24.785089: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:11:24.785077: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:11:24.813135: E tensorflow/stream_executor/cuda/cuda_driver.cc:328] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:11:24.813130: E tensorflow/stream_executor/cuda/cuda_driver.cc:328] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:11:24.813209: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu28
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:11:24.813228: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu28
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:11:24.813205: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu28
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:11:24.813225: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu28
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:11:24.813453: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:11:24.813450: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:11:24.813550: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:11:24.813571: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:11:24.813559: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:11:24.813580: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:11:24.814425: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:11:24.814424: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:11:24.830185: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 2600020000 Hz
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:11:24.830371: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 2600020000 Hz
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:11:24.833142: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x5b65290 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:11:24.833161: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:11:24.833576: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x52a45b0 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:11:24.833595: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:11:27.101032: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:11:27.106864: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:50:18.012410: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.10.1
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:50:18.012435: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.10.1
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:50:27.381183: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:50:27.381177: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:50:27.430789: E tensorflow/stream_executor/cuda/cuda_driver.cc:328] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:50:27.430790: E tensorflow/stream_executor/cuda/cuda_driver.cc:328] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:50:27.430878: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu11
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:50:27.430866: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu11
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:50:27.430898: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu11
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:50:27.430885: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu11
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:50:27.431094: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:50:27.431116: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:50:27.431184: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:50:27.431205: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:50:27.431211: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:50:27.431230: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:50:27.431980: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:50:27.432085: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:50:27.447974: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 2600120000 Hz
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:50:27.448856: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 2600120000 Hz
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:50:27.450999: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x525f4f0 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:50:27.451015: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:50:27.451547: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x4079370 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:50:27.451567: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:50:29.747939: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:50:29.762511: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
 [W] invalid valud of CUDA_VISIBLE_DEVICES: "NoDevFiles"
 [W] invalid valud of CUDA_VISIBLE_DEVICES: "NoDevFiles"
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:13:46.409425: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.10.1
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:13:46.409425: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.10.1
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:13:55.649645: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:13:55.649644: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:13:55.678138: E tensorflow/stream_executor/cuda/cuda_driver.cc:328] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:13:55.678132: E tensorflow/stream_executor/cuda/cuda_driver.cc:328] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:13:55.678225: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu28
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:13:55.678223: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu28
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:13:55.678247: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu28
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:13:55.678247: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu28
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:13:55.678456: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:13:55.678456: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:13:55.678559: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:13:55.678583: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:13:55.678569: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:13:55.678589: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:13:55.679459: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:13:55.679459: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:13:55.697107: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 2600020000 Hz
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:13:55.697085: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 2600020000 Hz
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:13:55.700141: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x4561000 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:13:55.700178: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:13:55.700389: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x534b270 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:13:55.700409: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:13:57.739395: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:13:57.784373: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:52:49.153127: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.10.1
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:52:49.153127: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.10.1
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:52:59.584324: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:52:59.584324: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:52:59.612816: E tensorflow/stream_executor/cuda/cuda_driver.cc:328] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:52:59.612894: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu11
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:52:59.612914: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu11
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:52:59.612864: E tensorflow/stream_executor/cuda/cuda_driver.cc:328] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:52:59.612935: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu11
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:52:59.612954: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu11
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:52:59.613114: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:52:59.613150: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:52:59.613204: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:52:59.613225: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:52:59.613232: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:52:59.613248: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:52:59.614051: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:52:59.614051: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:52:59.629132: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 2600120000 Hz
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:52:59.629431: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 2600120000 Hz
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:52:59.631922: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x4ad30a0 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:52:59.631942: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:52:59.632282: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x47a2500 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:52:59.632303: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:53:01.690215: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:53:01.727978: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
 [W] invalid valud of CUDA_VISIBLE_DEVICES: "NoDevFiles"
 [W] invalid valud of CUDA_VISIBLE_DEVICES: "NoDevFiles"
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:16:15.577328: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.10.1
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:16:15.577328: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.10.1
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:16:24.885001: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:16:24.885000: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:16:24.910964: E tensorflow/stream_executor/cuda/cuda_driver.cc:328] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:16:24.911036: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu28
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:16:24.911055: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu28
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:16:24.910974: E tensorflow/stream_executor/cuda/cuda_driver.cc:328] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:16:24.911040: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu28
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:16:24.911059: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu28
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:16:24.911279: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:16:24.911279: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:16:24.911375: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:16:24.911382: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:16:24.911396: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:16:24.911402: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:16:24.912242: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:16:24.912242: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:16:24.928427: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 2600020000 Hz
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:16:24.929029: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 2600020000 Hz
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:16:24.931766: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x41f5390 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:16:24.931801: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:16:24.931959: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x5293550 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:16:24.931978: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:16:27.175918: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:16:27.238455: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:55:21.856812: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.10.1
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:55:21.858254: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.10.1
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:55:48.058042: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:55:48.058147: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:55:48.096004: E tensorflow/stream_executor/cuda/cuda_driver.cc:328] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:55:48.095998: E tensorflow/stream_executor/cuda/cuda_driver.cc:328] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:55:48.096085: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu11
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:55:48.096105: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu11
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:55:48.096075: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu11
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:55:48.096096: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu11
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:55:48.096302: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:55:48.096311: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:55:48.096405: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:55:48.096398: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:55:48.096428: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:55:48.096419: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:55:48.097228: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:55:48.097227: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:55:48.115563: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 2600120000 Hz
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:55:48.116308: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 2600120000 Hz
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:55:48.119032: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x5842720 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:55:48.119066: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:55:48.119149: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x592f780 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:55:48.119189: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:55:50.617276: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:55:50.644309: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
 [W] invalid valud of CUDA_VISIBLE_DEVICES: "NoDevFiles"
 [W] invalid valud of CUDA_VISIBLE_DEVICES: "NoDevFiles"
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:18:46.074011: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.10.1
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:18:46.074010: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.10.1
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:18:55.281608: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:18:55.281597: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:18:55.310109: E tensorflow/stream_executor/cuda/cuda_driver.cc:328] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:18:55.310098: E tensorflow/stream_executor/cuda/cuda_driver.cc:328] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:18:55.310181: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu28
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:18:55.310175: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu28
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:18:55.310202: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu28
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:18:55.310196: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu28
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:18:55.310407: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:18:55.310415: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:18:55.310498: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:18:55.310528: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:18:55.310515: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:18:55.310537: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:18:55.311367: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:18:55.311401: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:18:55.328365: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 2600020000 Hz
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:18:55.329037: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 2600020000 Hz
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:18:55.332055: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x55ce8d0 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:18:55.332075: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:18:55.332100: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x571b1f0 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:18:55.332136: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:18:57.464772: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:18:57.478784: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:58:12.823171: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.10.1
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:58:12.823172: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.10.1
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:58:43.122607: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:58:43.122601: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:58:43.166500: E tensorflow/stream_executor/cuda/cuda_driver.cc:328] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:58:43.166582: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu11
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:58:43.166603: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu11
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:58:43.166823: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:58:43.166919: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:58:43.166941: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:58:43.167448: E tensorflow/stream_executor/cuda/cuda_driver.cc:328] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:58:43.167524: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu11
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:58:43.167544: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu11
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:58:43.167749: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:58:43.167783: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:58:43.167842: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:58:43.167864: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:58:43.168630: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:58:43.182441: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 2600120000 Hz
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:58:43.185570: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x4023580 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:58:43.185593: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:58:43.186705: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 2600120000 Hz
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:58:43.189379: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x42b13e0 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:58:43.189396: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 16:58:45.366685: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 16:58:45.396446: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
 [W] invalid valud of CUDA_VISIBLE_DEVICES: "NoDevFiles"
 [W] invalid valud of CUDA_VISIBLE_DEVICES: "NoDevFiles"
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:21:16.074716: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.10.1
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:21:16.074716: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.10.1
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:21:25.390457: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:21:25.390456: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:21:25.418821: E tensorflow/stream_executor/cuda/cuda_driver.cc:328] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:21:25.418826: E tensorflow/stream_executor/cuda/cuda_driver.cc:328] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:21:25.418901: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu28
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:21:25.418910: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu28
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:21:25.418921: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu28
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:21:25.418929: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu28
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:21:25.419124: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:21:25.419142: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:21:25.419215: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:21:25.419233: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:21:25.419224: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:21:25.419243: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:21:25.420116: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:21:25.420115: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:21:25.437973: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 2600020000 Hz
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:21:25.438281: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 2600020000 Hz
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:21:25.441026: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x457efa0 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:21:25.441055: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:21:25.442625: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x5ae01d0 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:21:25.442660: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:21:27.773815: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:21:27.807899: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 17:01:06.136203: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.10.1
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 17:01:06.138148: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.10.1
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 17:01:35.906628: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 17:01:35.906733: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 17:01:35.945639: E tensorflow/stream_executor/cuda/cuda_driver.cc:328] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 17:01:35.945724: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu11
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 17:01:35.945744: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu11
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 17:01:35.945659: E tensorflow/stream_executor/cuda/cuda_driver.cc:328] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 17:01:35.945731: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu11
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 17:01:35.945752: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu11
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 17:01:35.945956: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 17:01:35.945955: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 17:01:35.946048: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 17:01:35.946069: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 17:01:35.946053: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 17:01:35.946073: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 17:01:35.946965: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 17:01:35.946965: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 17:01:35.965449: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 2600120000 Hz
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 17:01:35.965698: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 2600120000 Hz
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 17:01:35.968469: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x461a1d0 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 17:01:35.968488: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 17:01:35.968956: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x48dd3e0 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 17:01:35.968974: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 17:01:38.446579: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 17:01:38.478078: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
 [W] invalid valud of CUDA_VISIBLE_DEVICES: "NoDevFiles"
 [W] invalid valud of CUDA_VISIBLE_DEVICES: "NoDevFiles"
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:23:47.246447: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.10.1
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:23:47.246448: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.10.1
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:23:56.490616: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:23:56.490606: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:23:56.519198: E tensorflow/stream_executor/cuda/cuda_driver.cc:328] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:23:56.519281: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu28
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:23:56.519302: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu28
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:23:56.519202: E tensorflow/stream_executor/cuda/cuda_driver.cc:328] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:23:56.519286: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu28
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:23:56.519307: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu28
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:23:56.519512: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:23:56.519537: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:23:56.519614: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:23:56.519633: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:23:56.519629: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:23:56.519648: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:23:56.520412: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:23:56.520455: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:23:56.537380: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 2600020000 Hz
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:23:56.539056: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 2600020000 Hz
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:23:56.540245: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x4d724b0 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:23:56.540264: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:23:56.541934: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x5234190 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:23:56.541953: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:23:58.562503: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:23:58.592902: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 17:04:00.238388: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.10.1
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 17:04:00.238389: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.10.1
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 17:04:26.704214: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 17:04:26.704214: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 17:04:26.742443: E tensorflow/stream_executor/cuda/cuda_driver.cc:328] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 17:04:26.742515: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu11
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 17:04:26.742434: E tensorflow/stream_executor/cuda/cuda_driver.cc:328] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 17:04:26.742534: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu11
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 17:04:26.742509: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu11
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 17:04:26.742531: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu11
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 17:04:26.742765: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 17:04:26.742764: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 17:04:26.742863: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 17:04:26.742868: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 17:04:26.742885: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 17:04:26.742887: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 17:04:26.743752: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 17:04:26.743750: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 17:04:26.760086: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 2600120000 Hz
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 17:04:26.762820: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 2600120000 Hz
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 17:04:26.762906: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x408c5b0 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 17:04:26.762935: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 17:04:26.766743: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x47e1510 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 17:04:26.766779: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 17:04:28.950195: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 17:04:28.952796: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
 [W] invalid valud of CUDA_VISIBLE_DEVICES: "NoDevFiles"
 [W] invalid valud of CUDA_VISIBLE_DEVICES: "NoDevFiles"
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:26:17.156320: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.10.1
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:26:17.156319: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.10.1
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:26:26.280592: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:26:26.280592: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:26:26.310149: E tensorflow/stream_executor/cuda/cuda_driver.cc:328] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:26:26.310144: E tensorflow/stream_executor/cuda/cuda_driver.cc:328] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:26:26.310221: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu28
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:26:26.310222: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu28
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:26:26.310242: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu28
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:26:26.310244: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu28
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:26:26.310466: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:26:26.310468: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:26:26.310572: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:26:26.310565: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:26:26.310592: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:26:26.310588: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:26:26.311479: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:26:26.311479: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:26:26.328554: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 2600020000 Hz
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:26:26.328727: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 2600020000 Hz
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:26:26.331436: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x4f3a620 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:26:26.331456: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:26:26.331877: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x4f60300 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:26:26.331894: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
-[[1;34m172.16.240.8.10001[m::[1;35mstderr[m] 2023-10-02 17:26:28.651284: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
-[[1;32m172.16.240.8.10000[m::[1;35mstderr[m] 2023-10-02 17:26:28.657239: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 17:06:49.726431: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.10.1
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 17:06:49.733526: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.10.1
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 17:07:18.224371: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 17:07:18.224369: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 17:07:18.261838: E tensorflow/stream_executor/cuda/cuda_driver.cc:328] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 17:07:18.261918: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu11
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 17:07:18.261938: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu11
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 17:07:18.262080: E tensorflow/stream_executor/cuda/cuda_driver.cc:328] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 17:07:18.262152: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu11
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 17:07:18.262170: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu11
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 17:07:18.262135: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 17:07:18.262228: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 17:07:18.262247: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 17:07:18.262362: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 17:07:18.262455: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 17:07:18.262475: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 17:07:18.263059: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 17:07:18.263227: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 17:07:18.278772: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 2600120000 Hz
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 17:07:18.278987: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 2600120000 Hz
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 17:07:18.281908: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x4488140 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 17:07:18.281927: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 17:07:18.282449: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x456b2e0 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 17:07:18.282469: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+[[1;34m172.16.239.11.10001[m::[1;35mstderr[m] 2023-10-03 17:07:20.664989: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
+[[1;32m172.16.239.11.10000[m::[1;35mstderr[m] 2023-10-03 17:07:20.668701: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
