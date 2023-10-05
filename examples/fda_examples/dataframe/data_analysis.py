@@ -4,11 +4,12 @@ class data_analysis:
 
     def __init__(self):
 
-        self.directory = "examples/fda_examples/csv_files/"
+        self.directory = "../csv_files/"
         self.files = [self.directory + "info.csv", self.directory + "step.csv", \
                       self.directory + "epoch.csv"]
         self.dfs = [pd.read_csv(file) for file in self.files]
         self.num_of_exper = self.dfs[0].shape[0]
+        self.epoch_step_with_info()
 
     def print_info(self):
         
@@ -41,29 +42,20 @@ class data_analysis:
 
         return results
 
-    #def print_syncs_accuracy(self):
+    def group_repeated_expers(self, attributes, table=None):
 
-    def group_repeated_expers(self, attributes, label=None, print=False):
+        grouped_list = []
+
+        if table is None:
+            dfs = self.dfs
+        else:
+            dfs = [self.dfs[table]]
 
         # Group by multiple columns
-        grouped = self.dfs[0].groupby(attributes)
+        for df in dfs:
+            grouped_list.append(df.groupby(attributes))
 
-        # Initialize an empty dictionary to store the result
-        result = {}
-
-        # Iterate through each group and collect the IDs
-        for name, group in grouped:
-            ids = group['exper_id'].tolist()
-            
-            # If a label is specified, use it to map the output
-            if label:
-                label_value = group[label].iloc[0]
-                result[label_value] = ids
-            else:
-                result[name] = ids
-
-        if print: print(result)
-        return(result)
+        self.grouped_list = grouped_list
     
     def get_values_from_id(self, table, attributes, id):
 
@@ -93,8 +85,17 @@ class data_analysis:
 
         return result_dict, attributes
     
-    def epoch_step_with_info(self):
-        self.dfs[2] = pd.merge(self.dfs[0], self.dfs[2], on='exper_id')
+    def get_last_epoch(self):
+        # Find the maximum value in the 'epoch' column
+        max_epoch = self.dfs[2]['epoch'].max()
 
+        # Filter the DataFrame to get rows where 'epoch' is equal to the maximum value
+        self.dfs[1] = self.dfs[1][self.dfs[1]['epoch'] == max_epoch]
+        self.dfs[2] = self.dfs[2][self.dfs[2]['epoch'] == max_epoch]
+
+    def epoch_step_with_info(self):
+        
+        self.dfs[1] = pd.merge(self.dfs[0], self.dfs[1], on='exper_id')
+        self.dfs[2] = pd.merge(self.dfs[0], self.dfs[2], on='exper_id')
 
 
