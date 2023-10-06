@@ -7,7 +7,7 @@
 #SBATCH --nodes=4
 #SBATCH --ntasks-per-node=1
 #SBATCH --mem=32G
-#SBATCH --time=05:00:00
+#SBATCH --time=00:30:00
 #SBATCH --partition=gpu
 #SBATCH --account=pa230902
 
