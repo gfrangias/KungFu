@@ -84,7 +84,9 @@ def training_step_synchronous(images, labels, first_step):
     # Run one step of gradient descent by updating
     # the value of the variables to minimize the loss.
     opt.apply_gradients(zip(grads, train_model.trainable_variables))
+    start_time = time.time()
     summed_models = group_all_reduce(train_model.trainable_variables)
+    end_time = time.time() 
 
     num_of_nodes = tf.cast(current_cluster_size(), tf.float32)
     # Reduce the gradients of the current node based on the average of all nodes
@@ -100,7 +102,7 @@ def training_step_synchronous(images, labels, first_step):
         broadcast_variables(train_model.variables)
         broadcast_variables(opt.variables())
 
-    return batch_loss
+    return batch_loss, end_time - start_time
 
 #
 # Function that performs one training step of one batch
@@ -108,6 +110,7 @@ def training_step_synchronous(images, labels, first_step):
 @tf.function
 def training_step_naive(images, labels, first_step, last_sync_model):
     
+    agg_duration = 0.0
     # Open a GradientTape to record the operations run
     # during the forward pass, which enables auto-differentiation    
     with tf.GradientTape() as tape:
@@ -125,7 +128,7 @@ def training_step_naive(images, labels, first_step, last_sync_model):
     opt.apply_gradients(zip(grads, train_model.trainable_variables))
 
     if not first_step:
-        averaged_divergence = compute_averaged_divergence \
+        averaged_divergence, agg_duration = compute_averaged_divergence \
             (last_sync_model, train_model.trainable_variables, current_cluster_size())
         
     else:
@@ -140,7 +143,11 @@ def training_step_naive(images, labels, first_step, last_sync_model):
         #if current_rank() == 0: tf.print("Syncing!")
 
         syncs.assign_add(1)
+
+        start_time = time.time() 
         summed_models = group_all_reduce(train_model.trainable_variables)
+        end_time = time.time() 
+        agg_duration += end_time - start_time
 
         num_of_nodes = tf.cast(current_cluster_size(), tf.float32)
         # Reduce the gradients of the current node based on the average of all nodes
@@ -159,12 +166,13 @@ def training_step_naive(images, labels, first_step, last_sync_model):
         broadcast_variables(opt.variables())
         syncs.assign_add(1)
 
-    return batch_loss, last_sync_model
+    return batch_loss, last_sync_model, agg_duration
 
 # Start timer
 steps_remainder = 0
 total_steps = 0
 duration = 0
+agg_duration = 0
 
 # Initialize last sync model
 last_sync_model = train_model.trainable_variables
@@ -188,23 +196,24 @@ for epoch in range(1, epochs+1):
         start_time = time.time() 
         
         # Take a training step
-        if(args.exper_type == "naive"):
-            batch_loss, last_sync_model = training_step_naive(images, labels, step == 0, last_sync_model)
+        if args.exper_type == "naive":
+            batch_loss, last_sync_model, agg_duration_step = training_step_naive(images, labels, step == 0, last_sync_model)
         elif(args.exper_type == "synchronous"):
-            batch_loss = training_step_synchronous(images, labels, step == 0)
+            batch_loss, agg_duration_step = training_step_synchronous(images, labels, step == 0)
         end_time = time.time()
+        agg_duration += agg_duration_step
         duration += end_time - start_time
 
         # Log loss and syncs data at every step
         if args.l and current_rank() == 0:
-            logs_dict.step_update(total_steps, epoch, syncs, batch_loss, duration)
+            logs_dict.step_update(total_steps, epoch, syncs, batch_loss, duration, agg_duration)
     
     if args.l and current_rank() == 0:
 
         print("Epoch #%d\tSteps: %d\t Steps remainder: %.2f" % (epoch, step+1, steps_remainder))
         print("Total Steps: %d\tSyncs: %d" % (total_steps, syncs))
         epoch_loss, epoch_accuracy = train_model.evaluate(test_dataset)
-        logs_dict.epoch_update(epoch, total_steps, syncs, epoch_accuracy, epoch_loss, duration)
+        logs_dict.epoch_update(epoch, total_steps, syncs, epoch_accuracy, epoch_loss, duration, agg_duration)
 
 if current_rank()==0:
 
