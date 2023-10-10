@@ -1,14 +1,15 @@
-from kungfu.python import current_cluster_size, current_rank
-from kungfu.tensorflow.ops import group_all_reduce
-from kungfu.tensorflow.optimizers import MySynchronousSGDOptimizer
-from kungfu._utils import map_maybe
+import os, argparse, time
 
 import tensorflow as tf
 if tf.config.list_physical_devices('GPU'):
         for gpu in tf.config.experimental.list_physical_devices('GPU'):
                 tf.config.experimental.set_memory_growth(gpu,True)
+                
+from kungfu.python import current_cluster_size, current_rank
+from kungfu.tensorflow.ops import group_all_reduce
+from kungfu.tensorflow.optimizers import MySynchronousSGDOptimizer
+from kungfu._utils import map_maybe
 
-import os, argparse, time
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 from models.lenet5 import create_lenet5
 from models.adv_cnn import create_adv_cnn
@@ -84,9 +85,9 @@ def training_step_synchronous(images, labels, first_step):
     # Run one step of gradient descent by updating
     # the value of the variables to minimize the loss.
     opt.apply_gradients(zip(grads, train_model.trainable_variables))
-    start_time = time.time()
+    start_time = tf.timestamp()
     summed_models = group_all_reduce(train_model.trainable_variables)
-    end_time = time.time() 
+    end_time = tf.timestamp()
 
     num_of_nodes = tf.cast(current_cluster_size(), tf.float32)
     # Reduce the gradients of the current node based on the average of all nodes
@@ -110,7 +111,7 @@ def training_step_synchronous(images, labels, first_step):
 @tf.function
 def training_step_naive(images, labels, first_step, last_sync_model):
     
-    agg_duration = 0.0
+    agg_duration = tf.constant(0, dtype=tf.float64)
     # Open a GradientTape to record the operations run
     # during the forward pass, which enables auto-differentiation    
     with tf.GradientTape() as tape:
@@ -144,10 +145,10 @@ def training_step_naive(images, labels, first_step, last_sync_model):
 
         syncs.assign_add(1)
 
-        start_time = time.time() 
+        start_time = tf.timestamp()
         summed_models = group_all_reduce(train_model.trainable_variables)
-        end_time = time.time() 
-        agg_duration += end_time - start_time
+        end_time = tf.timestamp()
+        agg_duration = agg_duration + end_time - start_time
 
         num_of_nodes = tf.cast(current_cluster_size(), tf.float32)
         # Reduce the gradients of the current node based on the average of all nodes
@@ -201,7 +202,7 @@ for epoch in range(1, epochs+1):
         elif(args.exper_type == "synchronous"):
             batch_loss, agg_duration_step = training_step_synchronous(images, labels, step == 0)
         end_time = time.time()
-        agg_duration += agg_duration_step
+        agg_duration += agg_duration_step.numpy()
         duration += end_time - start_time
 
         # Log loss and syncs data at every step

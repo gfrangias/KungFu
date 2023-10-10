@@ -16,11 +16,11 @@ def compute_averaged_divergence(last_sync_model, local_model, num_of_nodes):
     local_divergence =  tf.norm(local_model_vector - last_sync_model_vector, 2)
     #tf.print("Local divergence: ")
 
-    start_time = time.time() 
+    start_time = tf.timestamp()
     # Calculate the average divergence of the network using all-reduce
     summed_divergences = all_reduce(local_divergence)
-    end_time = time.time()
-
+    end_time = tf.timestamp()
+    
     averaged_divergence = summed_divergences / num_of_nodes
 
     return averaged_divergence, end_time - start_time
