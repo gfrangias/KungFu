@@ -7,14 +7,17 @@ import time
 # Compute the divergence using the 2-norm for Naive FDA
 def compute_averaged_divergence(last_sync_model, local_model, num_of_nodes):
 
+    start_time_norm = tf.timestamp()
     # Convert the two tensor list models to vectors
-    last_sync_model_vector = tensor_list_to_vector(last_sync_model)
+    last_sync_model_vector = tensor_list_to_vector(last_sync_model.trainable_variables)
     local_model_vector = tensor_list_to_vector(local_model)
 
     # Local divergence is the norm of the local model drift in comparison to the 
     # last synced model
     local_divergence =  tf.norm(local_model_vector - last_sync_model_vector, 2)
     #tf.print("Local divergence: ")
+    #tf.print(local_divergence)
+    end_time_norm = tf.timestamp()
 
     start_time = tf.timestamp()
     # Calculate the average divergence of the network using all-reduce
@@ -23,7 +26,9 @@ def compute_averaged_divergence(last_sync_model, local_model, num_of_nodes):
     
     averaged_divergence = summed_divergences / num_of_nodes
 
-    return averaged_divergence, end_time - start_time
+    #tf.print("Averaged divergence: ")
+    #tf.print(averaged_divergence)
+    return averaged_divergence, end_time - start_time, end_time_norm - start_time_norm
 
 # Check if the divergence satisfies the RTC
 def rtc_check(divergence, threshold):

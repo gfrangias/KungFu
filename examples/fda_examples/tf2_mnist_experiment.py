@@ -1,4 +1,4 @@
-import os, argparse, time
+import os, argparse, time, copy
 
 import tensorflow as tf
 if tf.config.list_physical_devices('GPU'):
@@ -39,6 +39,8 @@ args = parser.parse_args()
 # Get number of inputs from input 
 epochs = args.epochs
 syncs = tf.Variable(0, dtype=tf.int32)
+agg_duration = tf.Variable(0, dtype=tf.float64)
+norm_duration = tf.Variable(0, dtype=tf.float64)
 
 # Load mnist dataset
 train_dataset, test_dataset, steps_per_epoch, steps_per_epoch_float = \
@@ -56,8 +58,12 @@ if current_rank() == 0 and args.l:
 # Create selected model
 if args.model == "lenet5":
     train_model, loss_fun = create_lenet5(input_shape=(28,28,1), num_classes=10)
+    last_sync_model, loss_fun_last_sync = create_lenet5(input_shape=(28,28,1), num_classes=10)
+    last_sync_model.build((None,28,28))    
 elif args.model == "adv_cnn":
     train_model, loss_fun = create_adv_cnn(input_shape=(28,28,1), num_classes=10)
+    last_sync_model, loss_fun_last_sync = create_adv_cnn(input_shape=(28,28,1), num_classes=10)
+    last_sync_model.build((None,28,28))
 
 # Set Adam along with KungFu Synchronous SGD optimizer
 opt = tf.keras.optimizers.Adam()
@@ -68,6 +74,7 @@ opt = tf.keras.optimizers.Adam()
 @tf.function
 def training_step_synchronous(images, labels, first_step):
     
+    if current_rank() == 0: print("Retrace")
     # Open a GradientTape to record the operations run
     # during the forward pass, which enables auto-differentiation    
     with tf.GradientTape() as tape:
@@ -88,6 +95,7 @@ def training_step_synchronous(images, labels, first_step):
     start_time = tf.timestamp()
     summed_models = group_all_reduce(train_model.trainable_variables)
     end_time = tf.timestamp()
+    agg_duration.assign_add(end_time - start_time)
 
     num_of_nodes = tf.cast(current_cluster_size(), tf.float32)
     # Reduce the gradients of the current node based on the average of all nodes
@@ -109,9 +117,9 @@ def training_step_synchronous(images, labels, first_step):
 # Function that performs one training step of one batch
 #
 @tf.function
-def training_step_naive(images, labels, first_step, last_sync_model):
+def training_step_naive(images, labels, first_step):
     
-    agg_duration = tf.constant(0, dtype=tf.float64)
+    if current_rank() == 0: print("Retrace")
     # Open a GradientTape to record the operations run
     # during the forward pass, which enables auto-differentiation    
     with tf.GradientTape() as tape:
@@ -128,10 +136,15 @@ def training_step_naive(images, labels, first_step, last_sync_model):
 
     opt.apply_gradients(zip(grads, train_model.trainable_variables))
 
+    #if current_rank() == 0:
+    #    tf.print("New 1 last sync model: ")
+    #    tf.print(tf.norm(last_sync_model.trainable_variables[0]))
+
     if not first_step:
-        averaged_divergence, agg_duration = compute_averaged_divergence \
+        averaged_divergence, agg_duration_step, norm_duration_step = compute_averaged_divergence \
             (last_sync_model, train_model.trainable_variables, current_cluster_size())
-        
+        agg_duration.assign_add(agg_duration_step)    
+        norm_duration.assign_add(norm_duration_step)
     else:
         averaged_divergence = 0
     
@@ -139,25 +152,28 @@ def training_step_naive(images, labels, first_step, last_sync_model):
     #    tf.print("Averaged divergence: ")
     #    tf.print(averaged_divergence)
 
-
+    #tf.print(averaged_divergence)
     if rtc_check(averaged_divergence, args.threshold):
         #if current_rank() == 0: tf.print("Syncing!")
-
+        #tf.print("SYNC!")
         syncs.assign_add(1)
 
         start_time = tf.timestamp()
         summed_models = group_all_reduce(train_model.trainable_variables)
         end_time = tf.timestamp()
-        agg_duration = agg_duration + end_time - start_time
+        agg_duration.assign_add(end_time - start_time)
 
         num_of_nodes = tf.cast(current_cluster_size(), tf.float32)
         # Reduce the gradients of the current node based on the average of all nodes
         averaged_models = map_maybe(lambda g: g / num_of_nodes, summed_models)
         for variable, averaged_value in zip(train_model.trainable_variables, averaged_models):
             variable.assign(averaged_value)
-        last_sync_model = train_model.trainable_variables
-        #tf.print("New last sync model: ")
-        #tf.print(tf.norm(last_sync_model[0]))
+        for variable, averaged_value in zip(last_sync_model.trainable_variables, averaged_models):
+            variable.assign(averaged_value)
+
+        #if current_rank() == 0:
+        #    tf.print("New 2 last sync model: ")
+        #    tf.print(tf.norm(last_sync_model.trainable_variables[0]))
 
     # KungFu: broadcast is done after the first gradient step to ensure optimizer initialization.
     # This way all models across the network initialize with the same weights
@@ -167,16 +183,14 @@ def training_step_naive(images, labels, first_step, last_sync_model):
         broadcast_variables(opt.variables())
         syncs.assign_add(1)
 
-    return batch_loss, last_sync_model, agg_duration
+    return batch_loss, agg_duration, norm_duration
 
 # Start timer
 steps_remainder = 0
 total_steps = 0
 duration = 0
-agg_duration = 0
 
 # Initialize last sync model
-last_sync_model = train_model.trainable_variables
 
 train_dataset_iter = iter(train_dataset)
 
@@ -198,23 +212,24 @@ for epoch in range(1, epochs+1):
         
         # Take a training step
         if args.exper_type == "naive":
-            batch_loss, last_sync_model, agg_duration_step = training_step_naive(images, labels, step == 0, last_sync_model)
+            batch_loss, agg_duration_step, norm_duration_step = training_step_naive(images, labels, step == 0 and epoch == 1)
         elif(args.exper_type == "synchronous"):
-            batch_loss, agg_duration_step = training_step_synchronous(images, labels, step == 0)
+            batch_loss, agg_duration_step = training_step_synchronous(images, labels, step == 0 and epoch == 1)
+            norm_duration_step = tf.constant(0, dtype=tf.float64)
         end_time = time.time()
-        agg_duration += agg_duration_step.numpy()
         duration += end_time - start_time
 
         # Log loss and syncs data at every step
         if args.l and current_rank() == 0:
-            logs_dict.step_update(total_steps, epoch, syncs, batch_loss, duration, agg_duration)
+            logs_dict.step_update(total_steps, epoch, syncs, batch_loss, duration, agg_duration.numpy(), norm_duration.numpy())
     
     if args.l and current_rank() == 0:
 
         print("Epoch #%d\tSteps: %d\t Steps remainder: %.2f" % (epoch, step+1, steps_remainder))
         print("Total Steps: %d\tSyncs: %d" % (total_steps, syncs))
         epoch_loss, epoch_accuracy = train_model.evaluate(test_dataset)
-        logs_dict.epoch_update(epoch, total_steps, syncs, epoch_accuracy, epoch_loss, duration, agg_duration)
+        logs_dict.epoch_update(epoch, total_steps, syncs, epoch_accuracy, epoch_loss, duration, agg_duration.numpy(), norm_duration.numpy())
+
 
 if current_rank()==0:
 
@@ -223,5 +238,3 @@ if current_rank()==0:
         logs_dict.id_update()
         logs_df = logs_df(logs_dict)
         logs_df.append_in_csv()
-
-
