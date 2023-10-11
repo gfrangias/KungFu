@@ -71,10 +71,9 @@ opt = tf.keras.optimizers.Adam()
 #
 # Function that performs one training step of one batch
 #
-@tf.function
 def training_step_synchronous(images, labels, first_step):
     
-    if current_rank() == 0: print("Retrace")
+    #if current_rank() == 0: print("Retrace")
     # Open a GradientTape to record the operations run
     # during the forward pass, which enables auto-differentiation    
     with tf.GradientTape() as tape:
@@ -116,10 +115,9 @@ def training_step_synchronous(images, labels, first_step):
 #
 # Function that performs one training step of one batch
 #
-@tf.function
 def training_step_naive(images, labels, first_step):
     
-    if current_rank() == 0: print("Retrace")
+    #if current_rank() == 0: print("Retrace")
     # Open a GradientTape to record the operations run
     # during the forward pass, which enables auto-differentiation    
     with tf.GradientTape() as tape:

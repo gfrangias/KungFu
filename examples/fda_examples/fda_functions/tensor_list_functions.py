@@ -1,6 +1,5 @@
 import tensorflow as tf
 
-@tf.function
 def tensor_list_to_vector(tensor_list):
     return tf.concat([tf.reshape(var, [-1]) for var in tensor_list], axis=0)
 
