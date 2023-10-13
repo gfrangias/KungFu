@@ -3,8 +3,8 @@
 #SBATCH --job-name=kf.cl8
 #SBATCH --output=kf.cl8.out
 #SBATCH --error=kf.cl8.err
-#SBATCH --ntasks=4
-#SBATCH --nodes=4
+#SBATCH --ntasks=2
+#SBATCH --nodes=2
 #SBATCH --ntasks-per-node=1
 #SBATCH --mem=32G
 #SBATCH --time=10:00:00
@@ -28,7 +28,7 @@ export TF_XLA_FLAGS="--tf_xla_enable_xla_devices"
 ip_list=""
 
 num_clients="8"
-num_nodes="4"
+num_nodes="2"
 
 nodelist=$(scontrol show hostnames $SLURM_NODELIST)
 
@@ -43,5 +43,5 @@ done
 
 echo "IP List: $ip_list"
 
-srun python3 run_experiments.py --clients 8 --nodes 4 --ips $ip_list --nic "eth0" --json experiments_8.json
+srun python3 run_experiments.py --clients 8 --nodes 2 --ips $ip_list --nic "eth0" --json experiments_8.json
 
