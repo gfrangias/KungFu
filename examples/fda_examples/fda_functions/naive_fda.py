@@ -14,7 +14,9 @@ def compute_averaged_divergence(last_sync_model, local_model, num_of_nodes):
 
     # Local divergence is the norm of the local model drift in comparison to the 
     # last synced model
-    local_divergence =  tf.norm(local_model_vector - last_sync_model_vector, 2)
+    delta_i = local_model_vector - last_sync_model_vector
+    local_divergence =  tf.reduce_sum(tf.square(delta_i))
+    
     #tf.print("Local divergence: ")
     #tf.print(local_divergence)
     end_time_norm = tf.timestamp()
