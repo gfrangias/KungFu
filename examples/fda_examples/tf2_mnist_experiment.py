@@ -68,11 +68,10 @@ elif args.model == "adv_cnn":
 # Set Adam along with KungFu Synchronous SGD optimizer
 opt = tf.keras.optimizers.Adam()
 
-#
-# Function that performs one training step of one batch
-#
-def training_step_synchronous(images, labels, first_step):
-    
+@tf.function
+def training_step(images, labels):
+
+        
     #if current_rank() == 0: print("Retrace")
     # Open a GradientTape to record the operations run
     # during the forward pass, which enables auto-differentiation    
@@ -91,6 +90,14 @@ def training_step_synchronous(images, labels, first_step):
     # Run one step of gradient descent by updating
     # the value of the variables to minimize the loss.
     opt.apply_gradients(zip(grads, train_model.trainable_variables))
+
+#
+# Function that performs one training step of one batch
+#
+def training_step_synchronous(images, labels, first_step):
+
+    training_step(images, labels)
+
     start_time = tf.timestamp()
     summed_models = group_all_reduce(train_model.trainable_variables)
     end_time = tf.timestamp()
@@ -117,22 +124,7 @@ def training_step_synchronous(images, labels, first_step):
 #
 def training_step_naive(images, labels, first_step):
     
-    #if current_rank() == 0: print("Retrace")
-    # Open a GradientTape to record the operations run
-    # during the forward pass, which enables auto-differentiation    
-    with tf.GradientTape() as tape:
-        
-        # Predicted probability values
-        probs = train_model(images, training=True)
-        
-        # Compute the loss function for this minibatch
-        batch_loss = loss_fun(labels, probs)
-        
-    # Use the gradient tape to automatically retrieve
-    # the gradients of the trainable variables with respect to the loss.
-    grads = tape.gradient(batch_loss, train_model.trainable_variables)
-
-    opt.apply_gradients(zip(grads, train_model.trainable_variables))
+    training_step(images, labels)
 
     #if current_rank() == 0:
     #    tf.print("New 1 last sync model: ")
