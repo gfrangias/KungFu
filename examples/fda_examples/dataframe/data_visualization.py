@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 plt.rcParams['font.size'] = 14
-import pandas
 from data_analysis import data_analysis
 from matplotlib.cm import get_cmap
 
