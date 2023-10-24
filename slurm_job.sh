@@ -1,25 +1,24 @@
 #!/bin/bash -l
 
-#SBATCH --job-name=kf.cl4
-#SBATCH --output=kf.cl4.out
-#SBATCH --error=kf.cl4.err
-#SBATCH --ntasks=2
-#SBATCH --nodes=2
+#SBATCH --job-name=kf.cl16
+#SBATCH --output=kf.cl16.out
+#SBATCH --error=kf.cl16.err
+#SBATCH --ntasks=8
+#SBATCH --nodes=8
 #SBATCH --ntasks-per-node=1
 #SBATCH --mem=32G
-#SBATCH --time=12:00:00
+#SBATCH --time=06:00:00
 #SBATCH --partition=gpu
 #SBATCH --account=pa230902
 
 module purge
-
 module load gnu/8
 module load cuda/10.1.168
 module load intel/18
 module load intelmpi/2018
-module load tensorflow/2.4.1
-module load cmake/3.7.2
-conda activate kungfu-aris
+module load python/3.8.13
+module load tftorch/270-191
+
 export PATH=$HOME/.local/bin:$PATH
 
 export TF_XLA_FLAGS="--tf_xla_enable_xla_devices"
@@ -27,8 +26,8 @@ export TF_XLA_FLAGS="--tf_xla_enable_xla_devices"
 ## RUN YOUR PROGRAM ##
 ip_list=""
 
-num_clients="4"
-num_nodes="2"
+num_clients="16"
+num_nodes="8"
 
 nodelist=$(scontrol show hostnames $SLURM_NODELIST)
 
@@ -43,5 +42,5 @@ done
 
 echo "IP List: $ip_list"
 
-srun python3 run_experiments.py --clients 4 --nodes 2 --ips $ip_list --nic "eth0" --json experiments_4.json
+srun python3 run_experiments.py --clients 16 --nodes 8 --ips $ip_list --nic "eth0" --json experiments_16.json
 

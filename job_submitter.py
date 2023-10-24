@@ -17,14 +17,13 @@ def main(args, job_name, output_name, error_name, num_nodes):
 #SBATCH --account={args.account}
 
 module purge
-
 module load gnu/8
 module load cuda/10.1.168
 module load intel/18
 module load intelmpi/2018
-module load tensorflow/2.4.1
-module load cmake/3.7.2
-conda activate kungfu-aris
+module load python/3.8.13
+module load tftorch/270-191
+
 export PATH=$HOME/.local/bin:$PATH
 
 export TF_XLA_FLAGS="--tf_xla_enable_xla_devices"

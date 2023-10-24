@@ -91,12 +91,14 @@ def training_step(images, labels):
     # the value of the variables to minimize the loss.
     opt.apply_gradients(zip(grads, train_model.trainable_variables))
 
+    return batch_loss
+
 #
 # Function that performs one training step of one batch
 #
 def training_step_synchronous(images, labels, first_step):
 
-    training_step(images, labels)
+    batch_loss = training_step(images, labels)
 
     start_time = tf.timestamp()
     summed_models = group_all_reduce(train_model.trainable_variables)
@@ -124,7 +126,7 @@ def training_step_synchronous(images, labels, first_step):
 #
 def training_step_naive(images, labels, first_step):
     
-    training_step(images, labels)
+    batch_loss = training_step(images, labels)
 
     #if current_rank() == 0:
     #    tf.print("New 1 last sync model: ")
