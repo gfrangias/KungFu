@@ -36,8 +36,8 @@ threshold_str = str(args.threshold)
 threshold = tf.constant(threshold)
 method = args.fda
 epochs = int(args.epochs)
-steps_per_epoch_per_node = int(len(mnist_images) / (current_cluster_size() * 64))
-batches = steps_per_epoch_per_node * epochs
+epoch_steps_per_node = int(len(mnist_images) / (current_cluster_size() * 64))
+batches = epoch_steps_per_node * epochs
 print(batches)
 
 syncs_hist = []
@@ -48,7 +48,7 @@ dataset = tf.data.Dataset.from_tensor_slices(
     (tf.cast(mnist_images[..., tf.newaxis] / 255.0,
              tf.float32), tf.cast(mnist_labels, tf.int64)))
 
-dataset = dataset.repeat().shuffle(epochs*steps_per_epoch_per_node).batch(64)
+dataset = dataset.repeat().shuffle(epochs*epoch_steps_per_node).batch(64)
 
 
 mnist_model =  tf.keras.Sequential([
@@ -92,10 +92,10 @@ def tensor_to_tensor_list(tensor):
 
 # Compute the divergence using the 2-norm for Naive FDA
 @tf.function
-def compute_divergence_2_norm(last_sync_model, local_model):
-    last_sync_model_vector = tensor_list_to_vector(last_sync_model)
+def compute_divergence_2_norm(w_t0, local_model):
+    w_t0_vector = tensor_list_to_vector(w_t0)
     local_model_vector = tensor_list_to_vector(local_model)
-    norm_2 =  tf.norm(local_model_vector - last_sync_model_vector, 2)
+    norm_2 =  tf.norm(local_model_vector - w_t0_vector, 2)
     return tensor_to_tensor_list(norm_2)
 
 # Compute a random xi for the first synchronization
@@ -105,19 +105,19 @@ def random_xi(model):
     return tensor_to_tensor_list(xi_tensor)
 
 # Compute the "xi" unit vector
-def compute_xi(second_last_sync_model, last_sync_model):
-    last_sync_model_tensor = tensor_list_to_vector(last_sync_model) 
-    second_last_sync_model_tensor = tensor_list_to_vector(second_last_sync_model)
-    sync_models_diff_tensor = tf.abs(last_sync_model_tensor - second_last_sync_model_tensor)
+def compute_xi(second_w_t0, w_t0):
+    w_t0_tensor = tensor_list_to_vector(w_t0) 
+    second_w_t0_tensor = tensor_list_to_vector(second_w_t0)
+    sync_models_diff_tensor = tf.abs(w_t0_tensor - second_w_t0_tensor)
     xi = tf.divide(sync_models_diff_tensor, tf.norm(sync_models_diff_tensor))
     return tensor_to_tensor_list(xi)
 
 # Compute the dot product of xi and the model difference
 @tf.function
-def compute_xi_dot_diff(last_sync_model, local_model, xi):
-    last_sync_model_tensor = tensor_list_to_vector(last_sync_model) 
+def compute_xi_dot_diff(w_t0, local_model, xi):
+    w_t0_tensor = tensor_list_to_vector(w_t0) 
     local_model = tensor_list_to_vector(local_model)
-    models_diff_tensor = local_model - last_sync_model_tensor
+    models_diff_tensor = local_model - w_t0_tensor
     xi_tensor = tensor_list_to_vector(xi)
     xi_dot_diff = tf.tensordot(xi_tensor, models_diff_tensor, axes=1)
     return tensor_to_tensor_list(xi_dot_diff)
@@ -168,7 +168,7 @@ def save_csv(type ,batch_list, data_list, method, epochs, nodes, threshold, desc
 
 # Training step for Naive FDA
 @tf.function
-def training_step_naive(images, labels, first_batch, last_sync_model):
+def training_step_naive(images, labels, first_batch, w_t0):
     increment_counter()
     # Perform TensorFlow GradientTape
     with tf.GradientTape() as tape:
@@ -180,10 +180,10 @@ def training_step_naive(images, labels, first_batch, last_sync_model):
 
     # Apply the new gradients locally
     opt.apply_gradients(zip(grads, mnist_model.trainable_variables))
-    updated_last_sync_model = last_sync_model
+    updated_w_t0 = w_t0
 
     if not first_batch:
-        local_divergence = compute_divergence_2_norm(last_sync_model, mnist_model.trainable_variables)
+        local_divergence = compute_divergence_2_norm(w_t0, mnist_model.trainable_variables)
         summed_divergences = group_all_reduce(local_divergence)
         np = tf.cast(current_cluster_size(), tf.float32)
         averaged_divergence = map_maybe(lambda d: d / np, summed_divergences)
@@ -203,7 +203,7 @@ def training_step_naive(images, labels, first_batch, last_sync_model):
         averaged_models = map_maybe(lambda g: g / np, summed_models)
         for i, variable in enumerate(mnist_model.trainable_variables):
             variable.assign(averaged_models[i])
-        updated_last_sync_model = mnist_model.trainable_variables
+        updated_w_t0 = mnist_model.trainable_variables
         
     # KungFu: broadcast is done after the first gradient step to ensure optimizer initialization.
     if first_batch:
@@ -211,11 +211,11 @@ def training_step_naive(images, labels, first_batch, last_sync_model):
         broadcast_variables(mnist_model.variables)
         broadcast_variables(opt.variables())
 
-    return loss_value, updated_last_sync_model
+    return loss_value, updated_w_t0
 
 # Training step for Linear FDA
 @tf.function
-def training_step_linear(images, labels, first_batch, last_sync_model, xi):
+def training_step_linear(images, labels, first_batch, w_t0, xi):
     increment_counter()
     # Perform TensorFlow GradientTape
     with tf.GradientTape() as tape:
@@ -227,11 +227,11 @@ def training_step_linear(images, labels, first_batch, last_sync_model, xi):
 
     # Apply the new gradients locally
     opt.apply_gradients(zip(grads, mnist_model.trainable_variables))
-    updated_last_sync_model = last_sync_model
+    updated_w_t0 = w_t0
 
     if not first_batch:
-        local_divergence = compute_divergence_2_norm(last_sync_model, mnist_model.trainable_variables)
-        local_xi_dot_diff = compute_xi_dot_diff(last_sync_model, mnist_model.trainable_variables, xi)
+        local_divergence = compute_divergence_2_norm(w_t0, mnist_model.trainable_variables)
+        local_xi_dot_diff = compute_xi_dot_diff(w_t0, mnist_model.trainable_variables, xi)
 
         summed_divergences = group_all_reduce(local_divergence)
         summed_xi_dot_diff = group_all_reduce(local_xi_dot_diff)
@@ -261,8 +261,8 @@ def training_step_linear(images, labels, first_batch, last_sync_model, xi):
         if first_batch:
             xi = random_xi(mnist_model.trainable_variables)
         else:
-            xi = compute_xi(updated_last_sync_model, mnist_model.trainable_variables)
-        updated_last_sync_model = mnist_model.trainable_variables
+            xi = compute_xi(updated_w_t0, mnist_model.trainable_variables)
+        updated_w_t0 = mnist_model.trainable_variables
 
     # KungFu: broadcast is done after the first gradient step to ensure optimizer initialization.
     if first_batch:
@@ -270,13 +270,13 @@ def training_step_linear(images, labels, first_batch, last_sync_model, xi):
         broadcast_variables(mnist_model.variables)
         broadcast_variables(opt.variables())
 
-    return loss_value, updated_last_sync_model, xi
+    return loss_value, updated_w_t0, xi
 
 _ = mnist_model(tf.random.normal((1, 28, 28, 1), dtype=tf.float32))
 if current_rank == 0:
     print(mnist_model.summary())
 
-last_sync_model = [0.0] * len(mnist_model.trainable_variables)
+w_t0 = [0.0] * len(mnist_model.trainable_variables)
 xi = [0.0]
 # KungFu: adjust number of steps based on number of GPUs.
 start_time = time.time()
@@ -284,9 +284,9 @@ for batch, (images, labels) in enumerate(dataset):
     
     #print("Step #"+str(batch))
     if args.fda == 'naive':
-        loss_value, last_sync_model = training_step_naive(images, labels, batch == 0, last_sync_model)
+        loss_value, w_t0 = training_step_naive(images, labels, batch == 0, w_t0)
     elif args.fda == 'linear':
-        loss_value, last_sync_model, xi = training_step_linear(images, labels, batch == 0, last_sync_model, xi)
+        loss_value, w_t0, xi = training_step_linear(images, labels, batch == 0, w_t0, xi)
     elif args.fda == 'sketch':
         print("Sketch not implemented yet!")
         exit()
@@ -299,8 +299,8 @@ for batch, (images, labels) in enumerate(dataset):
             batch_hist.append(batch)
             syncs_hist.append(total_syncs.numpy())
             loss_hist.append(loss_value.numpy())
-        if batch == 0 or ((batch+1) % steps_per_epoch_per_node == 0):
-            print('Epoch #%d\tLoss: %.6f and %d synchronizations occured.' % (int((batch+1)/steps_per_epoch_per_node), loss_value, syncs_hist[-1]))
+        if batch == 0 or ((batch+1) % epoch_steps_per_node == 0):
+            print('Epoch #%d\tLoss: %.6f and %d synchronizations occured.' % (int((batch+1)/epoch_steps_per_node), loss_value, syncs_hist[-1]))
 
 end_time = time.time()
 elapsed_time = end_time - start_time

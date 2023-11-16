@@ -34,15 +34,15 @@ epochs = args.epochs
 syncs = tf.Variable(0, dtype=tf.int32)
 
 # Load mnist dataset
-train_dataset, test_dataset, steps_per_epoch, steps_per_epoch_float = \
+train_dataset, test_dataset, epoch_steps, epoch_steps_float = \
     create_dataset(epochs, args.batch, current_cluster_size(), current_rank())
 
 if current_rank() == 0 and args.l: 
 
-    print("Steps per Epoch: "+ str(steps_per_epoch))
-    print("Steps per Epoch in float: "+str(steps_per_epoch_float))
+    print("Steps per Epoch: "+ str(epoch_steps))
+    print("Steps per Epoch in float: "+str(epoch_steps_float))
 
-    logs_dict = logs_dict("Naive FDA", args.model, current_cluster_size(), args.threshold, args.batch, steps_per_epoch)
+    logs_dict = logs_dict("Naive FDA", args.model, current_cluster_size(), args.threshold, args.batch, epoch_steps)
 
 # Create selected model
 if args.model == "lenet5":
@@ -57,7 +57,7 @@ opt = tf.keras.optimizers.Adam()
 # Function that performs one training step of one batch
 #
 @tf.function
-def training_step(images, labels, first_step, last_sync_model):
+def training_step(images, labels, first_step, w_t0):
     
     # Open a GradientTape to record the operations run
     # during the forward pass, which enables auto-differentiation    
@@ -77,7 +77,7 @@ def training_step(images, labels, first_step, last_sync_model):
 
     if not first_step:
         averaged_divergence = compute_averaged_divergence \
-            (last_sync_model, train_model.trainable_variables, current_cluster_size())
+            (w_t0, train_model.trainable_variables, current_cluster_size())
         
     else:
         averaged_divergence = 0
@@ -98,9 +98,9 @@ def training_step(images, labels, first_step, last_sync_model):
         averaged_models = map_maybe(lambda g: g / num_of_nodes, summed_models)
         for variable, averaged_value in zip(train_model.trainable_variables, averaged_models):
             variable.assign(averaged_value)
-        last_sync_model = train_model.trainable_variables
+        w_t0 = train_model.trainable_variables
         #tf.print("New last sync model: ")
-        #tf.print(tf.norm(last_sync_model[0]))
+        #tf.print(tf.norm(w_t0[0]))
 
     # KungFu: broadcast is done after the first gradient step to ensure optimizer initialization.
     # This way all models across the network initialize with the same weights
@@ -110,7 +110,7 @@ def training_step(images, labels, first_step, last_sync_model):
         broadcast_variables(opt.variables())
         syncs.assign_add(1)
 
-    return batch_loss, last_sync_model
+    return batch_loss, w_t0
 
 # Start timer
 steps_remainder = 0
@@ -119,20 +119,20 @@ step_in_epoch = 0
 duration = 0
 
 # Initialize last sync model
-last_sync_model = train_model.trainable_variables
+w_t0 = train_model.trainable_variables
 
 # Take the batches needed for this epoch and take the steps needed
-for step, (images, labels) in enumerate(train_dataset.take(steps_per_epoch*epochs)):
+for step, (images, labels) in enumerate(train_dataset.take(epoch_steps*epochs)):
     
     start_time = time.time() 
     # Take a training step
-    batch_loss, last_sync_model = training_step(images, labels, step == 0, last_sync_model)
+    batch_loss, w_t0 = training_step(images, labels, step == 0, w_t0)
     end_time = time.time()
     duration += end_time - start_time
 
     step_in_epoch+=1
 
-    if step_in_epoch == steps_per_epoch and steps_remainder < 1:
+    if step_in_epoch == epoch_steps and steps_remainder < 1:
         if args.l and current_rank() == 0:
             print("Epoch #%d\tSteps: %d\t Steps remainder: %.2f" % (epoch, step_in_epoch, steps_remainder))
             print("Total Steps: %d\tSyncs: %d" % (step+1, syncs))
@@ -140,9 +140,9 @@ for step, (images, labels) in enumerate(train_dataset.take(steps_per_epoch*epoch
             logs_dict.epoch_update(epoch_accuracy, epoch_loss, duration)
         epoch += 1
         step_in_epoch = 0
-        steps_remainder += steps_per_epoch_float - steps_per_epoch
+        steps_remainder += epoch_steps_float - epoch_steps
 
-    if step_in_epoch > steps_per_epoch and steps_remainder >= 1:
+    if step_in_epoch > epoch_steps and steps_remainder >= 1:
         if args.l and current_rank() == 0:
             print("Epoch #%d\tSteps: %d\t Steps remainder: %.2f" % (epoch, step_in_epoch, steps_remainder))
             print("Total Steps: %d\tSyncs: %d" % (step+1, syncs))
@@ -153,11 +153,11 @@ for step, (images, labels) in enumerate(train_dataset.take(steps_per_epoch*epoch
         steps_remainder = steps_remainder - 1
     
     # Log loss and accuracy data every 10 steps
-    #if (step % 10 == 0 or step == steps_per_epoch*epochs - 1) and args.l and current_rank() == 0:
+    #if (step % 10 == 0 or step == epoch_steps*epochs - 1) and args.l and current_rank() == 0:
     #    logs_dict.step_update(step, syncs, batch_loss)
 
     # Print data to terminal
-   # if (((step % steps_per_epoch) % 10 == 0) or (step % (steps_per_epoch - 1) == 0)) and current_rank() == 0:
+   # if (((step % epoch_steps) % 10 == 0) or (step % (epoch_steps - 1) == 0)) and current_rank() == 0:
    #     print('Epoch #%d\tStep #%d \tLoss: %.6f\tSyncs: %d' % (epoch, step_in_epoch, batch_loss, syncs))
 
 if current_rank()==0:

@@ -8,20 +8,20 @@ def time_over_clients():
 
     da.get_last_epoch()
 
-    da.group_repeated_expers(['clients','exper_type'])
+    da.group_repeated_expers(['clients','algorithm'])
 
     result_df = da.grouped_list[2]['time'].agg(['min', 'mean', 'max']).reset_index()
 
     print(result_df)
 
-    result_grouped = result_df.groupby('exper_type')
+    result_grouped = result_df.groupby('algorithm')
 
     # Create the plot
     plt.figure()
     
-    for exper_type, group in result_grouped:
+    for algorithm, group in result_grouped:
         
-        print(exper_type)
+        print(algorithm)
         print(group)
 
         x = group['clients']
@@ -30,7 +30,7 @@ def time_over_clients():
         y_max = group['max']
 
         # Plot the mean line
-        plt.plot(x, y_mean, label=exper_type)
+        plt.plot(x, y_mean, label=algorithm)
 
         # Add the shaded region to represent the min-max range
         plt.fill_between(x, y_min, y_max, alpha=0.2)
@@ -51,20 +51,20 @@ def syncs_over_clients():
 
     da.get_last_epoch()
 
-    da.group_repeated_expers(['clients','exper_type'])
+    da.group_repeated_expers(['clients','algorithm'])
 
     result_df = da.grouped_list[2]['syncs'].agg(['min', 'mean', 'max']).reset_index()
 
     print(result_df)
 
-    result_grouped = result_df.groupby('exper_type')
+    result_grouped = result_df.groupby('algorithm')
 
     # Create the plot
     plt.figure()
     
-    for exper_type, group in result_grouped:
+    for algorithm, group in result_grouped:
         
-        print(exper_type)
+        print(algorithm)
         print(group)
 
         x = group['clients']
@@ -73,7 +73,7 @@ def syncs_over_clients():
         y_max = group['max']
 
         # Plot the mean line
-        plt.plot(x, y_mean, label=exper_type)
+        plt.plot(x, y_mean, label=algorithm)
 
         # Add the shaded region to represent the min-max range
         plt.fill_between(x, y_min, y_max, alpha=0.2)
@@ -94,21 +94,21 @@ def syncs_over_clients_naive():
 
     da.get_last_epoch()
 
-    da.group_repeated_expers(['clients','exper_type'])
+    da.group_repeated_expers(['clients','algorithm'])
 
     result_df = da.grouped_list[2]['syncs'].agg(['min', 'mean', 'max']).reset_index()
 
     print(result_df)
 
-    result_grouped = result_df.groupby('exper_type')
+    result_grouped = result_df.groupby('algorithm')
 
     # Create the plot
     plt.figure()
     
-    for exper_type, group in result_grouped:
+    for algorithm, group in result_grouped:
         
-        if exper_type == 'Naive FDA':
-            print(exper_type)
+        if algorithm == 'Naive FDA':
+            print(algorithm)
             print(group)
 
             x = group['clients']
@@ -117,7 +117,7 @@ def syncs_over_clients_naive():
             y_max = group['max']
 
             # Plot the mean line
-            plt.plot(x, y_mean, label=exper_type)
+            plt.plot(x, y_mean, label=algorithm)
 
             # Add the shaded region to represent the min-max range
             plt.fill_between(x, y_min, y_max, alpha=0.2)
@@ -136,13 +136,13 @@ def syncs_over_clients_naive():
 def accuracy_over_epochs():
     da = data_analysis()
 
-    da.group_repeated_expers(['clients','exper_type','epoch'], 2)
+    da.group_repeated_expers(['clients','algorithm','epoch'], 2)
 
     result_df = da.grouped_list[0]['accuracy'].agg(['min', 'mean', 'max']).reset_index()
 
     print(result_df)
 
-    result_grouped = result_df.groupby(['exper_type','clients'])
+    result_grouped = result_df.groupby(['algorithm','clients'])
 
     # Create the plot
     plt.figure()
@@ -155,13 +155,13 @@ def accuracy_over_epochs():
     
     for label, group in result_grouped:
         
-        exper_type = label[0]
+        algorithm = label[0]
         clients = label[1]
 
-        if exper_type == 'Naive FDA':
+        if algorithm == 'Naive FDA':
             color = cmap_blue((clients+4) / (2 * max_clients))
             color_fill = cmap_blue(1)
-        elif exper_type == 'Synchronous SGD':
+        elif algorithm == 'Synchronous SGD':
             color = cmap_red((clients+4) / (2 * max_clients))
             color_fill = cmap_red(1)
         
@@ -171,7 +171,7 @@ def accuracy_over_epochs():
         y_max = group['max']
 
         # Plot the mean line
-        plt.plot(x, y_mean, label=exper_type+' '+str(clients)+' clients', color=color)
+        plt.plot(x, y_mean, label=algorithm+' '+str(clients)+' clients', color=color)
 
         # Add the shaded region to represent the min-max range
         plt.fill_between(x, y_min, y_max, alpha=0.2, color=color)
@@ -190,13 +190,13 @@ def accuracy_over_epochs():
 def syncs_over_steps():
     da = data_analysis()
 
-    da.group_repeated_expers(['clients','exper_type','step'], 1)
+    da.group_repeated_expers(['clients','algorithm','step'], 1)
 
     result_df = da.grouped_list[0]['syncs'].agg(['min', 'mean', 'max']).reset_index()
 
     print(result_df)
 
-    result_grouped = result_df.groupby(['exper_type','clients'])
+    result_grouped = result_df.groupby(['algorithm','clients'])
 
     # Create the plot
     plt.figure()
@@ -209,10 +209,10 @@ def syncs_over_steps():
     
     for label, group in result_grouped:
         
-        exper_type = label[0]
+        algorithm = label[0]
         clients = label[1]
 
-        if exper_type == 'Naive FDA':
+        if algorithm == 'Naive FDA':
             color = cmap_blue((clients+4) / (2 * max_clients))
             color_fill = cmap_blue(1)
         
@@ -222,7 +222,7 @@ def syncs_over_steps():
             y_max = group['max']
 
             # Plot the mean line
-            plt.plot(x, y_mean, label=exper_type+' '+str(clients)+' clients', color=color)
+            plt.plot(x, y_mean, label=algorithm+' '+str(clients)+' clients', color=color)
 
             # Add the shaded region to represent the min-max range
             plt.fill_between(x, y_min, y_max, alpha=0.2, color=color)
@@ -241,7 +241,7 @@ def syncs_over_steps():
 def syncs_over_steps_rate():
     da = data_analysis()
 
-    da.group_repeated_expers(['clients','exper_type','step'], 1)
+    da.group_repeated_expers(['clients','algorithm','step'], 1)
 
     result_df = da.grouped_list[0]['syncs'].agg(['min', 'mean', 'max']).reset_index()
 
@@ -252,7 +252,7 @@ def syncs_over_steps_rate():
 
     print(result_df)
 
-    result_grouped = result_df.groupby(['exper_type','clients'])
+    result_grouped = result_df.groupby(['algorithm','clients'])
 
     # Create the plot
     plt.figure()
@@ -265,10 +265,10 @@ def syncs_over_steps_rate():
     
     for label, group in result_grouped:
         
-        exper_type = label[0]
+        algorithm = label[0]
         clients = label[1]
 
-        if exper_type == 'Naive FDA':
+        if algorithm == 'Naive FDA':
             color = cmap_blue((clients+4) / (2 * max_clients))
             color_fill = cmap_blue(1)
         
@@ -278,7 +278,7 @@ def syncs_over_steps_rate():
             y_max = group['max']
 
             # Plot the mean line
-            plt.plot(x, y_mean, label=exper_type+' '+str(clients)+' clients', color=color)
+            plt.plot(x, y_mean, label=algorithm+' '+str(clients)+' clients', color=color)
 
             # Add the shaded region to represent the min-max range
             plt.fill_between(x, y_min, y_max, alpha=0.2, color=color)
@@ -297,7 +297,7 @@ def syncs_over_steps_rate():
 def accuracy_over_time():
     da = data_analysis()
 
-    da.group_repeated_expers(['clients', 'exper_type', 'time', 'epoch'], 2)
+    da.group_repeated_expers(['clients', 'algorithm', 'time', 'epoch'], 2)
 
     result_df = da.grouped_list[0]['accuracy'].agg(['min', 'mean', 'max']).reset_index()
 
@@ -317,7 +317,7 @@ def accuracy_over_time():
         plt.figure()
 
         # Iterate through the subgroups of the filtered DataFrame to plot lines
-        for key, group in filtered_df.groupby('exper_type'):
+        for key, group in filtered_df.groupby('algorithm'):
             if key == 'Synchronous SGD': 
                 key='Synchronous'
                 color = "#0072BD"
@@ -350,7 +350,7 @@ def accuracy_over_time():
 def syncs_over_epochs():
     da = data_analysis()
 
-    da.group_repeated_expers(['clients', 'exper_type', 'syncs', 'epoch', 'steps'], 2)
+    da.group_repeated_expers(['clients', 'algorithm', 'syncs', 'epoch', 'steps'], 2)
 
     result_df = da.grouped_list[0]['syncs'].agg(['min', 'mean', 'max']).reset_index()
 
@@ -373,7 +373,7 @@ def syncs_over_epochs():
         plt.figure()
 
         # Iterate through the subgroups of the filtered DataFrame to plot lines
-        for key, group in filtered_df.groupby('exper_type'):
+        for key, group in filtered_df.groupby('algorithm'):
             if key == 'Synchronous SGD': 
                 continue
             else:
@@ -406,8 +406,8 @@ def combined_plot_to_single_svg(list):
     da_accuracy = data_analysis()
     da_syncs = data_analysis()
     
-    da_accuracy.group_repeated_expers(['clients', 'exper_type', 'time', 'epoch'], 2)
-    da_syncs.group_repeated_expers(['clients', 'exper_type', 'syncs', 'epoch', 'steps'], 2)
+    da_accuracy.group_repeated_expers(['clients', 'algorithm', 'time', 'epoch'], 2)
+    da_syncs.group_repeated_expers(['clients', 'algorithm', 'syncs', 'epoch', 'steps'], 2)
     
     result_df_accuracy = da_accuracy.grouped_list[0]['accuracy'].agg(['min', 'mean', 'max']).reset_index()
     result_df_syncs = da_syncs.grouped_list[0]['syncs'].agg(['min', 'mean', 'max']).reset_index()
@@ -427,7 +427,7 @@ def combined_plot_to_single_svg(list):
         ax1 = axes[idx, 0]
         filtered_df_accuracy = result_df_accuracy[result_df_accuracy['clients'] == client]
         
-        for key, group in filtered_df_accuracy.groupby('exper_type'):
+        for key, group in filtered_df_accuracy.groupby('algorithm'):
             if key == 'Synchronous SGD': 
                 key = 'Synchronous'
                 color = "#0072BD"
@@ -459,7 +459,7 @@ def combined_plot_to_single_svg(list):
         filtered_df_syncs['syncs_each'] = filtered_df_syncs['mean'].diff()
         filtered_df_syncs['syncs_each'].iloc[0] = filtered_df_syncs['mean'].iloc[0]
         
-        for key, group in filtered_df_syncs.groupby('exper_type'):
+        for key, group in filtered_df_syncs.groupby('algorithm'):
             if key == 'Synchronous SGD': 
                 continue
             else:

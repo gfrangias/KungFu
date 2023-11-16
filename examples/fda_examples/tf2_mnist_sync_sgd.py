@@ -36,16 +36,16 @@ args = parser.parse_args()
 epochs = args.epochs
 
 # Load mnist dataset
-train_dataset, test_dataset, steps_per_epoch, steps_per_epoch_float = \
+train_dataset, test_dataset, epoch_steps, epoch_steps_float = \
     create_dataset(epochs, args.batch, current_cluster_size(), current_rank())
 
 if current_rank() == 0 and args.l: 
 
-    print("Steps per Epoch: "+ str(steps_per_epoch))
-    print("Steps per Epoch in float: "+str(steps_per_epoch_float))
+    print("Steps per Epoch: "+ str(epoch_steps))
+    print("Steps per Epoch in float: "+str(epoch_steps_float))
 
     # Initialize the training logs
-    logs_dict = logs_dict("Synchronous SGD", args.model, current_cluster_size(), None, args.batch, steps_per_epoch)
+    logs_dict = logs_dict("Synchronous SGD", args.model, current_cluster_size(), None, args.batch, epoch_steps)
 
 
 # Create selected model
@@ -104,7 +104,7 @@ step_in_epoch = 0
 duration = 0
 
 # Take the batches needed for this epoch and take the steps needed
-for step, (images, labels) in enumerate(train_dataset.take(steps_per_epoch*epochs)):
+for step, (images, labels) in enumerate(train_dataset.take(epoch_steps*epochs)):
     
     start_time = time.time() 
 
@@ -117,7 +117,7 @@ for step, (images, labels) in enumerate(train_dataset.take(steps_per_epoch*epoch
 
     step_in_epoch+=1
 
-    if step_in_epoch == steps_per_epoch and steps_remainder < 1:
+    if step_in_epoch == epoch_steps and steps_remainder < 1:
         if args.l and current_rank() == 0:
             print("Epoch #%d\tSteps: %d\t Steps remainder: %.2f" % (epoch, step_in_epoch, steps_remainder))
             print("Total Steps: %d\tSyncs: %d" % (step+1, step+1))
@@ -125,9 +125,9 @@ for step, (images, labels) in enumerate(train_dataset.take(steps_per_epoch*epoch
             logs_dict.epoch_update(epoch_accuracy, epoch_loss, duration)
         epoch += 1
         step_in_epoch = 0
-        steps_remainder += steps_per_epoch_float - steps_per_epoch
+        steps_remainder += epoch_steps_float - epoch_steps
 
-    if step_in_epoch > steps_per_epoch and steps_remainder >= 1:
+    if step_in_epoch > epoch_steps and steps_remainder >= 1:
         if args.l and current_rank() == 0:
             print("Epoch #%d\tSteps: %d\t Steps remainder: %.2f" % (epoch, step_in_epoch, steps_remainder))
             print("Total Steps: %d\tSyncs: %d" % (step+1, step+1))
@@ -138,12 +138,12 @@ for step, (images, labels) in enumerate(train_dataset.take(steps_per_epoch*epoch
         steps_remainder = steps_remainder - 1
     
     # Log loss and accuracy data every 10 steps
-    #if (step % 10 == 0 or step == steps_per_epoch*epochs - 1) and args.l and current_rank() == 0:
+    #if (step % 10 == 0 or step == epoch_steps*epochs - 1) and args.l and current_rank() == 0:
     #    logs_dict.step_update(step, step, batch_loss)
 
 
     # Print data to terminal
-    #if (((step % steps_per_epoch) % 10 == 0) or (step % (steps_per_epoch - 1) == 0)) and current_rank() == 0:
+    #if (((step % epoch_steps) % 10 == 0) or (step % (epoch_steps - 1) == 0)) and current_rank() == 0:
     #    print('Epoch #%d\tStep #%d \tLoss: %.6f' % \
     #          (epoch, step_in_epoch, batch_loss))
 

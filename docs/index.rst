@@ -173,7 +173,7 @@ as a callback for Keras model.
     # KungFu Step 2: Register a broadcast callback
     from kungfu.tensorflow.initializer import BroadcastGlobalVariablesCallback
     model.fit(dataset,
-              steps_per_epoch=500,
+              epoch_steps=500,
               epochs=1,
               callbacks=[BroadcastGlobalVariablesCallback()])
 

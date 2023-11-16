@@ -1,0 +1,5 @@
+exper_id,algorithm,model,clients,clients_distr,epochs,threshold,batch_size,syncs,duration,timestamp,epoch_steps
+13,linear,lenet5,8,[],2,1.1,64,10,8.646678924560547,16-11-2023 07:22,117
+14,linear,lenet5,8,[],2,1.1,64,9,8.90040373802185,16-11-2023 07:23,117
+15,linear,lenet5,8,[],2,1.1,64,10,8.999041318893433,16-11-2023 08:17,117
+16,sketch,lenet5,8,[],2,1.1,64,4,12.081032991409302,16-11-2023 08:46,117

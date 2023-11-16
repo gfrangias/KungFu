@@ -1,40 +1,41 @@
 import tensorflow as tf
-from kungfu.tensorflow.ops import group_all_reduce, all_reduce
-from kungfu._utils import map_maybe
-from .tensor_list_functions import tensor_list_to_vector, tensor_to_tensor_list
-import time
+from kungfu.tensorflow.ops import all_reduce
+from .tensor_list_functions import tensor_list_to_vector
 
-# Compute the divergence using the 2-norm for Naive FDA
-def compute_averaged_divergence(last_sync_model, local_model, num_of_nodes):
+### Calculate the local update norm
+#
+# ||Delta^(k)||^2 = ||w_local-w_t0||^2
+#
+def local_update_norm_comp(w_t0, w_local):
 
-    start_time_norm = tf.timestamp()
-    # Convert the two tensor list models to vectors
-    last_sync_model_vector = tensor_list_to_vector(last_sync_model.trainable_variables)
-    local_model_vector = tensor_list_to_vector(local_model)
+    local_update = w_local - w_t0
+    local_update_norm = tf.reduce_sum(tf.square(local_update))
 
-    # Local divergence is the norm of the local model drift in comparison to the 
-    # last synced model
-    delta_i = local_model_vector - last_sync_model_vector
-    local_divergence =  tf.reduce_sum(tf.square(delta_i))
-    
-    #tf.print("Local divergence: ")
-    #tf.print(local_divergence)
-    end_time_norm = tf.timestamp()
+    return local_update_norm
 
-    start_time = tf.timestamp()
-    # Calculate the average divergence of the network using all-reduce
-    summed_divergences = all_reduce(local_divergence)
-    end_time = tf.timestamp()
-    
-    averaged_divergence = summed_divergences / num_of_nodes
+### Approximate the RTC using Linear FDA
+#
+# RTC = 1/n * all_reduce(||Delta^(k)||^2)
+#
+def approx_rtc_naive(w_t0, w_local, num_of_nodes):
+    w_t0_vector = tensor_list_to_vector(w_t0.trainable_variables)
+    w_local_vector = tensor_list_to_vector(w_local)
 
-    #tf.print("Averaged divergence: ")
-    #tf.print(averaged_divergence)
-    return averaged_divergence, end_time - start_time, end_time_norm - start_time_norm
+    start_time_calc = tf.timestamp()
+    local_update_norm = local_update_norm_comp(w_t0_vector, w_local_vector)
+    end_time_calc = tf.timestamp()
+
+    start_time_com = tf.timestamp()
+    local_update_norm_sum = all_reduce(local_update_norm)
+    end_time_com = tf.timestamp()
+
+    local_update_norm_avg = local_update_norm_sum / num_of_nodes
+
+    return local_update_norm_avg, end_time_com - start_time_com, end_time_calc - start_time_calc
 
 # Check if the divergence satisfies the RTC
-def rtc_check(divergence, threshold):
-    if tf.math.greater(tf.cast(divergence, tf.float32),tf.cast(threshold, tf.float32)):
+def rtc_check(average_update_norm, threshold):
+    if tf.math.greater(tf.cast(average_update_norm, tf.float32),tf.cast(threshold, tf.float32)):
         return True
     else:
         return False

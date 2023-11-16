@@ -18,7 +18,7 @@ class logs_df:
         self.id = self.info_df["exper_id"].iloc[0]
 
         self.step_df = pd.DataFrame(logs_dict.step_data)
-        #self.step_df["epoch"] = self.step_df["step"] / self.info_df["steps_per_epoch"].iloc[0]
+        #self.step_df["epoch"] = self.step_df["step"] / self.info_df["epoch_steps"].iloc[0]
         #self.step_df["data_transmission"] = self.step_df["syncs"] * self.info_df["data_sync"].iloc[0] + \
         #                            (self.step_df["step"] - self.step_df["syncs"]) * self.info_df["data_non_sync"].iloc[0]
         self.step_df["exper_id"] = self.info_df["exper_id"].iloc[0]

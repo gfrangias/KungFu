@@ -63,7 +63,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Generate and submit a SLURM job')
     parser.add_argument('--special_name', default=None, help='Special naming for the job name')
     parser.add_argument('--clients', required=True, help='Number of clients')
-    parser.add_argument('--clients_per_node', required=True, help='Clients for each node.')
+    parser.add_argument('--clients_distr', required=True, help='Clients for each node.')
     parser.add_argument('--partition', default='gpu', help='SLURM partition where the tests will run')
     parser.add_argument('--account', default='pa230902', help='SLURM account')
     parser.add_argument('--time', default='01:00:00', help='Wall time of job')
@@ -83,10 +83,10 @@ if __name__ == "__main__":
     error_name = job_name+'.err'
 
     # Calculate num_nodes
-    num_nodes = int(args.clients) // int(args.clients_per_node)
+    num_nodes = int(args.clients) // int(args.clients_distr)
 
     # Check if there's a remainder
-    remainder = int(args.clients) % int(args.clients_per_node)
+    remainder = int(args.clients) % int(args.clients_distr)
 
     # If there's a remainder, add 1 to the result
     if remainder != 0 or num_nodes == 0:

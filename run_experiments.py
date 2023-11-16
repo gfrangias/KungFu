@@ -23,11 +23,11 @@ commands = []
 ips_list = args.ips.split(',')
 
 # Distribute the clients to physical nodes
-clients_per_node = distribute_clients(args.clients, args.nodes)
-print("Clients at each node: " +str(clients_per_node))
+clients_distr = distribute_clients(args.clients, args.nodes)
+print("Clients at each node: " +str(clients_distr))
 
 # Create the string equivalent of the IP list for KungFu command
-ips = [f"{ips_list[i]}:{clients_per_node[i]}" for i in range(args.nodes)]
+ips = [f"{ips_list[i]}:{clients_distr[i]}" for i in range(args.nodes)]
 ips = ",".join(ips)
 
 # Open the JSON file for reading
@@ -38,8 +38,8 @@ with open('json_experiments/'+args.json, 'r') as f:
 for experiment in experiments:
 
     # Create the KungFu command
-    command = "kungfu-run -np %d -H %s --nic %s python3 examples/fda_examples/tf2_mnist_experiment.py --epochs %d --model %s --batch %d --threshold %.2f --exper_type %s --clients_per_node \"%s\" --optimizer %s -l" % \
-        (args.clients, ips, args.nic, experiment['epochs'], experiment['model'], experiment['batch_size'], experiment['threshold'], experiment['algorithm'], str(clients_per_node), experiment['optimizer'])
+    command = "kungfu-run -np %d -H %s --nic %s python3 examples/fda_examples/tf2_mnist_experiment.py --epochs %d --model %s --batch %d --threshold %.2f --algorithm %s --clients_distr \"%s\" --optimizer %s -l" % \
+        (args.clients, ips, args.nic, experiment['epochs'], experiment['model'], experiment['batch_size'], experiment['threshold'], experiment['algorithm'], str(clients_distr), experiment['optimizer'])
     
     # If --print then just print the commands
     if args.print:

@@ -68,7 +68,7 @@ Generate and submit a SLURM job
   --**special_name** SPECIAL_NAME
                         Special naming for the job name\
   --**clients** CLIENTS     Number of clients\
-  --**clients_per_node** CLIENTS_PER_NODE
+  --**clients_distr** clients_distr
                         Clients for each node.\
   --**partition** PARTITION
                         SLURM partition where the tests will run\
@@ -80,7 +80,7 @@ Generate and submit a SLURM job
 
 ***An example***
 ```bash
-python3 job_submitter.py --clients 5 clients_per_node 3 --partition gpu\
+python3 job_submitter.py --clients 5 clients_distr 3 --partition gpu\
    --account pa1243 --time 01:00:00 --json experiments_5.json --script_name slurm_job.sh
 ```
 This will return
