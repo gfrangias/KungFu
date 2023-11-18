@@ -76,15 +76,6 @@ if args.algorithm == "sketch":
     sketch_depth = 5
     epsilon = 1. / sqrt(sketch_width)
     ams_sketch = AmsSketch(depth=5, width=250)
-    v = tensor_list_to_vector(train_model.trainable_variables)
-    d = v.shape[0]
-    ams_sketch.precompute(d)
-    indices = ams_sketch.precomputed_dict[('indices',d)]
-    four = ams_sketch.precomputed_dict[('four',d)]
-    f = ams_sketch.F
-    ams_sketch.precomputed_dict[('indices',d)] = broadcast(indices)
-    ams_sketch.precomputed_dict[('four',d)] = broadcast(four)
-    ams_sketch.F = broadcast(f)
 
 # Set Adam along with KungFu Synchronous SGD optimizer
 opt = tf.keras.optimizers.Adam()
@@ -242,8 +233,7 @@ def training_step_sketch(images, labels, first_step):
             (w_t0, train_model.trainable_variables, ams_sketch, epsilon, current_cluster_size())
         com_duration.assign_add(com_duration_step)    
         calc_duration.assign_add(calc_duration_step)
-        #if current_rank() == 0:
-        #    print(rtc_approx)
+        #if current_rank() == 0: print(rtc_approx)
     else:
         rtc_approx = 0
 

@@ -1,6 +1,7 @@
 import tensorflow as tf
 import numpy as np
-from kungfu.tensorflow.ops import all_reduce
+from kungfu.python import current_rank
+from kungfu.tensorflow.ops import all_reduce, broadcast
 from .tensor_list_functions import tensor_list_to_vector
 
 ### Adapted from Michail Theologitis' implementation 
@@ -88,9 +89,17 @@ class AmsSketch:
         """
 
         d = v.shape[0]
-        
+
         if ('four', d) not in self.precomputed_dict:
             self.precompute(d)
+            """
+            indices = self.precomputed_dict[('indices',d)]
+            four = self.precomputed_dict[('four',d)]
+            f = self.F
+            self.precomputed_dict[('indices',d)] = broadcast(indices)
+            self.precomputed_dict[('four',d)] = broadcast(four)
+            self.F = broadcast(f)
+            """
 
         return self._sketch_for_vector(v, self.precomputed_dict[('four', d)], self.precomputed_dict[('indices', d)])
 
@@ -138,7 +147,8 @@ def local_state_comp(w_t0, w_local, ams_sketch):
     
     start_time_calc = tf.timestamp()
     local_update_norm = local_update_norm_comp(w_t0, w_local)
-    sketch = ams_sketch.sketch_for_vector(w_local - w_t0)
+    local_update = w_local - w_t0
+    sketch = ams_sketch.sketch_for_vector(local_update)
     end_time_calc = tf.timestamp()
 
     return local_update_norm, sketch, end_time_calc - start_time_calc
@@ -153,18 +163,20 @@ def approx_rtc_sketch(w_t0, w_local, ams_sketch, epsilon, num_of_nodes):
 
     local_update_norm, sketch, calc_duration = local_state_comp(w_t0_vector, w_local_vector, ams_sketch)
 
-    print(tf.reduce_sum(tf.square(sketch)))
-    
+    #print(sketch)
+    #print(type(sketch))
+
     start_time_com = tf.timestamp()
-    local_update_norm_sum = all_reduce(local_update_norm)
-    sketch_sum = all_reduce(sketch)
+    local_update_norm_avg = all_reduce(local_update_norm) / num_of_nodes
+    sketch_avg = all_reduce(sketch) / num_of_nodes
     end_time_com = tf.timestamp()
 
-    local_update_norm_avg = local_update_norm_sum / num_of_nodes
-    sketch_avg = sketch_sum / num_of_nodes
-
     start_time_calc = tf.timestamp()
-    sketch_m_2 = (1. / (1. + epsilon)) * AmsSketch.estimate_euc_norm_squared(sketch_avg)
+    sketch_m_2 = (1. / ((1. + epsilon))) * AmsSketch.estimate_euc_norm_squared(sketch_avg)
     end_time_calc = tf.timestamp()
+
+    #if current_rank() == 0:
+    #    print("local_update_norm_avg: " + str(local_update_norm_avg))
+    #    print("sketch_m_2: " + str(sketch_m_2))
 
     return local_update_norm_avg - sketch_m_2, end_time_com - start_time_com, calc_duration + end_time_calc - start_time_calc

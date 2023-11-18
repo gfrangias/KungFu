@@ -49,6 +49,7 @@ if __name__ == "__main__":
 
     # Get the input arguments
     parser = argparse.ArgumentParser(description='Create a JSON file configuration of experiments parameters.')
+    parser.add_argument('--name', type=str, default='no', help='(optional) give a custom name for the json file')
     parser.add_argument('--clients', type=int, nargs="+", help='number of clients in the network')
     parser.add_argument("--algorithms", type=str, nargs="+", help="algorithms used")
     parser.add_argument("--models", type=str, nargs="+", help='ANN models used')
@@ -64,7 +65,10 @@ if __name__ == "__main__":
     combinations = generate_combinations(args)
     
     # Generate the JSON file name
-    json_file_name = "json_experiments/experiments_"+"_".join([str(clients) for clients in args.clients])+".json"
+    if args.name == 'no':
+        json_file_name = "json_experiments/experiments_"+"_".join([str(clients) for clients in args.clients])+".json"
+    else:
+        json_file_name = "json_experiments/" + args.name
 
     # If --print just print the parameters combinations
     if args.print:
@@ -72,7 +76,7 @@ if __name__ == "__main__":
     # Else write the combinations in the JSON file
     else:
         # Save to JSON file
-        with open(json_file_name, 'w') as f:
+        with open(json_file_name, 'w', encoding='utf-8') as f:
             json.dump(combinations, f, indent=4)
+            print(str(len(combinations))+" experiments have been saved in file: "+json_file_name)
 
-    print(str(len(combinations))+" experiments have been saved in file: "+json_file_name)
