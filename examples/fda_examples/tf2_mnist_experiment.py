@@ -1,13 +1,14 @@
-from kungfu.python import current_cluster_size, current_rank
-from kungfu.tensorflow.ops import group_all_reduce, broadcast
-from kungfu.tensorflow.optimizers import MySynchronousSGDOptimizer, SynchronousSGDOptimizer
-from kungfu._utils import map_maybe
-
 import tensorflow as tf
 from math import sqrt
 if tf.config.list_physical_devices('GPU'):
         for gpu in tf.config.experimental.list_physical_devices('GPU'):
                 tf.config.experimental.set_memory_growth(gpu,True)
+
+from kungfu.python import current_cluster_size, current_rank
+from kungfu.tensorflow.ops import group_all_reduce
+from kungfu.tensorflow.initializer import broadcast_variables
+from kungfu.tensorflow.optimizers import MySynchronousSGDOptimizer, SynchronousSGDOptimizer
+from kungfu._utils import map_maybe
 
 import os, argparse, time, copy, sys
 
@@ -79,9 +80,7 @@ if args.algorithm == "sketch":
 
 # Set Adam along with KungFu Synchronous SGD optimizer
 opt = tf.keras.optimizers.Adam()
-opt = SynchronousSGDOptimizer(opt)
 
-@tf.function
 def training_step(images, labels):
 
     # Open a GradientTape to record the operations run
@@ -108,9 +107,11 @@ def training_step(images, labels):
 # Function that performs one training step of one batch
 # Baseline Synchronous
 #
-def training_step_synchronous(images, labels, first_step):
+def training_step_synchronous(images, labels):
 
     batch_loss = training_step(images, labels)
+
+    syncs.assign_add(1)
 
     start_time = tf.timestamp()
     summed_models = group_all_reduce(train_model.trainable_variables)
@@ -120,18 +121,11 @@ def training_step_synchronous(images, labels, first_step):
     num_of_nodes = tf.cast(current_cluster_size(), tf.float32)
     # Reduce the gradients of the current node based on the average of all nodes
     averaged_models = map_maybe(lambda g: g / num_of_nodes, summed_models)
+    
     for variable, averaged_value in zip(train_model.trainable_variables, averaged_models):
         variable.assign(averaged_value)
-    syncs.assign_add(1)
 
-    # KungFu: broadcast is done after the first gradient step to ensure optimizer initialization.
-    # This way all models across the network initialize with the same weights
-    if first_step:
-        from kungfu.tensorflow.initializer import broadcast_variables
-        broadcast_variables(train_model.variables)
-        broadcast_variables(opt.variables())
-
-    return batch_loss, end_time - start_time
+    return batch_loss, com_duration
 
 #
 # Function that performs one training step of one batch
@@ -164,14 +158,6 @@ def training_step_naive(images, labels, first_step):
             variable.assign(averaged_value)
         for variable, averaged_value in zip(w_t0.trainable_variables, averaged_models):
             variable.assign(averaged_value)
-
-    # KungFu: broadcast is done after the first gradient step to ensure optimizer initialization.
-    # This way all models across the network initialize with the same weights
-    if first_step:
-        from kungfu.tensorflow.initializer import broadcast_variables
-        broadcast_variables(train_model.variables)
-        broadcast_variables(opt.variables())
-        syncs.assign_add(1)
 
     return batch_loss, com_duration, calc_duration
 
@@ -209,15 +195,6 @@ def training_step_linear(images, labels, first_step):
         for variable, averaged_value in zip(w_t0.trainable_variables, averaged_models):
             variable.assign(averaged_value)
 
-
-    # KungFu: broadcast is done after the first gradient step to ensure optimizer initialization.
-    # This way all models across the network initialize with the same weights
-    if first_step:
-        from kungfu.tensorflow.initializer import broadcast_variables
-        broadcast_variables(train_model.variables)
-        broadcast_variables(opt.variables())
-        syncs.assign_add(1)
-
     return batch_loss, com_duration, calc_duration
 
 #
@@ -252,13 +229,6 @@ def training_step_sketch(images, labels, first_step):
         for variable, averaged_value in zip(w_t0.trainable_variables, averaged_models):
             variable.assign(averaged_value)
 
-    # KungFu: broadcast is done after the first gradient step to ensure optimizer initialization.
-    # This way all models across the network initialize with the same weights
-    if first_step:
-        from kungfu.tensorflow.initializer import broadcast_variables
-        broadcast_variables(train_model.variables)
-        broadcast_variables(opt.variables())
-        syncs.assign_add(1)
 
     return batch_loss, com_duration, calc_duration
 
@@ -267,9 +237,9 @@ steps_remainder = 0
 total_steps = 0
 duration = 0
 
-# Initialize last sync model
-
 train_dataset_iter = iter(train_dataset)
+broadcast_variables(train_model.variables)
+broadcast_variables(opt.variables())
 
 for epoch in range(1, epochs+1):
     
@@ -295,7 +265,7 @@ for epoch in range(1, epochs+1):
         elif args.algorithm == "sketch":
             batch_loss, com_duration_step, calc_duration_step = training_step_sketch(images, labels, step == 0 and epoch == 1)
         elif(args.algorithm == "synchronous"):
-            batch_loss, com_duration_step = training_step_synchronous(images, labels, step == 0 and epoch == 1)
+            batch_loss, com_duration_step = training_step_synchronous(images, labels)
             calc_duration_step = tf.constant(0, dtype=tf.float64)
         end_time = time.time()
         duration += end_time - start_time
@@ -308,7 +278,10 @@ for epoch in range(1, epochs+1):
 
         print("Epoch #%d\tSteps: %d\t Steps remainder: %.2f" % (epoch, step+1, steps_remainder))
         print("Total Steps: %d\tSyncs: %d" % (total_steps, syncs))
-        epoch_loss, epoch_accuracy = train_model.evaluate(test_dataset)
+        if args.algorithm == "synchronous":
+            epoch_loss, epoch_accuracy = train_model.evaluate(test_dataset)
+        else:
+            epoch_loss, epoch_accuracy = w_t0.evaluate(test_dataset)
         logs_dict.epoch_update(epoch, total_steps, syncs, epoch_accuracy, epoch_loss, duration, com_duration.numpy(), calc_duration.numpy())
 
 
