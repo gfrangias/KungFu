@@ -1,0 +1,1202 @@
+[
+    {
+        "exper_id": 0,
+        "clients": 8,
+        "algorithm": "synchronous",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 0.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 1,
+        "clients": 8,
+        "algorithm": "synchronous",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 0.0,
+        "batch_size": 64,
+        "epochs": 100
+    },
+    {
+        "exper_id": 2,
+        "clients": 8,
+        "algorithm": "synchronous",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 0.0,
+        "batch_size": 256,
+        "epochs": 100
+    },
+    {
+        "exper_id": 3,
+        "clients": 8,
+        "algorithm": "naive",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 50.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 4,
+        "clients": 8,
+        "algorithm": "naive",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 1.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 5,
+        "clients": 8,
+        "algorithm": "naive",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 25.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 6,
+        "clients": 8,
+        "algorithm": "naive",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 100.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 7,
+        "clients": 8,
+        "algorithm": "naive",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 200.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 8,
+        "clients": 8,
+        "algorithm": "naive",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 50.0,
+        "batch_size": 64,
+        "epochs": 100
+    },
+    {
+        "exper_id": 9,
+        "clients": 8,
+        "algorithm": "naive",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 50.0,
+        "batch_size": 256,
+        "epochs": 100
+    },
+    {
+        "exper_id": 10,
+        "clients": 8,
+        "algorithm": "linear",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 50.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 11,
+        "clients": 8,
+        "algorithm": "linear",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 1.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 12,
+        "clients": 8,
+        "algorithm": "linear",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 25.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 13,
+        "clients": 8,
+        "algorithm": "linear",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 100.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 14,
+        "clients": 8,
+        "algorithm": "linear",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 200.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 15,
+        "clients": 8,
+        "algorithm": "linear",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 50.0,
+        "batch_size": 64,
+        "epochs": 100
+    },
+    {
+        "exper_id": 16,
+        "clients": 8,
+        "algorithm": "linear",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 50.0,
+        "batch_size": 256,
+        "epochs": 100
+    },
+    {
+        "exper_id": 17,
+        "clients": 8,
+        "algorithm": "sketch",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 50.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 18,
+        "clients": 8,
+        "algorithm": "sketch",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 1.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 19,
+        "clients": 8,
+        "algorithm": "sketch",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 25.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 20,
+        "clients": 8,
+        "algorithm": "sketch",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 100.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 21,
+        "clients": 8,
+        "algorithm": "sketch",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 200.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 22,
+        "clients": 8,
+        "algorithm": "sketch",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 50.0,
+        "batch_size": 64,
+        "epochs": 100
+    },
+    {
+        "exper_id": 23,
+        "clients": 8,
+        "algorithm": "sketch",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 50.0,
+        "batch_size": 256,
+        "epochs": 100
+    },
+    {
+        "exper_id": 24,
+        "clients": 2,
+        "algorithm": "synchronous",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 0.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 25,
+        "clients": 2,
+        "algorithm": "synchronous",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 0.0,
+        "batch_size": 64,
+        "epochs": 100
+    },
+    {
+        "exper_id": 26,
+        "clients": 2,
+        "algorithm": "synchronous",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 0.0,
+        "batch_size": 256,
+        "epochs": 100
+    },
+    {
+        "exper_id": 27,
+        "clients": 2,
+        "algorithm": "naive",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 50.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 28,
+        "clients": 2,
+        "algorithm": "naive",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 1.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 29,
+        "clients": 2,
+        "algorithm": "naive",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 25.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 30,
+        "clients": 2,
+        "algorithm": "naive",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 100.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 31,
+        "clients": 2,
+        "algorithm": "naive",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 200.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 32,
+        "clients": 2,
+        "algorithm": "naive",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 50.0,
+        "batch_size": 64,
+        "epochs": 100
+    },
+    {
+        "exper_id": 33,
+        "clients": 2,
+        "algorithm": "naive",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 50.0,
+        "batch_size": 256,
+        "epochs": 100
+    },
+    {
+        "exper_id": 34,
+        "clients": 2,
+        "algorithm": "linear",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 50.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 35,
+        "clients": 2,
+        "algorithm": "linear",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 1.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 36,
+        "clients": 2,
+        "algorithm": "linear",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 25.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 37,
+        "clients": 2,
+        "algorithm": "linear",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 100.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 38,
+        "clients": 2,
+        "algorithm": "linear",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 200.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 39,
+        "clients": 2,
+        "algorithm": "linear",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 50.0,
+        "batch_size": 64,
+        "epochs": 100
+    },
+    {
+        "exper_id": 40,
+        "clients": 2,
+        "algorithm": "linear",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 50.0,
+        "batch_size": 256,
+        "epochs": 100
+    },
+    {
+        "exper_id": 41,
+        "clients": 2,
+        "algorithm": "sketch",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 50.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 42,
+        "clients": 2,
+        "algorithm": "sketch",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 1.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 43,
+        "clients": 2,
+        "algorithm": "sketch",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 25.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 44,
+        "clients": 2,
+        "algorithm": "sketch",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 100.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 45,
+        "clients": 2,
+        "algorithm": "sketch",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 200.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 46,
+        "clients": 2,
+        "algorithm": "sketch",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 50.0,
+        "batch_size": 64,
+        "epochs": 100
+    },
+    {
+        "exper_id": 47,
+        "clients": 2,
+        "algorithm": "sketch",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 50.0,
+        "batch_size": 256,
+        "epochs": 100
+    },
+    {
+        "exper_id": 48,
+        "clients": 4,
+        "algorithm": "synchronous",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 0.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 49,
+        "clients": 4,
+        "algorithm": "synchronous",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 0.0,
+        "batch_size": 64,
+        "epochs": 100
+    },
+    {
+        "exper_id": 50,
+        "clients": 4,
+        "algorithm": "synchronous",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 0.0,
+        "batch_size": 256,
+        "epochs": 100
+    },
+    {
+        "exper_id": 51,
+        "clients": 4,
+        "algorithm": "naive",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 50.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 52,
+        "clients": 4,
+        "algorithm": "naive",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 1.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 53,
+        "clients": 4,
+        "algorithm": "naive",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 25.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 54,
+        "clients": 4,
+        "algorithm": "naive",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 100.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 55,
+        "clients": 4,
+        "algorithm": "naive",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 200.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 56,
+        "clients": 4,
+        "algorithm": "naive",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 50.0,
+        "batch_size": 64,
+        "epochs": 100
+    },
+    {
+        "exper_id": 57,
+        "clients": 4,
+        "algorithm": "naive",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 50.0,
+        "batch_size": 256,
+        "epochs": 100
+    },
+    {
+        "exper_id": 58,
+        "clients": 4,
+        "algorithm": "linear",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 50.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 59,
+        "clients": 4,
+        "algorithm": "linear",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 1.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 60,
+        "clients": 4,
+        "algorithm": "linear",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 25.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 61,
+        "clients": 4,
+        "algorithm": "linear",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 100.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 62,
+        "clients": 4,
+        "algorithm": "linear",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 200.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 63,
+        "clients": 4,
+        "algorithm": "linear",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 50.0,
+        "batch_size": 64,
+        "epochs": 100
+    },
+    {
+        "exper_id": 64,
+        "clients": 4,
+        "algorithm": "linear",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 50.0,
+        "batch_size": 256,
+        "epochs": 100
+    },
+    {
+        "exper_id": 65,
+        "clients": 4,
+        "algorithm": "sketch",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 50.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 66,
+        "clients": 4,
+        "algorithm": "sketch",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 1.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 67,
+        "clients": 4,
+        "algorithm": "sketch",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 25.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 68,
+        "clients": 4,
+        "algorithm": "sketch",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 100.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 69,
+        "clients": 4,
+        "algorithm": "sketch",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 200.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 70,
+        "clients": 4,
+        "algorithm": "sketch",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 50.0,
+        "batch_size": 64,
+        "epochs": 100
+    },
+    {
+        "exper_id": 71,
+        "clients": 4,
+        "algorithm": "sketch",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 50.0,
+        "batch_size": 256,
+        "epochs": 100
+    },
+    {
+        "exper_id": 72,
+        "clients": 16,
+        "algorithm": "synchronous",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 0.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 73,
+        "clients": 16,
+        "algorithm": "synchronous",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 0.0,
+        "batch_size": 64,
+        "epochs": 100
+    },
+    {
+        "exper_id": 74,
+        "clients": 16,
+        "algorithm": "synchronous",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 0.0,
+        "batch_size": 256,
+        "epochs": 100
+    },
+    {
+        "exper_id": 75,
+        "clients": 16,
+        "algorithm": "naive",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 50.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 76,
+        "clients": 16,
+        "algorithm": "naive",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 1.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 77,
+        "clients": 16,
+        "algorithm": "naive",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 25.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 78,
+        "clients": 16,
+        "algorithm": "naive",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 100.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 79,
+        "clients": 16,
+        "algorithm": "naive",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 200.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 80,
+        "clients": 16,
+        "algorithm": "naive",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 50.0,
+        "batch_size": 64,
+        "epochs": 100
+    },
+    {
+        "exper_id": 81,
+        "clients": 16,
+        "algorithm": "naive",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 50.0,
+        "batch_size": 256,
+        "epochs": 100
+    },
+    {
+        "exper_id": 82,
+        "clients": 16,
+        "algorithm": "linear",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 50.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 83,
+        "clients": 16,
+        "algorithm": "linear",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 1.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 84,
+        "clients": 16,
+        "algorithm": "linear",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 25.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 85,
+        "clients": 16,
+        "algorithm": "linear",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 100.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 86,
+        "clients": 16,
+        "algorithm": "linear",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 200.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 87,
+        "clients": 16,
+        "algorithm": "linear",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 50.0,
+        "batch_size": 64,
+        "epochs": 100
+    },
+    {
+        "exper_id": 88,
+        "clients": 16,
+        "algorithm": "linear",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 50.0,
+        "batch_size": 256,
+        "epochs": 100
+    },
+    {
+        "exper_id": 89,
+        "clients": 16,
+        "algorithm": "sketch",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 50.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 90,
+        "clients": 16,
+        "algorithm": "sketch",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 1.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 91,
+        "clients": 16,
+        "algorithm": "sketch",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 25.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 92,
+        "clients": 16,
+        "algorithm": "sketch",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 100.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 93,
+        "clients": 16,
+        "algorithm": "sketch",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 200.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 94,
+        "clients": 16,
+        "algorithm": "sketch",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 50.0,
+        "batch_size": 64,
+        "epochs": 100
+    },
+    {
+        "exper_id": 95,
+        "clients": 16,
+        "algorithm": "sketch",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 50.0,
+        "batch_size": 256,
+        "epochs": 100
+    },
+    {
+        "exper_id": 96,
+        "clients": 32,
+        "algorithm": "synchronous",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 0.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 97,
+        "clients": 32,
+        "algorithm": "synchronous",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 0.0,
+        "batch_size": 64,
+        "epochs": 100
+    },
+    {
+        "exper_id": 98,
+        "clients": 32,
+        "algorithm": "synchronous",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 0.0,
+        "batch_size": 256,
+        "epochs": 100
+    },
+    {
+        "exper_id": 99,
+        "clients": 32,
+        "algorithm": "naive",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 50.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 100,
+        "clients": 32,
+        "algorithm": "naive",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 1.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 101,
+        "clients": 32,
+        "algorithm": "naive",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 25.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 102,
+        "clients": 32,
+        "algorithm": "naive",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 100.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 103,
+        "clients": 32,
+        "algorithm": "naive",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 200.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 104,
+        "clients": 32,
+        "algorithm": "naive",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 50.0,
+        "batch_size": 64,
+        "epochs": 100
+    },
+    {
+        "exper_id": 105,
+        "clients": 32,
+        "algorithm": "naive",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 50.0,
+        "batch_size": 256,
+        "epochs": 100
+    },
+    {
+        "exper_id": 106,
+        "clients": 32,
+        "algorithm": "linear",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 50.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 107,
+        "clients": 32,
+        "algorithm": "linear",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 1.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 108,
+        "clients": 32,
+        "algorithm": "linear",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 25.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 109,
+        "clients": 32,
+        "algorithm": "linear",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 100.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 110,
+        "clients": 32,
+        "algorithm": "linear",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 200.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 111,
+        "clients": 32,
+        "algorithm": "linear",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 50.0,
+        "batch_size": 64,
+        "epochs": 100
+    },
+    {
+        "exper_id": 112,
+        "clients": 32,
+        "algorithm": "linear",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 50.0,
+        "batch_size": 256,
+        "epochs": 100
+    },
+    {
+        "exper_id": 113,
+        "clients": 32,
+        "algorithm": "sketch",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 50.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 114,
+        "clients": 32,
+        "algorithm": "sketch",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 1.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 115,
+        "clients": 32,
+        "algorithm": "sketch",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 25.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 116,
+        "clients": 32,
+        "algorithm": "sketch",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 100.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 117,
+        "clients": 32,
+        "algorithm": "sketch",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 200.0,
+        "batch_size": 128,
+        "epochs": 100
+    },
+    {
+        "exper_id": 118,
+        "clients": 32,
+        "algorithm": "sketch",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 50.0,
+        "batch_size": 64,
+        "epochs": 100
+    },
+    {
+        "exper_id": 119,
+        "clients": 32,
+        "algorithm": "sketch",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 50.0,
+        "batch_size": 256,
+        "epochs": 100
+    }
+]

@@ -1,0 +1,42 @@
+[
+    {
+        "exper_id": 0,
+        "clients": 4,
+        "algorithm": "synchronous",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 0.0,
+        "batch_size": 64,
+        "epochs": 20
+    },
+    {
+        "exper_id": 1,
+        "clients": 4,
+        "algorithm": "naive",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 100.0,
+        "batch_size": 64,
+        "epochs": 20
+    },
+    {
+        "exper_id": 2,
+        "clients": 4,
+        "algorithm": "linear",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 100.0,
+        "batch_size": 64,
+        "epochs": 20
+    },
+    {
+        "exper_id": 3,
+        "clients": 4,
+        "algorithm": "sketch",
+        "model": "adv_cnn",
+        "optimizer": "adam",
+        "threshold": 100.0,
+        "batch_size": 64,
+        "epochs": 20
+    }
+]

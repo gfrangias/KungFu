@@ -1,6 +1,5 @@
 *.dylib
 *.egg-info
-*.json
 *.log
 *.npz
 *.o
