@@ -1,0 +1,166 @@
+[W] invalid valud of CUDA_VISIBLE_DEVICES: "NoDevFiles"
+[W] invalid valud of CUDA_VISIBLE_DEVICES: "NoDevFiles"
+[[1;34m172.16.239.4.10001[m::[1;35mstderr[m] [W] /tmp/kungfu-run-10001.sock already exists for 52.245128334s, trying to remove
+[[1;32m172.16.239.4.10000[m::[1;35mstderr[m] [W] /tmp/kungfu-run-10000.sock already exists for 52.257869169s, trying to remove
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: got SIGCONT
+slurmstepd: error: *** STEP 1557272.0 ON gpu04 CANCELLED AT 2023-11-23T17:01:30 ***
+[W] terminated trapped
+slurmstepd: error: *** JOB 1557272 ON gpu04 CANCELLED AT 2023-11-23T17:01:30 ***
+srun: forcing job termination
+[1;35m[E][m #<172.16.239.4.10001> exited with error: signal: killed
+[1;35m[E][m #<172.16.239.4.10000> exited with error: signal: killed
+srun: error: gpu04: task 0: Terminated
+srun: Terminating job step 1557272.0
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-23 17:01:33.387944: E tensorflow/stream_executor/cuda/cuda_driver.cc:271] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-23 17:01:33.387946: E tensorflow/stream_executor/cuda/cuda_driver.cc:271] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-23 17:01:33.388068: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu03
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-23 17:01:33.388092: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu03
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-23 17:01:33.388306: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-23 17:01:33.388393: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-23 17:01:33.388414: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-23 17:01:33.388053: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu03
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-23 17:01:33.388076: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu03
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-23 17:01:33.388291: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-23 17:01:33.388379: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-23 17:01:33.388399: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-23 17:01:33.413461: I tensorflow/compiler/xla/service/service.cc:171] XLA service 0x5baffd0 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-23 17:01:33.413509: I tensorflow/compiler/xla/service/service.cc:179]   StreamExecutor device (0): Host, Default Version
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-23 17:01:33.413960: I tensorflow/compiler/xla/service/service.cc:171] XLA service 0x4a49e10 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-23 17:01:33.413999: I tensorflow/compiler/xla/service/service.cc:179]   StreamExecutor device (0): Host, Default Version
+[W] invalid valud of CUDA_VISIBLE_DEVICES: "NoDevFiles"
+[W] invalid valud of CUDA_VISIBLE_DEVICES: "NoDevFiles"
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-23 20:11:38.753663: E tensorflow/stream_executor/cuda/cuda_driver.cc:271] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-23 20:11:38.753666: E tensorflow/stream_executor/cuda/cuda_driver.cc:271] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-23 20:11:38.753777: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu03
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-23 20:11:38.753801: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu03
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-23 20:11:38.754066: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-23 20:11:38.754163: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-23 20:11:38.754185: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-23 20:11:38.753770: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu03
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-23 20:11:38.753792: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu03
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-23 20:11:38.754029: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-23 20:11:38.754128: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-23 20:11:38.754150: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-23 20:11:38.777404: I tensorflow/compiler/xla/service/service.cc:171] XLA service 0x691fd40 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-23 20:11:38.777441: I tensorflow/compiler/xla/service/service.cc:179]   StreamExecutor device (0): Host, Default Version
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-23 20:11:38.778305: I tensorflow/compiler/xla/service/service.cc:171] XLA service 0x59ca210 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-23 20:11:38.778329: I tensorflow/compiler/xla/service/service.cc:179]   StreamExecutor device (0): Host, Default Version
+[W] invalid valud of CUDA_VISIBLE_DEVICES: "NoDevFiles"
+[W] invalid valud of CUDA_VISIBLE_DEVICES: "NoDevFiles"
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 00:07:14.500668: E tensorflow/stream_executor/cuda/cuda_driver.cc:271] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 00:07:14.500670: E tensorflow/stream_executor/cuda/cuda_driver.cc:271] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 00:07:14.500778: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu03
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 00:07:14.500802: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu03
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 00:07:14.501099: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 00:07:14.501218: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 00:07:14.501245: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 00:07:14.500784: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu03
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 00:07:14.500805: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu03
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 00:07:14.501023: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 00:07:14.501145: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 00:07:14.501170: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 00:07:14.525234: I tensorflow/compiler/xla/service/service.cc:171] XLA service 0x534d090 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 00:07:14.525272: I tensorflow/compiler/xla/service/service.cc:179]   StreamExecutor device (0): Host, Default Version
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 00:07:14.525677: I tensorflow/compiler/xla/service/service.cc:171] XLA service 0x5d08f50 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 00:07:14.525717: I tensorflow/compiler/xla/service/service.cc:179]   StreamExecutor device (0): Host, Default Version
+[W] invalid valud of CUDA_VISIBLE_DEVICES: "NoDevFiles"
+[W] invalid valud of CUDA_VISIBLE_DEVICES: "NoDevFiles"
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 02:56:21.221903: E tensorflow/stream_executor/cuda/cuda_driver.cc:271] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 02:56:21.221902: E tensorflow/stream_executor/cuda/cuda_driver.cc:271] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 02:56:21.222008: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu03
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 02:56:21.222030: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu03
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 02:56:21.222284: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 02:56:21.222378: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 02:56:21.222399: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 02:56:21.222014: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu03
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 02:56:21.222036: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu03
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 02:56:21.222285: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 02:56:21.222384: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 02:56:21.222406: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 02:56:21.245756: I tensorflow/compiler/xla/service/service.cc:171] XLA service 0x4a37010 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 02:56:21.245789: I tensorflow/compiler/xla/service/service.cc:179]   StreamExecutor device (0): Host, Default Version
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 02:56:21.246106: I tensorflow/compiler/xla/service/service.cc:171] XLA service 0x5eab180 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 02:56:21.246145: I tensorflow/compiler/xla/service/service.cc:179]   StreamExecutor device (0): Host, Default Version
+[W] invalid valud of CUDA_VISIBLE_DEVICES: "NoDevFiles"
+[W] invalid valud of CUDA_VISIBLE_DEVICES: "NoDevFiles"
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 06:05:07.339349: E tensorflow/stream_executor/cuda/cuda_driver.cc:271] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 06:05:07.339462: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu03
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 06:05:07.339484: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu03
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 06:05:07.339708: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 06:05:07.339806: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 06:05:07.339827: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 06:05:07.340016: E tensorflow/stream_executor/cuda/cuda_driver.cc:271] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 06:05:07.340111: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu03
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 06:05:07.340130: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu03
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 06:05:07.340319: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 06:05:07.340402: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 06:05:07.340420: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 06:05:07.364149: I tensorflow/compiler/xla/service/service.cc:171] XLA service 0x51e8de0 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 06:05:07.364187: I tensorflow/compiler/xla/service/service.cc:179]   StreamExecutor device (0): Host, Default Version
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 06:05:07.364646: I tensorflow/compiler/xla/service/service.cc:171] XLA service 0x5cf50d0 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 06:05:07.364686: I tensorflow/compiler/xla/service/service.cc:179]   StreamExecutor device (0): Host, Default Version
+[W] invalid valud of CUDA_VISIBLE_DEVICES: "NoDevFiles"
+[W] invalid valud of CUDA_VISIBLE_DEVICES: "NoDevFiles"
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 09:16:06.891130: E tensorflow/stream_executor/cuda/cuda_driver.cc:271] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 09:16:06.891131: E tensorflow/stream_executor/cuda/cuda_driver.cc:271] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 09:16:06.891235: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu03
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 09:16:06.891258: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu03
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 09:16:06.891479: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 09:16:06.891575: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 09:16:06.891600: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 09:16:06.891239: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu03
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 09:16:06.891262: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu03
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 09:16:06.891479: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 09:16:06.891580: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 09:16:06.891604: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 09:16:06.909730: I tensorflow/compiler/xla/service/service.cc:171] XLA service 0x62040e0 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 09:16:06.909759: I tensorflow/compiler/xla/service/service.cc:179]   StreamExecutor device (0): Host, Default Version
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 09:16:06.914897: I tensorflow/compiler/xla/service/service.cc:171] XLA service 0x67220e0 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 09:16:06.914938: I tensorflow/compiler/xla/service/service.cc:179]   StreamExecutor device (0): Host, Default Version
+[W] invalid valud of CUDA_VISIBLE_DEVICES: "NoDevFiles"
+[W] invalid valud of CUDA_VISIBLE_DEVICES: "NoDevFiles"
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 12:25:55.957372: E tensorflow/stream_executor/cuda/cuda_driver.cc:271] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 12:25:55.957415: E tensorflow/stream_executor/cuda/cuda_driver.cc:271] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 12:25:55.957482: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu03
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 12:25:55.957505: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu03
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 12:25:55.957723: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 12:25:55.957814: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 12:25:55.957835: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 12:25:55.957507: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu03
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 12:25:55.957528: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu03
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 12:25:55.957734: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 12:25:55.957818: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 12:25:55.957836: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 12:25:55.979656: I tensorflow/compiler/xla/service/service.cc:171] XLA service 0x4d59140 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 12:25:55.979704: I tensorflow/compiler/xla/service/service.cc:179]   StreamExecutor device (0): Host, Default Version
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 12:25:55.981470: I tensorflow/compiler/xla/service/service.cc:171] XLA service 0x556de70 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 12:25:55.981510: I tensorflow/compiler/xla/service/service.cc:179]   StreamExecutor device (0): Host, Default Version
+[W] invalid valud of CUDA_VISIBLE_DEVICES: "NoDevFiles"
+[W] invalid valud of CUDA_VISIBLE_DEVICES: "NoDevFiles"
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 15:33:43.411706: E tensorflow/stream_executor/cuda/cuda_driver.cc:271] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 15:33:43.411705: E tensorflow/stream_executor/cuda/cuda_driver.cc:271] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 15:33:43.411811: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu03
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 15:33:43.411832: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu03
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 15:33:43.412075: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 15:33:43.412172: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 15:33:43.412196: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 15:33:43.411807: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:169] retrieving CUDA diagnostic information for host: gpu03
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 15:33:43.411830: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:176] hostname: gpu03
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 15:33:43.412093: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:200] libcuda reported version is: 418.67.0
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 15:33:43.412184: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:204] kernel reported version is: 418.67.0
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 15:33:43.412207: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:310] kernel version seems to match DSO: 418.67.0
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 15:33:43.435590: I tensorflow/compiler/xla/service/service.cc:171] XLA service 0x66eafc0 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+[[1;34m172.16.239.3.10001[m::[1;35mstderr[m] 2023-11-24 15:33:43.435619: I tensorflow/compiler/xla/service/service.cc:179]   StreamExecutor device (0): Host, Default Version
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 15:33:43.436022: I tensorflow/compiler/xla/service/service.cc:171] XLA service 0x4b46f60 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+[[1;32m172.16.239.3.10000[m::[1;35mstderr[m] 2023-11-24 15:33:43.436045: I tensorflow/compiler/xla/service/service.cc:179]   StreamExecutor device (0): Host, Default Version
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: got SIGCONT
+slurmstepd: error: *** STEP 1557271.0 ON gpu03 CANCELLED AT 2023-11-24T17:09:38 ***
+[W] terminated trapped
+slurmstepd: error: *** JOB 1557271 ON gpu03 CANCELLED AT 2023-11-24T17:09:38 ***
+srun: forcing job termination
+[1;35m[E][m #<172.16.239.3.10001> exited with error: signal: killed
+[1;35m[E][m #<172.16.239.3.10000> exited with error: signal: killed
+srun: error: gpu03: task 0: Terminated
+srun: Terminating job step 1557271.0
