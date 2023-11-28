@@ -8,40 +8,43 @@ def generate_combinations(args):
 
     for _ in range(args.repetitions):
 
-        for clients in args.clients:
-            
-            for model in args.models:
+        for topologies in args.topologies:
 
-                for optimizer in args.optimizers:
+            for clients in args.clients:
+                
+                for model in args.models:
 
-                    for algorithm in args.algorithms:
+                    for optimizer in args.optimizers:
 
-                        # Dict default stores the default values of each parameter
-                        default['clients'] = clients
-                        default['algorithm'] = algorithm
-                        default['model'] = model
-                        default['optimizer'] = optimizer
-                        default['threshold'] = args.thresholds[0]
-                        if algorithm == "synchronous": default['threshold'] = 0.0
-                        default['batch_size'] = args.batch_sizes[0]
-                        default['epochs'] = args.epochs
-                        default['exper_id']+=1
+                        for algorithm in args.algorithms:
 
-                        combinations.append(default.copy())
+                            # Dict default stores the default values of each parameter
+                            default['clients'] = clients
+                            default['topologies'] = topologies
+                            default['algorithm'] = algorithm
+                            default['model'] = model
+                            default['optimizer'] = optimizer
+                            default['threshold'] = args.thresholds[0]
+                            if algorithm == "synchronous": default['threshold'] = 0.0
+                            default['batch_size'] = args.batch_sizes[0]
+                            default['epochs'] = args.epochs
+                            default['exper_id']+=1
 
-                        # Threshold is relevant only for FDA methods
-                        if algorithm != "synchronous":
-                            for threshold in args.thresholds[1:]:
+                            combinations.append(default.copy())
+
+                            # Threshold is relevant only for FDA methods
+                            if algorithm != "synchronous":
+                                for threshold in args.thresholds[1:]:
+                                    default['exper_id']+=1
+                                    temp = default.copy()
+                                    temp['threshold'] = threshold
+                                    combinations.append(temp.copy())
+
+                            for batch_size in args.batch_sizes[1:]:
                                 default['exper_id']+=1
                                 temp = default.copy()
-                                temp['threshold'] = threshold
+                                temp['batch_size'] = batch_size
                                 combinations.append(temp.copy())
-
-                        for batch_size in args.batch_sizes[1:]:
-                            default['exper_id']+=1
-                            temp = default.copy()
-                            temp['batch_size'] = batch_size
-                            combinations.append(temp.copy())
         
     return combinations
 
@@ -51,6 +54,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Create a JSON file configuration of experiments parameters.')
     parser.add_argument('--name', type=str, default='no', help='(optional) give a custom name for the json file')
     parser.add_argument('--clients', type=int, nargs="+", help='number of clients in the network')
+    parser.add_argument('--topologies', type=str, nargs="+", help='network topologies')
     parser.add_argument("--algorithms", type=str, nargs="+", help="algorithms used")
     parser.add_argument("--models", type=str, nargs="+", help='ANN models used')
     parser.add_argument("--epochs", type=int, help='number of epochs that the experiment will run')

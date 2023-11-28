@@ -1,14 +1,14 @@
-from kungfu.python import current_cluster_size, current_rank
-from kungfu.tensorflow.ops import group_all_reduce
-from kungfu.tensorflow.initializer import broadcast_variables
-from kungfu.tensorflow.optimizers import MySynchronousSGDOptimizer, SynchronousSGDOptimizer
-from kungfu._utils import map_maybe
-
 import tensorflow as tf
 from math import sqrt
 if tf.config.list_physical_devices('GPU'):
         for gpu in tf.config.experimental.list_physical_devices('GPU'):
                 tf.config.experimental.set_memory_growth(gpu,True)
+
+from kungfu.python import current_cluster_size, current_rank
+from kungfu.tensorflow.ops import group_all_reduce, set_tree, broadcast
+from kungfu.tensorflow.initializer import broadcast_variables
+from kungfu.tensorflow.optimizers import MySynchronousSGDOptimizer, SynchronousSGDOptimizer
+from kungfu._utils import map_maybe
 
 import os, argparse, time, copy, sys
 
@@ -39,6 +39,8 @@ parser.add_argument("--optimizer", type=str,
                     default='Adam', help='Optimizer used')
 parser.add_argument("--algorithm", type=str, default= "synchronous",
                      help="type of experiment algorithmrithm")
+parser.add_argument("--topology", type=str, default= "ring",
+                     help="network topology")
 args = parser.parse_args()
 
 # Get number of inputs from input 
@@ -60,7 +62,7 @@ if current_rank() == 0 and args.l:
     print("Steps per Epoch in float: "+str(epoch_steps_float))
 
     # Create a dictionary for the logs
-    logs_dict = logs_dict(args.algorithm, args.model, current_cluster_size(), args.clients_distr,threshold, args.batch, epoch_steps, epochs)
+    logs_dict = logs_dict(args.algorithm, args.model, current_cluster_size(), args.clients_distr,threshold, args.batch, epoch_steps, epochs, args.topology)
 
 # Create selected model
 if args.model == "lenet5":
@@ -77,6 +79,16 @@ if args.algorithm == "sketch":
     sketch_depth = 5
     epsilon = 1. / sqrt(sketch_width)
     ams_sketch = AmsSketch(depth=5, width=250)
+
+if args.topology == "star":
+    # Set a star-topology with node 0 as the root
+    tree = tf.constant(0, shape=(current_cluster_size(),), dtype=tf.int32)
+    set_tree_op = set_tree(broadcast(tree))
+elif args.topology == "binary_tree":
+    topology = tf.range(current_cluster_size(), dtype=tf.int32)
+    tree = tf.where(topology > 0, (topology - 1) // 2, 0)
+    print(tree.numpy())
+    set_tree_op = set_tree(broadcast(tree))
 
 # Set Adam along with KungFu Synchronous SGD optimizer
 opt = tf.keras.optimizers.Adam()

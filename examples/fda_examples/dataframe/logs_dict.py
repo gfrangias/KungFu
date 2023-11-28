@@ -5,7 +5,7 @@ import tensorflow as tf
 
 class logs_dict:
 
-    def __init__(self, algorithm, model, clients, clients_distr, threshold, batch_size, epoch_steps, epochs):
+    def __init__(self, algorithm, model, clients, clients_distr, threshold, batch_size, epoch_steps, epochs, topology):
 
         timestamp = datetime.now().strftime("%d-%m-%Y %H:%M")
 
@@ -18,6 +18,7 @@ class logs_dict:
             "epochs" : epochs,
             "threshold" : threshold,
             "batch_size" : batch_size,
+            "topology" : topology,
             "syncs" : 0,
             "duration" : 0,
             "timestamp" : timestamp,
