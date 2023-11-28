@@ -1,101 +1,87 @@
 import pandas as pd
+import glob
 
 class data_analysis:
 
-    def __init__(self):
+    def __init__(self, directory):
 
-        self.directory = "../csv_files/"
-        self.files = [self.directory + "info.csv", self.directory + "step.csv", \
-                      self.directory + "epoch.csv"]
-        self.dfs = [pd.read_csv(file) for file in self.files]
-        self.num_of_exper = self.dfs[0].shape[0]
+        # Directory where all CSV files are located
+        self.directory = "../csv_files/"+directory+"/"
+        
+        self.df = {}
+        self.grouped_df = {}
+        
+        # Create experiments info dataframe
+        info_file = self.directory + "info.csv"
+        self.df['info'] = pd.read_csv(info_file)
+
+        epoch_files = self.directory + "epoch_step_info/*epoch.csv"
+        step_files = self.directory + "epoch_step_info/*step.csv"
+
+        # Combine all files for steps and epochs in two dataframes
+        self.df['epoch'], self.df['step'] = self.concat_epoch_step_files(epoch_files, step_files)
+
+        # Add for each step and epoch dataframe row all the experiment info
         self.epoch_step_with_info()
 
-    def print_info(self):
-        
-        print(self.dfs[0])
+    # Combine all files for steps and epochs in two dataframes
+    def concat_epoch_step_files(self, epoch_files, step_files):
+        epoch_files_list = glob.glob(epoch_files)
+        step_files_list = glob.glob(step_files)
 
-    # Print the dataframe or part of the dataframe
-    # low: the lower limit of exper_id to be printed  
-    # high: the higher limit of exper_id to be printed
-    # query: a string containing a query to be ran
-    def print_df(self, low=0, high=None, query=None):
-        pd.set_option('display.max_columns', None)
+        epoch_dfs, step_dfs = [], []
 
-        if high is None: high = self.num_of_exper
-
-        if query is None:
-
-            results = [df.query(f"exper_id.between({low}, {high})") for df in self.dfs]        
-
-        else:
-
-            range = [df.query(f"exper_id.between({low}, {high})") for df in self.dfs]
+        for epoch_file, step_file in zip(epoch_files_list, step_files_list):
             
-            exper_ids = self.dfs[0].query(query)['exper_id']
-
-            results = [df[df['exper_id'].isin(exper_ids)] for df in range]
-        
-        for result in results: print(result)
-        
-        pd.reset_option('display.max_columns')
-
-        return results
-
-    def group_repeated_expers(self, attributes, table=None):
-
-        grouped_list = []
-
-        if table is None:
-            dfs = self.dfs
-        else:
-            dfs = [self.dfs[table]]
-
-        # Group by multiple columns
-        for df in dfs:
-            grouped_list.append(df.groupby(attributes))
-
-        self.grouped_list = grouped_list
-    
-    def get_values_from_id(self, table, attributes, id):
-
-        result = self.dfs[table].loc[self.dfs[table]['exper_id'] == id, attributes]
-
-        return result
-    
-    def min_max_mean_of_rows(self, table, attributes, ids):
-
-        result_dict = {}
-
-        for labels, id_list in ids.items():
-            temp_dfs = []
-            for id in id_list:
-                result = self.get_values_from_id(table, attributes, id)
-                temp_dfs.append(result.set_index(attributes[0]))
+            epoch_file_df = pd.read_csv(epoch_file)
+            step_file_df = pd.read_csv(step_file)
             
-            # Combine the DataFrames
-            combined_df = pd.concat(temp_dfs, keys=range(len(temp_dfs)))
+            epoch_dfs.append(epoch_file_df)
+            step_dfs.append(step_file_df)    
 
-            # Calculate the mean accuracy for each epoch
-            agg_df = combined_df.groupby(attributes[0]).agg(
-                mean=(attributes[1], 'mean'),
-                min=(attributes[1], 'min'),
-                max=(attributes[1], 'max')
-                ).reset_index()
+        epoch_df = pd.concat(epoch_dfs, ignore_index=True)
+        step_df = pd.concat(step_dfs, ignore_index=True)
 
-        return result_dict, attributes
+        return epoch_df, step_df
     
-    def get_last_epoch(self):
-        # Find the maximum value in the 'epoch' column
-        max_epoch = self.dfs[2]['epoch'].max()
-
-        # Filter the DataFrame to get rows where 'epoch' is equal to the maximum value
-        self.dfs[1] = self.dfs[1][self.dfs[1]['epoch'] == max_epoch]
-        self.dfs[2] = self.dfs[2][self.dfs[2]['epoch'] == max_epoch]
-
+    # Add for each step and epoch dataframe row all the experiment info
     def epoch_step_with_info(self):
+
+        self.df['epoch'] = pd.merge(self.df['info'], self.df['epoch'], on='exper_id')
+        self.df['step'] = pd.merge(self.df['info'], self.df['step'], on='exper_id')
+
+    # Select from dataframes the rows that have specific values in columns
+    def select_where(self, selections):
+        columns = list(selections.keys())
+        values = list(selections.values())
+        threshold_in_columns = False
+
+        # Check if 'threshold' is in the selections
+        if 'threshold' in columns:
+            threshold_in_columns = True
+            threshold_index = columns.index('threshold')
+            threshold_value = values.pop(threshold_index)
+            columns.remove('threshold')
         
-        self.dfs[1] = pd.merge(self.dfs[0], self.dfs[1], on='exper_id')
-        self.dfs[2] = pd.merge(self.dfs[0], self.dfs[2], on='exper_id')
+        for key, df in self.df.items():
+            conditions = [df[column] == value for column, value in zip(columns, values)]
+            
+            if threshold_in_columns:
+                threshold_condition = (df['threshold'] == threshold_value) | (df['threshold'].isna())
+                conditions.append(threshold_condition)
 
+            final_condition = conditions[0]
 
+            for condition in conditions[1:]:
+                final_condition &= condition
+            self.df[key] = df[final_condition]
+
+    def group_repeated_expers(self, attributes, key, aggr, time = False):
+        # Group by multiple columns
+        grouped_df = self.df[key].groupby(attributes, dropna=False)
+        if time:
+            resulting_df = grouped_df.agg({aggr: ['min', 'mean', 'max'], 'time': 'mean'}).reset_index()
+            resulting_df.columns = [f"{col[0]}_{col[1]}" if col[1] else col[0] for col in resulting_df.columns]
+        else:
+            resulting_df = grouped_df['time'].agg(['min', 'mean', 'max']).reset_index()
+        return resulting_df
