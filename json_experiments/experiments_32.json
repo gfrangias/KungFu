@@ -2,100 +2,56 @@
     {
         "exper_id": 0,
         "clients": 32,
-        "topologies": "ring",
+        "topology": "ring",
         "algorithm": "synchronous",
         "model": "adv_cnn",
         "optimizer": "adam",
         "threshold": 0.0,
         "batch_size": 128,
-        "epochs": 100
+        "epochs": 10
     },
     {
         "exper_id": 1,
         "clients": 32,
-        "topologies": "star",
+        "topology": "star",
         "algorithm": "synchronous",
         "model": "adv_cnn",
         "optimizer": "adam",
         "threshold": 0.0,
         "batch_size": 128,
-        "epochs": 100
+        "epochs": 10
     },
     {
         "exper_id": 2,
         "clients": 32,
-        "topologies": "binary_tree",
+        "topology": "binary_tree",
         "algorithm": "synchronous",
         "model": "adv_cnn",
         "optimizer": "adam",
         "threshold": 0.0,
         "batch_size": 128,
-        "epochs": 100
+        "epochs": 10
     },
     {
         "exper_id": 3,
         "clients": 32,
-        "topologies": "ring",
-        "algorithm": "synchronous",
+        "topology": "star",
+        "algorithm": "naive",
         "model": "adv_cnn",
         "optimizer": "adam",
-        "threshold": 0.0,
+        "threshold": 2.0,
         "batch_size": 128,
-        "epochs": 100
+        "epochs": 10
     },
     {
         "exper_id": 4,
         "clients": 32,
-        "topologies": "star",
-        "algorithm": "synchronous",
+        "topology": "binary_tree",
+        "algorithm": "naive",
         "model": "adv_cnn",
         "optimizer": "adam",
-        "threshold": 0.0,
+        "threshold": 2.0,
         "batch_size": 128,
-        "epochs": 100
-    },
-    {
-        "exper_id": 5,
-        "clients": 32,
-        "topologies": "binary_tree",
-        "algorithm": "synchronous",
-        "model": "adv_cnn",
-        "optimizer": "adam",
-        "threshold": 0.0,
-        "batch_size": 128,
-        "epochs": 100
-    },
-    {
-        "exper_id": 6,
-        "clients": 32,
-        "topologies": "ring",
-        "algorithm": "synchronous",
-        "model": "adv_cnn",
-        "optimizer": "adam",
-        "threshold": 0.0,
-        "batch_size": 128,
-        "epochs": 100
-    },
-    {
-        "exper_id": 7,
-        "clients": 32,
-        "topologies": "star",
-        "algorithm": "synchronous",
-        "model": "adv_cnn",
-        "optimizer": "adam",
-        "threshold": 0.0,
-        "batch_size": 128,
-        "epochs": 100
-    },
-    {
-        "exper_id": 8,
-        "clients": 32,
-        "topologies": "binary_tree",
-        "algorithm": "synchronous",
-        "model": "adv_cnn",
-        "optimizer": "adam",
-        "threshold": 0.0,
-        "batch_size": 128,
-        "epochs": 100
+        "epochs": 10
     }
 ]

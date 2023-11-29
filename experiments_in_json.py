@@ -20,7 +20,7 @@ def generate_combinations(args):
 
                             # Dict default stores the default values of each parameter
                             default['clients'] = clients
-                            default['topologies'] = topologies
+                            default['topology'] = topologies
                             default['algorithm'] = algorithm
                             default['model'] = model
                             default['optimizer'] = optimizer
