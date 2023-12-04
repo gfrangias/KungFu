@@ -7,51 +7,7 @@
         "model": "adv_cnn",
         "optimizer": "adam",
         "threshold": 0.0,
-        "batch_size": 128,
-        "epochs": 10
-    },
-    {
-        "exper_id": 1,
-        "clients": 32,
-        "topology": "star",
-        "algorithm": "synchronous",
-        "model": "adv_cnn",
-        "optimizer": "adam",
-        "threshold": 0.0,
-        "batch_size": 128,
-        "epochs": 10
-    },
-    {
-        "exper_id": 2,
-        "clients": 32,
-        "topology": "binary_tree",
-        "algorithm": "synchronous",
-        "model": "adv_cnn",
-        "optimizer": "adam",
-        "threshold": 0.0,
-        "batch_size": 128,
-        "epochs": 10
-    },
-    {
-        "exper_id": 3,
-        "clients": 32,
-        "topology": "star",
-        "algorithm": "naive",
-        "model": "adv_cnn",
-        "optimizer": "adam",
-        "threshold": 2.0,
-        "batch_size": 128,
-        "epochs": 10
-    },
-    {
-        "exper_id": 4,
-        "clients": 32,
-        "topology": "binary_tree",
-        "algorithm": "naive",
-        "model": "adv_cnn",
-        "optimizer": "adam",
-        "threshold": 2.0,
-        "batch_size": 128,
-        "epochs": 10
+        "batch_size": 64,
+        "epochs": 20
     }
 ]

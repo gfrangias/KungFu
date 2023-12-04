@@ -6,10 +6,6 @@ from kungfu._utils import map_maybe
 
 import tensorflow as tf
 from math import sqrt
-if tf.config.list_physical_devices('GPU'):
-        for gpu in tf.config.experimental.list_physical_devices('GPU'):
-                tf.config.experimental.set_memory_growth(gpu,True)
-
 import os, argparse, time, copy, sys
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'

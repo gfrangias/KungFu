@@ -1,6 +1,6 @@
 import tensorflow as tf
 import numpy as np
-from kungfu.python import current_rank
+from kungfu.python import current_rank, current_cluster_size
 from kungfu.tensorflow.ops import all_reduce, broadcast
 from .tensor_list_functions import tensor_list_to_vector
 
@@ -92,17 +92,17 @@ class AmsSketch:
 
         if ('four', d) not in self.precomputed_dict:
             self.precompute(d)
-            """
+
             indices = self.precomputed_dict[('indices',d)]
             four = self.precomputed_dict[('four',d)]
             f = self.F
             self.precomputed_dict[('indices',d)] = broadcast(indices)
             self.precomputed_dict[('four',d)] = broadcast(four)
             self.F = broadcast(f)
-            """
 
         return self._sketch_for_vector(v, self.precomputed_dict[('four', d)], self.precomputed_dict[('indices', d)])
 
+    @tf.function
     def _sketch_for_vector(self, v, four, indices):
         v_expand = tf.expand_dims(v, axis=-1)  # shape=(d, 1)
 
@@ -136,7 +136,7 @@ def local_update_norm_comp(w_t0, w_local):
     local_update = w_local - w_t0
     local_update_norm = tf.reduce_sum(tf.square(local_update))
 
-    return local_update_norm
+    return local_update_norm, local_update
 
 ### Calculate the local state of the node
 #
@@ -145,8 +145,7 @@ def local_update_norm_comp(w_t0, w_local):
 def local_state_comp(w_t0, w_local, ams_sketch):
     
     start_time_calc = tf.timestamp()
-    local_update_norm = local_update_norm_comp(w_t0, w_local)
-    local_update = w_local - w_t0
+    local_update_norm, local_update = local_update_norm_comp(w_t0, w_local)
     sketch = ams_sketch.sketch_for_vector(local_update)
     end_time_calc = tf.timestamp()
 
@@ -162,16 +161,13 @@ def approx_rtc_sketch(w_t0, w_local, ams_sketch, epsilon, num_of_nodes):
 
     local_update_norm, sketch, calc_duration = local_state_comp(w_t0_vector, w_local_vector, ams_sketch)
 
-    #print(sketch)
-    #print(type(sketch))
-
     start_time_com = tf.timestamp()
     local_update_norm_avg = all_reduce(local_update_norm) / num_of_nodes
     sketch_avg = all_reduce(sketch) / num_of_nodes
     end_time_com = tf.timestamp()
 
     start_time_calc = tf.timestamp()
-    sketch_m_2 = (1. / ((1. + epsilon))) * AmsSketch.estimate_euc_norm_squared(sketch_avg)
+    sketch_m_2 = (1. / ((1. + epsilon)*current_cluster_size())) * AmsSketch.estimate_euc_norm_squared(sketch_avg)
     end_time_calc = tf.timestamp()
 
     #if current_rank() == 0:
@@ -179,3 +175,4 @@ def approx_rtc_sketch(w_t0, w_local, ams_sketch, epsilon, num_of_nodes):
     #    print("sketch_m_2: " + str(sketch_m_2))
 
     return local_update_norm_avg - sketch_m_2, end_time_com - start_time_com, calc_duration + end_time_calc - start_time_calc
+

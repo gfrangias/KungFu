@@ -11,9 +11,10 @@ def main(args, job_name, output_name, error_name, num_nodes):
 #SBATCH --ntasks={num_nodes}
 #SBATCH --nodes={num_nodes}
 #SBATCH --ntasks-per-node=1
-#SBATCH --mem=32G
+#SBATCH --mem=50G
 #SBATCH --time={args.time}
 #SBATCH --partition={args.partition}
+#SBATCH --gres=gpu:{args.clients_distr}
 #SBATCH --account={args.account}
 
 module purge
@@ -25,7 +26,6 @@ module load python/3.8.13
 module load tftorch/270-191
 
 export PATH=$HOME/.local/bin:$PATH
-
 export TF_XLA_FLAGS="--tf_xla_enable_xla_devices"
 
 ## RUN YOUR PROGRAM ##
