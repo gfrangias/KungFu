@@ -14,7 +14,7 @@ def main(args, job_name, output_name, error_name, num_nodes):
 #SBATCH --mem=50G
 #SBATCH --time={args.time}
 #SBATCH --partition={args.partition}
-#SBATCH --gres=gpu:{args.clients_distr}
+#SBATCH --gres=gpu:2
 #SBATCH --account={args.account}
 
 module purge

@@ -1,5 +1,0 @@
-exper_id,algorithm,model,clients,clients_distr,epochs,threshold,batch_size,syncs,duration,timestamp,epoch_steps
-0,synchronous,adv_cnn,4,"[2, 2]",20,,64,4685,1610.07062458992,18-11-2023 12:58,234
-1,naive,adv_cnn,4,"[2, 2]",20,100.0,64,34,971.5191555023192,18-11-2023 13:28,234
-2,linear,adv_cnn,4,"[2, 2]",20,100.0,64,33,1067.9328029155731,18-11-2023 13:46,234
-3,sketch,adv_cnn,4,"[2, 2]",20,100.0,64,26,4770.314381122589,18-11-2023 14:07,234
