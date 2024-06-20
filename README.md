@@ -227,7 +227,7 @@ Check out the developer [guideline](CONTRIBUTING.md) for more information.
 
 # SLURM Job Submission Python Scripts
 
-![sync](examples/fda_examples/images/workflow.jpg)
+![workflow](examples/fda_examples/images/workflow.jpg)
 
 ## experiments_in_json.py
 
